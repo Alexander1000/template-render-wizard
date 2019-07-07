@@ -28,6 +28,10 @@ namespace TemplateRenderWizard
                 this->is_version = true;
                 break;
             }
+
+            if (i == argc - 1) {
+                this->templateFile = new std::string(paramName);
+            }
         }
     }
 
