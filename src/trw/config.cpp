@@ -36,6 +36,12 @@ namespace TemplateRenderWizard
                 continue;
             }
 
+            if (paramName == "--values") {
+                this->valuesFile = new std::string(argv[i+1]);
+                i++;
+                continue;
+            }
+
             if (i == argc - 1) {
                 this->templateFile = new std::string(paramName);
             }
