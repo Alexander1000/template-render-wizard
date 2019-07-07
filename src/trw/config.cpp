@@ -12,6 +12,7 @@ namespace TemplateRenderWizard
 
         this->templateFile = NULL;
         this->valuesFile = NULL;
+        this->outputFile = NULL;
 
         this->values = new std::map<std::string, std::string>;
 
@@ -29,10 +30,26 @@ namespace TemplateRenderWizard
                 break;
             }
 
+            if (paramName == "-o" || paramName == "--output") {
+                this->outputFile = new std::string(argv[i+1]);
+                i++;
+                continue;
+            }
+
             if (i == argc - 1) {
                 this->templateFile = new std::string(paramName);
             }
         }
+    }
+
+    std::string* Config::getTemplateFile()
+    {
+        return this->templateFile;
+    }
+
+    std::string* Config::getValuesFile()
+    {
+        return this->valuesFile;
     }
 
     bool Config::isVersion()

@@ -17,6 +17,9 @@ namespace TemplateRenderWizard
         bool isVersion();
         const char* getVersionText();
 
+        std::string* getTemplateFile();
+        std::string* getValuesFile();
+
     private:
         bool is_help;
         bool is_version;
@@ -25,6 +28,7 @@ namespace TemplateRenderWizard
 
         std::string* templateFile;
         std::string* valuesFile;
+        std::string* outputFile;
     };
 }
 
