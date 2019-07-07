@@ -2,6 +2,7 @@
 #define H_TRW_CONFIG_INCLUDED
 
 #include <string>
+#include <map>
 
 namespace TRW
 {
@@ -19,6 +20,11 @@ namespace TRW
     private:
         bool is_help;
         bool is_version;
+
+        std::map<std::string, std::string>* values;
+
+        std::string* templateFile;
+        std::string* valuesFile;
 
         void setDefaults();
     };

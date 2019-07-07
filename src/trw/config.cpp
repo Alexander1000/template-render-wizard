@@ -1,5 +1,6 @@
 #include <trw.h>
 #include <string>
+#include <map>
 
 namespace TRW
 {
@@ -52,5 +53,10 @@ namespace TRW
     {
         this->is_help = false;
         this->is_version = false;
+
+        this->templateFile = NULL;
+        this->valuesFile = NULL;
+
+        this->values = new std::map<std::string, std::string>;
     }
 }
