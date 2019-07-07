@@ -6,8 +6,16 @@ namespace TemplateRenderWizard
 {
     Config::Config(int argc, char** argv)
     {
-        this->setDefaults();
+        // defaults:
+        this->is_help = false;
+        this->is_version = false;
 
+        this->templateFile = NULL;
+        this->valuesFile = NULL;
+
+        this->values = new std::map<std::string, std::string>;
+
+        // initialize parameters
         for (int i = 1; i < argc; i++) {
             std::string paramName(argv[i]);
 
@@ -47,16 +55,5 @@ namespace TemplateRenderWizard
            "        --values [file]        Yaml-file with values for placeholders for template.\n"
            "    -o, --output [file]        Output template render, by default stdout.\n"
            "    -v, --version              Print version and exit.";
-    }
-
-    void Config::setDefaults()
-    {
-        this->is_help = false;
-        this->is_version = false;
-
-        this->templateFile = NULL;
-        this->valuesFile = NULL;
-
-        this->values = new std::map<std::string, std::string>;
     }
 }

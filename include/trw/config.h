@@ -25,8 +25,6 @@ namespace TemplateRenderWizard
 
         std::string* templateFile;
         std::string* valuesFile;
-
-        void setDefaults();
     };
 }
 
