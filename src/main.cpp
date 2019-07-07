@@ -11,6 +11,12 @@ int main(int argc, char** argv) {
 
     if (config.isHelp()) {
         std::cout << config.getHelpText() << std::endl;
+        return 0;
+    }
+
+    if (config.isVersion()) {
+        std::cout << config.getVersionText() << std::endl;
+        return 0;
     }
 
     return 0;

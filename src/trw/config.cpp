@@ -1,4 +1,4 @@
-#include <trw/config.h>
+#include <trw.h>
 #include <string>
 
 namespace TRW
@@ -12,9 +12,24 @@ namespace TRW
 
             if (paramName == "-h" || paramName == "--help") {
                 this->is_help = true;
-                continue;
+                break;
+            }
+
+            if (paramName == "-v" || paramName == "--version") {
+                this->is_version = true;
+                break;
             }
         }
+    }
+
+    bool Config::isVersion()
+    {
+        return this->is_version;
+    }
+
+    const char* Config::getVersionText()
+    {
+        return "template-render-wizard [trw] version: " TRW_VERSION "\n";
     }
 
     bool Config::isHelp()
@@ -28,12 +43,14 @@ namespace TRW
            "Common options:\n"
            "    -h, --help                 Show this message and exit.\n"
            "        --set [string array]   Set value for property.\n"
-           "    -v, --values [file]        Yaml-file with values for placeholders for template.\n"
-           "    -o, --output [file]        Output template render, by default stdout.\n";
+           "        --values [file]        Yaml-file with values for placeholders for template.\n"
+           "    -o, --output [file]        Output template render, by default stdout.\n"
+           "    -v, --version              Print version and exit.";
     }
 
     void Config::setDefaults()
     {
         this->is_help = false;
+        this->is_version = false;
     }
 }
