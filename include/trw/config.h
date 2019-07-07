@@ -7,10 +7,12 @@ namespace TRW
     {
     public:
         Config(int argc, char** argv);
+        bool isHelp();
 
     private:
-        int argc;
-        char** argv;
+        bool is_help;
+
+        void setDefaults();
     };
 }
 
