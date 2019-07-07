@@ -10,7 +10,7 @@ int main(int argc, char** argv) {
     TRW::Config config(argc, argv);
 
     if (config.isHelp()) {
-        std::cout << "Is is help message" << std::endl;
+        std::cout << config.getHelpText() << std::endl;
     }
 
     return 0;
