@@ -42,6 +42,26 @@ namespace TemplateRenderWizard
                 continue;
             }
 
+            if (paramName == "--set") {
+                std::string paramValue = argv[i+1];
+                for (int j = 0; j < paramValue.size(); j++) {
+                    if (paramValue[j] == '=') {
+                        char* objParam = (char*) malloc(sizeof(char) * j);
+                        memset(objParam, 0, sizeof(char) * j);
+                        memcpy(objParam, paramValue.c_str(), j);
+
+                        char* objValue = (char*) malloc(sizeof(char) * (paramValue.size() - j - 1));
+                        memset(objValue, 0, (paramValue.size() - j - 1));
+                        memcpy(objValue, paramValue.c_str() + j + 1, paramValue.size() - j - 1);
+
+                        (*this->values)[std::string(objParam)] = std::string(objValue);
+                        break;
+                    }
+                }
+                i++;
+                continue;
+            }
+
             if (i == argc - 1) {
                 this->templateFile = new std::string(paramName);
             }
