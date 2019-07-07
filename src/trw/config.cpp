@@ -2,7 +2,7 @@
 #include <string>
 #include <map>
 
-namespace TRW
+namespace TemplateRenderWizard
 {
     Config::Config(int argc, char** argv)
     {
