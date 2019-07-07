@@ -9,6 +9,10 @@ set(TRW_SOURCES
     src/main.cpp
 )
 
+include_directories(
+    include
+)
+
 find_library(IO_BUFFER libio-buffer.a)
 message(STATUS "Found io-buffer library: ${IO_BUFFER}")
 
