@@ -7,6 +7,7 @@ project(template-render-wizard)
 
 set(TRW_SOURCES
     src/main.cpp
+    src/trw/config.cpp
 )
 
 include_directories(
