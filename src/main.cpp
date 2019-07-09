@@ -3,8 +3,16 @@
  */
 
 #include <iostream>
+#include <string>
+#include <sys/stat.h>
 
 #include <trw.h>
+
+inline bool file_exists(const std::string* name)
+{
+    struct stat buffer;
+    return (stat(name->c_str(), &buffer) == 0);
+}
 
 int main(int argc, char** argv) {
     TemplateRenderWizard::Config config(argc, argv);
@@ -19,9 +27,16 @@ int main(int argc, char** argv) {
         return 0;
     }
 
-    if (config.getTemplateFile() == NULL) {
+    std::string* templateFile = config.getTemplateFile();
+
+    if (templateFile == NULL) {
         std::cout << "Template required" << std::endl;
         std::cout << config.getHelpText() << std::endl;
+        return -1;
+    }
+
+    if (!file_exists(templateFile)) {
+        std::cout << "Template file not exists" << std::endl;
         return -1;
     }
 
