@@ -19,5 +19,11 @@ int main(int argc, char** argv) {
         return 0;
     }
 
+    if (config.getTemplateFile() == NULL) {
+        std::cout << "Template required" << std::endl;
+        std::cout << config.getHelpText() << std::endl;
+        return -1;
+    }
+
     return 0;
 }
