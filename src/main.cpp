@@ -7,6 +7,7 @@
 #include <sys/stat.h>
 
 #include <trw.h>
+#include <io-buffer.h>
 
 inline bool file_exists(const std::string* name)
 {
@@ -39,6 +40,10 @@ int main(int argc, char** argv) {
         std::cout << "Template file not exists" << std::endl;
         return -1;
     }
+
+    IOBuffer::IOFileReader fileReader(templateFile->c_str());
+    IOBuffer::CharStream charStream(&fileReader);
+    TemplateRenderWizard::Stream tokenStream(&charStream);
 
     return 0;
 }
