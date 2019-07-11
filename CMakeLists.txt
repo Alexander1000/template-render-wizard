@@ -9,6 +9,7 @@ set(TRW_SOURCES
     src/main.cpp
     src/trw/config.cpp
     src/trw/stream.cpp
+    src/trw/tokens/token.cpp
 )
 
 include_directories(
