@@ -14,6 +14,8 @@ namespace TemplateRenderWizard
 
     private:
         IOBuffer::CharStream* charStream;
+
+        char* getNextChar();
     };
 }
 

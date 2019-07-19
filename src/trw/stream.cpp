@@ -12,4 +12,8 @@ namespace TemplateRenderWizard
     Token* Stream::getNextToken() {
         return NULL;
     }
+
+    char* Stream::getNextChar() {
+        return this->charStream->getNext();
+    }
 }
