@@ -14,6 +14,12 @@ namespace TemplateRenderWizard::Token
     public:
         OpenTagValue();
     };
+
+    class PlainText : public Token
+    {
+    public:
+        PlainText();
+    };
 }
 
 #endif

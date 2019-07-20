@@ -24,19 +24,33 @@ namespace TemplateRenderWizard
                 if (*curSymbol == '{') {
                     char *nextChar = this->getNextChar();
                     if (nextChar == NULL) {
-                        // todo: throw exception?
-                        return NULL;
+                        ioWriter = new IOBuffer::IOMemoryBuffer(2);
+                        ioWriter->write(curSymbol, 1);
+                        token = new Token::PlainText();
+                        return token;
                     }
+
                     if (*nextChar == '{') {
                         ioWriter = new IOBuffer::IOMemoryBuffer(3);
                         ioWriter->write(curSymbol, 1);
                         ioWriter->write(nextChar, 1);
                         token = new Token::OpenTagValue();
+                        return token;
                     }
-                    // parse token
+
+                    ioWriter = new IOBuffer::IOMemoryBuffer(512);
+                    ioWriter->write(curSymbol, 1);
+                    ioWriter->write(nextChar, 1);
+                }
+
+                if (ioWriter == NULL) {
+                    ioWriter = new IOBuffer::IOMemoryBuffer(512);
+                    ioWriter->write(curSymbol, 1);
                 }
 
                 // parse plain text
+
+                token = new Token::PlainText;
                 break;
             }
         }

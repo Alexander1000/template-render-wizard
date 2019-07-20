@@ -11,6 +11,7 @@ set(TRW_SOURCES
     src/trw/stream.cpp
     src/trw/tokens/token.cpp
     src/trw/tokens/open_tag_value.cpp
+    src/trw/tokens/plain_text.cpp
 )
 
 include_directories(
