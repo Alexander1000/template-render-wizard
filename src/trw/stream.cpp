@@ -17,6 +17,12 @@ namespace TemplateRenderWizard
         }
 
         Token* token = NULL;
+
+        switch (this->mode) {
+            case StreamMode::PlainText:
+                break;
+        }
+
         return token;
     }
 
