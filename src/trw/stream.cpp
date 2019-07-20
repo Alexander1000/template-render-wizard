@@ -17,10 +17,27 @@ namespace TemplateRenderWizard
         }
 
         Token* token = NULL;
+        IOBuffer::IOMemoryBuffer* ioWriter = NULL;
 
         switch (this->mode) {
-            case StreamMode::PlainText:
+            case StreamMode::PlainText: {
+                if (*curSymbol == '{') {
+                    char *nextChar = this->getNextChar();
+                    if (nextChar == NULL) {
+                        // todo: throw exception?
+                        return NULL;
+                    }
+                    if (*nextChar == '{') {
+                        ioWriter = new IOBuffer::IOMemoryBuffer(3);
+                        ioWriter->write(curSymbol, 1);
+                        ioWriter->write(nextChar, 1);
+                    }
+                    // parse token
+                }
+                
+                // parse plain text
                 break;
+            }
         }
 
         return token;
