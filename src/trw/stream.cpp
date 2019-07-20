@@ -7,10 +7,17 @@ namespace TemplateRenderWizard
     Stream::Stream(IOBuffer::CharStream *charStream)
     {
         this->charStream = charStream;
+        this->mode = StreamMode::PlainText;
     }
 
     Token* Stream::getNextToken() {
-        return NULL;
+        char* curSymbol = this->getNextChar();
+        if (curSymbol == NULL) {
+            return NULL;
+        }
+
+        Token* token = NULL;
+        return token;
     }
 
     char* Stream::getNextChar() {

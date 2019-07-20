@@ -6,6 +6,10 @@
 
 namespace TemplateRenderWizard
 {
+    enum StreamMode{
+        PlainText
+    };
+
     class Stream
     {
     public:
@@ -14,6 +18,7 @@ namespace TemplateRenderWizard
 
     private:
         IOBuffer::CharStream* charStream;
+        StreamMode mode;
 
         char* getNextChar();
     };
