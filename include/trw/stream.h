@@ -14,7 +14,7 @@ namespace TemplateRenderWizard
     {
     public:
         Stream(IOBuffer::CharStream* charStream);
-        Token* getNextToken();
+        Token::Token* getNextToken();
 
     private:
         IOBuffer::CharStream* charStream;

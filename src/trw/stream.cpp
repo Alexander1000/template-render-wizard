@@ -10,13 +10,13 @@ namespace TemplateRenderWizard
         this->mode = StreamMode::PlainText;
     }
 
-    Token* Stream::getNextToken() {
+    Token::Token* Stream::getNextToken() {
         char* curSymbol = this->getNextChar();
         if (curSymbol == NULL) {
             return NULL;
         }
 
-        Token* token = NULL;
+        Token::Token* token = NULL;
         IOBuffer::IOMemoryBuffer* ioWriter = NULL;
 
         switch (this->mode) {
@@ -31,10 +31,11 @@ namespace TemplateRenderWizard
                         ioWriter = new IOBuffer::IOMemoryBuffer(3);
                         ioWriter->write(curSymbol, 1);
                         ioWriter->write(nextChar, 1);
+                        token = new Token::OpenTagValue();
                     }
                     // parse token
                 }
-                
+
                 // parse plain text
                 break;
             }

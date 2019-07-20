@@ -10,6 +10,7 @@ set(TRW_SOURCES
     src/trw/config.cpp
     src/trw/stream.cpp
     src/trw/tokens/token.cpp
+    src/trw/tokens/open_tag_value.cpp
 )
 
 include_directories(

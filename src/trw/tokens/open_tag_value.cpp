@@ -2,6 +2,7 @@
 
 namespace TemplateRenderWizard::Token
 {
-    Token::Token() {
+    OpenTagValue::OpenTagValue() : Token()
+    {
     }
 }
