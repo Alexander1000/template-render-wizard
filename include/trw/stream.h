@@ -3,6 +3,7 @@
 
 #include <io-buffer.h>
 #include <trw/token.h>
+#include <stack>
 
 namespace TemplateRenderWizard
 {
@@ -20,6 +21,7 @@ namespace TemplateRenderWizard
     private:
         IOBuffer::CharStream* charStream;
         StreamMode mode;
+        std::stack<char*>* charStack;
 
         char* getNextChar();
         void setMode(StreamMode);

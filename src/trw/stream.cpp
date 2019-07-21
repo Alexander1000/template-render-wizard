@@ -1,6 +1,7 @@
 #include <trw/stream.h>
 #include <io-buffer.h>
 #include <trw/token.h>
+#include <stack>
 
 namespace TemplateRenderWizard
 {
@@ -8,6 +9,8 @@ namespace TemplateRenderWizard
     {
         this->charStream = charStream;
         this->mode = StreamMode::PlainText;
+
+        this->charStack = new std::stack<char*>;
     }
 
     Token::Token* Stream::getNextToken() {
@@ -58,8 +61,18 @@ namespace TemplateRenderWizard
                         break;
                     }
 
-                    if (*curSymbol == '{') {
-                        break;
+                    if (escape) {
+                        escape = false;
+                    } else {
+                        if (*curSymbol == '\\') {
+                            escape = true;
+                            continue;
+                        }
+
+                        if (*curSymbol == '{') {
+                            this->charStack->push(curSymbol);
+                            break;
+                        }
                     }
 
                     ioWriter->write(curSymbol, 1);
@@ -84,6 +97,12 @@ namespace TemplateRenderWizard
 
     char* Stream::getNextChar()
     {
+        if (!this->charStack->empty()) {
+            char* symbol = this->charStack->top();
+            this->charStack->pop();
+            return symbol;
+        }
+
         return this->charStream->getNext();
     }
 }
