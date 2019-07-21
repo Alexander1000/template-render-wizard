@@ -5,5 +5,6 @@
 
 #include <trw/config.h>
 #include <trw/stream.h>
+#include <trw/exceptions.h>
 
 #endif
