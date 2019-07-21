@@ -7,7 +7,8 @@
 namespace TemplateRenderWizard
 {
     enum StreamMode{
-        PlainText
+        PlainText,
+        ValueMode
     };
 
     class Stream
@@ -21,6 +22,7 @@ namespace TemplateRenderWizard
         StreamMode mode;
 
         char* getNextChar();
+        void setMode(StreamMode);
     };
 }
 

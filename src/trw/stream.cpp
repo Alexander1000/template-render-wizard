@@ -35,6 +35,7 @@ namespace TemplateRenderWizard
                         ioWriter->write(curSymbol, 1);
                         ioWriter->write(nextChar, 1);
                         token = new Token::OpenTagValue();
+                        this->setMode(StreamMode::ValueMode);
                         return token;
                     }
 
@@ -49,8 +50,26 @@ namespace TemplateRenderWizard
                 }
 
                 // parse plain text
+                bool escape = false;
+
+                do {
+                    curSymbol = this->getNextChar();
+                    if (curSymbol == NULL) {
+                        break;
+                    }
+
+                    if (*curSymbol == '{') {
+                        break;
+                    }
+
+                    ioWriter->write(curSymbol, 1);
+                } while (true);
 
                 token = new Token::PlainText;
+                break;
+            }
+
+            case StreamMode::ValueMode: {
                 break;
             }
         }
@@ -58,7 +77,13 @@ namespace TemplateRenderWizard
         return token;
     }
 
-    char* Stream::getNextChar() {
+    void Stream::setMode(StreamMode streamMode)
+    {
+        this->mode = streamMode;
+    }
+
+    char* Stream::getNextChar()
+    {
         return this->charStream->getNext();
     }
 }
