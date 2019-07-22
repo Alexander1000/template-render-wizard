@@ -29,7 +29,7 @@ namespace TemplateRenderWizard
                     if (nextChar == nullptr) {
                         ioWriter = new IOBuffer::IOMemoryBuffer(2);
                         ioWriter->write(curSymbol, 1);
-                        token = new Token::PlainText();
+                        token = new Token::PlainText(0, 0, nullptr); // todo: fixme
                         return token;
                     }
 
@@ -37,7 +37,7 @@ namespace TemplateRenderWizard
                         ioWriter = new IOBuffer::IOMemoryBuffer(3);
                         ioWriter->write(curSymbol, 1);
                         ioWriter->write(nextChar, 1);
-                        token = new Token::OpenTagValue();
+                        token = new Token::OpenTagValue(0, 0); // todo: fixme
                         this->setMode(StreamMode::ValueMode);
                         return token;
                     }
@@ -78,7 +78,7 @@ namespace TemplateRenderWizard
                     ioWriter->write(curSymbol, 1);
                 } while (true);
 
-                token = new Token::PlainText;
+                token = new Token::PlainText(0, 0, nullptr); // todo: fixme
                 break;
             }
 
