@@ -94,14 +94,31 @@ namespace TemplateRenderWizard
                     return nullptr;
                 }
 
-                ioWriter = new IOBuffer::IOMemoryBuffer(32);
-
                 if (*curSymbol == '}') {
                     char* nextSymbol = this->getNextChar();
                     if (*nextSymbol == '}') {
-                        // todo: return close tag value
+                        // todo: make token
+                        break;
                     }
+
+                    // todo: unexpected character
+                    break;
                 }
+
+                ioWriter = new IOBuffer::IOMemoryBuffer(32);
+                ioWriter->write(curSymbol, 1);
+
+                do {
+                    curSymbol = this->getNextChar();
+                    if (curSymbol == nullptr) {
+                        break;
+                    }
+                    if (*curSymbol == '}') {
+                        this->charStack->push(curSymbol);
+                        break;
+                    }
+                } while(true);
+
                 break;
             }
         }
