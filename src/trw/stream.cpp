@@ -15,18 +15,18 @@ namespace TemplateRenderWizard
 
     Token::Token* Stream::getNextToken() {
         char* curSymbol = this->getNextChar();
-        if (curSymbol == NULL) {
-            return NULL;
+        if (curSymbol == nullptr) {
+            return nullptr;
         }
 
-        Token::Token* token = NULL;
-        IOBuffer::IOMemoryBuffer* ioWriter = NULL;
+        Token::Token* token = nullptr;
+        IOBuffer::IOMemoryBuffer* ioWriter = nullptr;
 
         switch (this->mode) {
             case StreamMode::PlainText: {
                 if (*curSymbol == '{') {
                     char *nextChar = this->getNextChar();
-                    if (nextChar == NULL) {
+                    if (nextChar == nullptr) {
                         ioWriter = new IOBuffer::IOMemoryBuffer(2);
                         ioWriter->write(curSymbol, 1);
                         token = new Token::PlainText();
@@ -47,7 +47,7 @@ namespace TemplateRenderWizard
                     ioWriter->write(nextChar, 1);
                 }
 
-                if (ioWriter == NULL) {
+                if (ioWriter == nullptr) {
                     ioWriter = new IOBuffer::IOMemoryBuffer(512);
                     ioWriter->write(curSymbol, 1);
                 }
@@ -57,7 +57,7 @@ namespace TemplateRenderWizard
 
                 do {
                     curSymbol = this->getNextChar();
-                    if (curSymbol == NULL) {
+                    if (curSymbol == nullptr) {
                         break;
                     }
 
@@ -83,6 +83,25 @@ namespace TemplateRenderWizard
             }
 
             case StreamMode::ValueMode: {
+                if (*curSymbol == 0x20) {
+                    // skip spaces
+                    do {
+                        curSymbol = this->getNextChar();
+                    } while(curSymbol != nullptr && *curSymbol == 0x20);
+                }
+
+                if (curSymbol == nullptr) {
+                    return nullptr;
+                }
+
+                ioWriter = new IOBuffer::IOMemoryBuffer(32);
+
+                if (*curSymbol == '}') {
+                    char* nextSymbol = this->getNextChar();
+                    if (*nextSymbol == '}') {
+                        // todo: return close tag value
+                    }
+                }
                 break;
             }
         }
