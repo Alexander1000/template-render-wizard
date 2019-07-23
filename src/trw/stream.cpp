@@ -97,7 +97,8 @@ namespace TemplateRenderWizard
                 if (*curSymbol == '}') {
                     char* nextSymbol = this->getNextChar();
                     if (*nextSymbol == '}') {
-                        // todo: make token
+                        token = new Token::CloseTagValue(0, 0);
+                        this->mode = StreamMode::PlainText;
                         break;
                     }
 
