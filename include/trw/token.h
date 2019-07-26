@@ -8,7 +8,8 @@ namespace TemplateRenderWizard::Token
     enum Type {
         PlainTextType,
         OpenTagValueType,
-        CloseTagValueType
+        CloseTagValueType,
+        PlainValueType
     };
 
     class Token
@@ -43,6 +44,13 @@ namespace TemplateRenderWizard::Token
     {
     public:
         PlainText(int line, int column, IOBuffer::IOReader *reader);
+        Type getType();
+    };
+
+    class PlainValue : public Token
+    {
+    public:
+        PlainValue(int line, int column, IOBuffer::IOReader *reader);
         Type getType();
     };
 }

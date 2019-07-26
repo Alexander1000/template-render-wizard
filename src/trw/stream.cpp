@@ -118,8 +118,11 @@ namespace TemplateRenderWizard
                         this->charStack->push(curSymbol);
                         break;
                     }
+
+                    ioWriter->write(curSymbol, 1);
                 } while(true);
 
+                token = new Token::PlainValue(0, 0, ioWriter); // todo: fixme
                 break;
             }
         }
