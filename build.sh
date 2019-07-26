@@ -7,7 +7,9 @@ rm -f cmake_install.cmake
 rm -f CMakeCache.txt
 rm -f Makefile
 rm -f template-render-wizard
-rm -f template-render-wizard-cbp
+rm -f template-render-wizard.cbp
+rm -f template-render-wizard-test
+rm -f template-render-wizard-test.cbp
 
 cmake .
 make

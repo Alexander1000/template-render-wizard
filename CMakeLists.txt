@@ -34,3 +34,20 @@ target_link_libraries(${PROJECT_NAME}
     ${IO_BUFFER}
     ${YAML_PARSER}
 )
+
+#############
+### TESTS ###
+#############
+
+project(template-render-wizard-test)
+
+set(TRW_SOURCES_TEST
+    tests/main.cpp
+)
+
+include_directories(include)
+
+add_executable(
+    ${PROJECT_NAME} tests/main.cpp
+    ${TRW_SOURCES_TEST}
+)
