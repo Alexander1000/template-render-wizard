@@ -8,4 +8,8 @@ namespace TemplateRenderWizard::Token
         this->column = column;
         this->reader = reader;
     }
+
+    IOBuffer::IOReader* Token::getReader() {
+        return this->reader;
+    }
 }

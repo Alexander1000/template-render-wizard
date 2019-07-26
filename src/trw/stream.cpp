@@ -78,7 +78,7 @@ namespace TemplateRenderWizard
                     ioWriter->write(curSymbol, 1);
                 } while (true);
 
-                token = new Token::PlainText(0, 0, nullptr); // todo: fixme
+                token = new Token::PlainText(0, 0, ioWriter); // todo: fixme
                 break;
             }
 

@@ -18,6 +18,7 @@ namespace TemplateRenderWizard::Token
         int getLine();
         int getColumn();
         virtual Type getType() = 0;
+        IOBuffer::IOReader* getReader();
     protected:
         int line;
         int column;
