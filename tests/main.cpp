@@ -15,7 +15,6 @@ CppUnitTest::TestCase* testParseToken_Template_Positive() {
 
     t->printTitle();
 
-    IOBuffer::IOReader* reader = nullptr;
     TemplateRenderWizard::Token::Token* token = nullptr;
     char* textBuffer = new char[1000];
 
@@ -27,10 +26,9 @@ CppUnitTest::TestCase* testParseToken_Template_Positive() {
 
     CppUnitTest::assertNotNull(t, token);
     assertEquals(t, TemplateRenderWizard::Token::Type::PlainTextType, token->getType());
-    reader = token->getReader();
-    CppUnitTest::assertNotNull(t, reader);
+    CppUnitTest::assertNotNull(t, token->getReader());
     memset(textBuffer, 0, sizeof(char) * 1000);
-    reader->read(textBuffer, 999);
+    token->getReader()->read(textBuffer, 999);
     CppUnitTest::assertEquals(t, "Hello world!\nMy name is ", textBuffer);
 
     token = tokenStream.getNextToken();
@@ -39,6 +37,8 @@ CppUnitTest::TestCase* testParseToken_Template_Positive() {
 
     token = tokenStream.getNextToken();
     CppUnitTest::assertNotNull(t, token);
+    assertEquals(t, TemplateRenderWizard::Token::Type::PlainValueType, token->getType());
+    CppUnitTest::assertNotNull(t, token->getReader());
 
     delete[] textBuffer;
 
