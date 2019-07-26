@@ -5,14 +5,18 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 
 project(template-render-wizard)
 
-set(TRW_SOURCES
-    src/main.cpp
+set(TRW_SHARED_SOURCES
     src/trw/config.cpp
     src/trw/stream.cpp
     src/trw/tokens/token.cpp
     src/trw/tokens/open_tag_value.cpp
     src/trw/tokens/plain_text.cpp
     src/trw/tokens/close_tag_value.cpp
+)
+
+set(TRW_SOURCES
+    src/main.cpp
+    ${TRW_SHARED_SOURCES}
 )
 
 include_directories(
@@ -43,6 +47,7 @@ project(template-render-wizard-test)
 
 set(TRW_SOURCES_TEST
     tests/main.cpp
+    ${TRW_SHARED_SOURCES}
 )
 
 include_directories(include)
