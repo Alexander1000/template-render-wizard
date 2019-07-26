@@ -39,6 +39,24 @@ CppUnitTest::TestCase* testParseToken_Template_Positive() {
     CppUnitTest::assertNotNull(t, token);
     assertEquals(t, TemplateRenderWizard::Token::Type::PlainValueType, token->getType());
     CppUnitTest::assertNotNull(t, token->getReader());
+    memset(textBuffer, 0, sizeof(char) * 1000);
+    token->getReader()->read(textBuffer, 999);
+    CppUnitTest::assertEquals(t, "name", textBuffer);
+
+    token = tokenStream.getNextToken();
+    CppUnitTest::assertNotNull(t, token);
+    assertEquals(t, TemplateRenderWizard::Token::Type::CloseTagValueType, token->getType());
+
+    token = tokenStream.getNextToken();
+    CppUnitTest::assertNotNull(t, token);
+    assertEquals(t, TemplateRenderWizard::Token::Type::PlainTextType, token->getType());
+    CppUnitTest::assertNotNull(t, token->getReader());
+    memset(textBuffer, 0, sizeof(char) * 1000);
+    token->getReader()->read(textBuffer, 999);
+    CppUnitTest::assertEquals(t, "!\n", textBuffer);
+
+    token = tokenStream.getNextToken();
+    CppUnitTest::assertNull(t, token);
 
     delete[] textBuffer;
 

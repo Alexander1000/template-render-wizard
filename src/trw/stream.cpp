@@ -119,6 +119,10 @@ namespace TemplateRenderWizard
                         break;
                     }
 
+                    if (*curSymbol == ' ') {
+                        break;
+                    }
+
                     ioWriter->write(curSymbol, 1);
                 } while(true);
 
