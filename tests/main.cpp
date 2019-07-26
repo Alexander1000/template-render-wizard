@@ -33,6 +33,13 @@ CppUnitTest::TestCase* testParseToken_Template_Positive() {
     reader->read(textBuffer, 999);
     CppUnitTest::assertEquals(t, "Hello world!\nMy name is ", textBuffer);
 
+    token = tokenStream.getNextToken();
+    CppUnitTest::assertNotNull(t, token);
+    assertEquals(t, TemplateRenderWizard::Token::Type::OpenTagValueType, token->getType());
+
+    token = tokenStream.getNextToken();
+    CppUnitTest::assertNotNull(t, token);
+
     delete[] textBuffer;
 
     t->finish();
