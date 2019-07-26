@@ -47,7 +47,15 @@ set(TRW_SOURCES_TEST
 
 include_directories(include)
 
+find_library(CPP_UNIT_TEST libcpp-unit-test.a)
+message(STATUS "Found cpp-unit-test: ${CPP_UNIT_TEST}")
+
 add_executable(
     ${PROJECT_NAME} tests/main.cpp
     ${TRW_SOURCES_TEST}
+)
+
+target_link_libraries(${PROJECT_NAME}
+    ${IO_BUFFER}
+    ${CPP_UNIT_TEST}
 )
