@@ -5,6 +5,7 @@
 #include <map>
 
 typedef std::map<std::string, YamlParser::Element*> YamlObject;
+typedef std::map<std::string, TemplateRenderWizard::Tree::LeafElement*> LeafObject;
 
 namespace TemplateRenderWizard::Tree
 {
@@ -29,14 +30,18 @@ namespace TemplateRenderWizard::Tree
     {
         switch (yamlElement->getType()) {
             case YamlParser::ElementType::ObjectType: {
+                LeafObject* leafObject = (LeafObject*) leaf->getData();
                 YamlObject* yamlObject = (YamlObject*) yamlElement->getData();
                 YamlObject::iterator itYamlObject;
                 for (itYamlObject = yamlObject->begin(); itYamlObject != yamlObject->end(); itYamlObject++) {
-                    // itYamlObject->first;
-                    // itYamlObject->second;
+                    (*leafObject)[itYamlObject->first] = this->convert(itYamlObject->second);
                 }
                 break;
             }
         }
+    }
+
+    LeafElement* Tree::convert(YamlParser::Element* yamlElement) {
+        return nullptr;
     }
 }

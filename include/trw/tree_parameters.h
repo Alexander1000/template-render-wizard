@@ -33,6 +33,7 @@ namespace TemplateRenderWizard::Tree
         LeafElement* root;
 
         void merge(LeafElement*, YamlParser::Element*);
+        LeafElement* convert(YamlParser::Element*);
     };
 }
 
