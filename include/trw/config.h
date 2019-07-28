@@ -1,6 +1,7 @@
 #ifndef H_TRW_CONFIG_INCLUDED
 #define H_TRW_CONFIG_INCLUDED
 
+#include <trw/tree_parameters.h>
 #include <string>
 #include <map>
 
@@ -20,6 +21,8 @@ namespace TemplateRenderWizard
         std::string* getTemplateFile();
         std::string* getValuesFile();
 
+        Tree::Tree* getTree();
+
     private:
         bool is_help;
         bool is_version;
@@ -29,6 +32,8 @@ namespace TemplateRenderWizard
         std::string* templateFile;
         std::string* valuesFile;
         std::string* outputFile;
+
+        Tree::Tree* tree;
     };
 }
 

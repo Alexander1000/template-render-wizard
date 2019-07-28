@@ -10,9 +10,11 @@ namespace TemplateRenderWizard
         this->is_help = false;
         this->is_version = false;
 
-        this->templateFile = NULL;
-        this->valuesFile = NULL;
-        this->outputFile = NULL;
+        this->templateFile = nullptr;
+        this->valuesFile = nullptr;
+        this->outputFile = nullptr;
+
+        this->tree = new Tree::Tree();
 
         this->values = new std::map<std::string, std::string>;
 
@@ -37,7 +39,7 @@ namespace TemplateRenderWizard
             }
 
             if (paramName == "--values") {
-                this->valuesFile = new std::string(argv[i+1]);
+                this->tree->scan(new std::string(argv[i+1]));
                 i++;
                 continue;
             }
@@ -102,5 +104,10 @@ namespace TemplateRenderWizard
            "        --values [file]        Yaml-file with values for placeholders for template.\n"
            "    -o, --output [file]        Output template render, by default stdout.\n"
            "    -v, --version              Print version and exit.";
+    }
+
+    Tree::Tree* Config::getTree()
+    {
+        return this->tree;
     }
 }
