@@ -1,6 +1,8 @@
 #ifndef H_TRW_TREE_PARAMETERS
 #define H_TRW_TREE_PARAMETERS
 
+#include <string>
+
 namespace TemplateRenderWizard::Tree
 {
     class LeafElement
@@ -13,6 +15,7 @@ namespace TemplateRenderWizard::Tree
     {
     public:
         Tree();
+        void scan(std::string*);
 
     private:
         LeafElement* root;
