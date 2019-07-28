@@ -3,6 +3,20 @@
 
 namespace TemplateRenderWizard::Tree
 {
+    class LeafElement
+    {
+    public:
+        LeafElement();
+    };
+
+    class Tree
+    {
+    public:
+        Tree();
+
+    private:
+        LeafElement* root;
+    };
 }
 
 #endif
