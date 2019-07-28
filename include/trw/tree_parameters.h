@@ -2,6 +2,7 @@
 #define H_TRW_TREE_PARAMETERS
 
 #include <string>
+#include <yaml-parser.h>
 
 namespace TemplateRenderWizard::Tree
 {
@@ -30,6 +31,8 @@ namespace TemplateRenderWizard::Tree
 
     private:
         LeafElement* root;
+
+        void merge(LeafElement*, YamlParser::Element*);
     };
 }
 

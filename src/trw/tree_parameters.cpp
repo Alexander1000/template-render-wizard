@@ -4,6 +4,8 @@
 #include <yaml-parser.h>
 #include <map>
 
+typedef std::map<std::string, YamlParser::Element*> YamlObject;
+
 namespace TemplateRenderWizard::Tree
 {
     Tree::Tree() {
@@ -20,5 +22,16 @@ namespace TemplateRenderWizard::Tree
         YamlParser::Decoder decoder(&yamlStream);
 
         YamlParser::Element* valuesObject = decoder.parse();
+        this->merge(this->root, valuesObject);
+    }
+
+    void Tree::merge(LeafElement* leaf, YamlParser::Element* yamlElement)
+    {
+        switch (yamlElement->getType()) {
+            case YamlParser::ElementType::ObjectType: {
+                YamlObject* yamlObject = (YamlObject*) yamlElement->getData();
+                break;
+            }
+        }
     }
 }
