@@ -13,6 +13,7 @@ set(TRW_SHARED_SOURCES
     src/trw/tokens/plain_text.cpp
     src/trw/tokens/close_tag_value.cpp
     src/trw/tokens/plain_value.cpp
+    src/trw/tree_parameters.cpp
 )
 
 set(TRW_SOURCES

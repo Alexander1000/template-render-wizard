@@ -6,5 +6,7 @@
 #include <trw/config.h>
 #include <trw/stream.h>
 #include <trw/exceptions.h>
+#include <trw/token.h>
+#include <trw/tree_parameters.h>
 
 #endif
