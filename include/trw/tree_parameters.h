@@ -5,10 +5,21 @@
 
 namespace TemplateRenderWizard::Tree
 {
+    enum LeafElementType {
+        LeafElementObject,
+        LeafElementArray,
+        LeafElementText
+    };
+
     class LeafElement
     {
     public:
-        LeafElement();
+        LeafElement(LeafElementType, void*);
+        LeafElementType getType();
+        void* getData();
+    private:
+        LeafElementType type;
+        void* data;
     };
 
     class Tree
