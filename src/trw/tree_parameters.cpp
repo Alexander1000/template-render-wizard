@@ -30,6 +30,11 @@ namespace TemplateRenderWizard::Tree
         switch (yamlElement->getType()) {
             case YamlParser::ElementType::ObjectType: {
                 YamlObject* yamlObject = (YamlObject*) yamlElement->getData();
+                YamlObject::iterator itYamlObject;
+                for (itYamlObject = yamlObject->begin(); itYamlObject != yamlObject->end(); itYamlObject++) {
+                    // itYamlObject->first;
+                    // itYamlObject->second;
+                }
                 break;
             }
         }
