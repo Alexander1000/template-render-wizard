@@ -42,6 +42,9 @@ namespace TemplateRenderWizard::Tree
     }
 
     LeafElement* Tree::convert(YamlParser::Element* yamlElement) {
+        if (yamlElement->getType() == YamlParser::ElementType::PlainTextType) {
+            return new LeafElement(LeafElementType::LeafElementText, yamlElement->getData());
+        }
         return nullptr;
     }
 }
