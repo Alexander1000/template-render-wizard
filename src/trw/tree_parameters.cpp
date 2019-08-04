@@ -50,8 +50,14 @@ namespace TemplateRenderWizard::Tree
                 return new LeafElement(LeafElementType::LeafElementText, yamlElement->getData());
             }
             case YamlParser::ElementType::ListType: {
-
-                break;
+                LeafArray* lArray;
+                lArray = new LeafArray;
+                YamlArray* yArray = (YamlArray*) yamlElement->getType();
+                YamlArray::iterator it;
+                for (it = yArray->begin(); it != yArray->end(); it++) {
+                    lArray->push_back(this->convert(*it));
+                }
+                return new LeafElement(TemplateRenderWizard::Tree::LeafElementType::LeafElementArray, lArray);
             }
             case YamlParser::ElementType::ObjectType: {
                 break;
