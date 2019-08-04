@@ -65,5 +65,6 @@ add_executable(
 
 target_link_libraries(${PROJECT_NAME}
     ${IO_BUFFER}
+    ${YAML_PARSER}
     ${CPP_UNIT_TEST}
 )

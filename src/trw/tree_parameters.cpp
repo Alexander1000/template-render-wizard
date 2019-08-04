@@ -3,9 +3,12 @@
 #include <io-buffer.h>
 #include <yaml-parser.h>
 #include <map>
+#include <list>
 
 typedef std::map<std::string, YamlParser::Element*> YamlObject;
 typedef std::map<std::string, TemplateRenderWizard::Tree::LeafElement*> LeafObject;
+typedef std::list<YamlParser::Element*> YamlArray;
+typedef std::list<TemplateRenderWizard::Tree::LeafElement*> LeafArray;
 
 namespace TemplateRenderWizard::Tree
 {
@@ -42,8 +45,17 @@ namespace TemplateRenderWizard::Tree
     }
 
     LeafElement* Tree::convert(YamlParser::Element* yamlElement) {
-        if (yamlElement->getType() == YamlParser::ElementType::PlainTextType) {
-            return new LeafElement(LeafElementType::LeafElementText, yamlElement->getData());
+        switch (yamlElement->getType())  {
+            case YamlParser::ElementType::PlainTextType: {
+                return new LeafElement(LeafElementType::LeafElementText, yamlElement->getData());
+            }
+            case YamlParser::ElementType::ListType: {
+
+                break;
+            }
+            case YamlParser::ElementType::ObjectType: {
+                break;
+            }
         }
         return nullptr;
     }
