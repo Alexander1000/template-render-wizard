@@ -33,6 +33,9 @@ namespace TemplateRenderWizard::Tree
     {
         switch (yamlElement->getType()) {
             case YamlParser::ElementType::ObjectType: {
+                if (leaf->getType() != LeafElementType::LeafElementObject) {
+                    throw new UnexpectedLeafElementException;
+                }
                 LeafObject* leafObject = (LeafObject*) leaf->getData();
                 YamlObject* yamlObject = (YamlObject*) yamlElement->getData();
                 YamlObject::iterator itYamlObject;

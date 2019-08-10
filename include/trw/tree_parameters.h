@@ -35,6 +35,10 @@ namespace TemplateRenderWizard::Tree
         void merge(LeafElement*, YamlParser::Element*);
         LeafElement* convert(YamlParser::Element*);
     };
+
+    class UnexpectedLeafElementException
+    {
+    };
 }
 
 #endif
