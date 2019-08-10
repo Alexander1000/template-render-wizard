@@ -64,10 +64,25 @@ CppUnitTest::TestCase* testParseToken_Template_Positive() {
     return t;
 }
 
+CppUnitTest::TestCase* testTreeMergeWithEmpty_ValuesFile_Positive()
+{
+    CppUnitTest::TestCase* t = nullptr;
+    t = new CppUnitTest::TestCase("002-merge-with-empty-values-file");
+
+    t->printTitle();
+
+    // put test case body
+
+    t->finish();
+    return t;
+}
+
 int main(int argc, char** argv) {
     CppUnitTest::TestSuite testSuite;
 
     testSuite.addTestCase(testParseToken_Template_Positive());
+
+    testSuite.addTestCase(testTreeMergeWithEmpty_ValuesFile_Positive());
 
     testSuite.printTotal();
 
