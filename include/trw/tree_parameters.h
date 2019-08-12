@@ -28,6 +28,7 @@ namespace TemplateRenderWizard::Tree
     public:
         Tree();
         void scan(std::string*);
+        void scan(const char*);
 
     private:
         LeafElement* root;

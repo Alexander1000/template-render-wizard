@@ -1,0 +1,12 @@
+properties:
+  name: alexander
+  some-attribute: test-attribute
+
+data:
+  foo: bar
+
+items:
+  - key: test01
+    value: some-data
+  - key: test02
+    value: shkaff

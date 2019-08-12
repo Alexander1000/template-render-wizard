@@ -20,7 +20,12 @@ namespace TemplateRenderWizard::Tree
 
     void Tree::scan(std::string* fileName)
     {
-        IOBuffer::IOFileReader fileReader(fileName->c_str());
+        this->scan(fileName->c_str());
+    }
+
+    void Tree::scan(const char* fileName)
+    {
+        IOBuffer::IOFileReader fileReader(fileName);
         IOBuffer::CharStream charStream(&fileReader);
         YamlParser::Stream yamlStream(&charStream);
         YamlParser::Decoder decoder(&yamlStream);
