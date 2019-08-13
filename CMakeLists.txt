@@ -48,6 +48,8 @@ target_link_libraries(${PROJECT_NAME}
 
 project(template-render-wizard-test)
 
+set(CMAKE_BUILD_TYPE Debug)
+
 set(TRW_SOURCES_TEST
     tests/main.cpp
     ${TRW_SHARED_SOURCES}
