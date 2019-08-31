@@ -68,7 +68,14 @@ namespace TemplateRenderWizard::Tree
                 return new LeafElement(TemplateRenderWizard::Tree::LeafElementType::LeafElementArray, lArray);
             }
             case YamlParser::ElementType::ObjectType: {
-                break;
+                LeafObject* leafObject;
+                leafObject = new LeafObject;
+                YamlObject* yamlObject = (YamlObject*) yamlElement->getData();
+                YamlObject::iterator itYamlObject;
+                for (itYamlObject = yamlObject->begin(); itYamlObject != yamlObject->end(); itYamlObject++) {
+                    (*leafObject)[itYamlObject->first] = this->convert(itYamlObject->second);
+                }
+                return new LeafElement(TemplateRenderWizard::Tree::LeafElementType::LeafElementObject, leafObject);
             }
         }
         return nullptr;
