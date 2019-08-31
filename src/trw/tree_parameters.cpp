@@ -49,6 +49,12 @@ namespace TemplateRenderWizard::Tree
                 }
                 break;
             }
+            case YamlParser::ElementType::ListType: {
+                break;
+            }
+            case YamlParser::ElementType::PlainTextType: {
+                break;
+            }
         }
     }
 
