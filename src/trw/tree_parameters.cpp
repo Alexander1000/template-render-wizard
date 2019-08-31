@@ -60,7 +60,7 @@ namespace TemplateRenderWizard::Tree
             case YamlParser::ElementType::ListType: {
                 LeafArray* lArray;
                 lArray = new LeafArray;
-                YamlArray* yArray = (YamlArray*) yamlElement->getType();
+                YamlArray* yArray = (YamlArray*) yamlElement->getData();
                 YamlArray::iterator it;
                 for (it = yArray->begin(); it != yArray->end(); it++) {
                     lArray->push_back(this->convert(*it));
