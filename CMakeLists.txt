@@ -15,6 +15,7 @@ set(TRW_SHARED_SOURCES
     src/trw/tokens/plain_value.cpp
     src/trw/leaf_element.cpp
     src/trw/tree_parameters.cpp
+    src/trw/render.cpp
 )
 
 set(TRW_SOURCES
