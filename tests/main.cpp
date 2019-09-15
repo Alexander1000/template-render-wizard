@@ -78,12 +78,25 @@ CppUnitTest::TestCase* testTreeMergeWithEmpty_ValuesFile_Positive()
     return t;
 }
 
+CppUnitTest::TestCase* testRender_TemplateAndValues_Positive()
+{
+    CppUnitTest::TestCase* t = nullptr;
+    t = new CppUnitTest::TestCase("003-template-and-values-file");
+
+    t->printTitle();
+
+    t->finish();
+    return t;
+}
+
 int main(int argc, char** argv) {
     CppUnitTest::TestSuite testSuite;
 
     testSuite.addTestCase(testParseToken_Template_Positive());
 
     testSuite.addTestCase(testTreeMergeWithEmpty_ValuesFile_Positive());
+
+    testSuite.addTestCase(testRender_TemplateAndValues_Positive());
 
     testSuite.printTotal();
 
