@@ -21,4 +21,9 @@ namespace TemplateRenderWizard
     {
         // do render
     }
+
+    void Render::save(std::string* output)
+    {
+        // do render
+    }
 }
