@@ -85,6 +85,12 @@ CppUnitTest::TestCase* testRender_TemplateAndValues_Positive()
 
     t->printTitle();
 
+    TemplateRenderWizard::Tree::Tree tree;
+    tree.scan("./fixtures/003-values.yaml");
+
+    TemplateRenderWizard::Render* render;
+    render = new TemplateRenderWizard::Render("./fixtures/001-simple-text.txt", &tree);
+
     t->finish();
     return t;
 }

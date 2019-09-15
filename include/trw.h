@@ -8,5 +8,6 @@
 #include <trw/exceptions.h>
 #include <trw/token.h>
 #include <trw/tree_parameters.h>
+#include <trw/render.h>
 
 #endif

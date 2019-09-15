@@ -11,6 +11,14 @@ namespace TemplateRenderWizard
         this->tree = tree;
     }
 
+    Render::Render(const char* srcTemplateFile, TemplateRenderWizard::Tree::Tree* tree)
+    {
+        IOBuffer::IOFileReader fileReader(srcTemplateFile);
+        IOBuffer::CharStream charStream(&fileReader);
+        this->stream = new TemplateRenderWizard::Stream(&charStream);
+        this->tree = tree;
+    }
+
     Render::Render(TemplateRenderWizard::Stream* stream, TemplateRenderWizard::Tree::Tree* tree)
     {
         this->stream = stream;
