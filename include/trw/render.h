@@ -4,6 +4,7 @@
 #include <string>
 #include <trw/stream.h>
 #include <trw/tree_parameters.h>
+#include <io-buffer.h>
 
 namespace TemplateRenderWizard
 {
@@ -16,8 +17,7 @@ namespace TemplateRenderWizard
         Render(const char*, TemplateRenderWizard::Tree::Tree*);
         Render(std::string*, TemplateRenderWizard::Tree::Tree*);
         Render(TemplateRenderWizard::Stream*, TemplateRenderWizard::Tree::Tree*);
-        void save();
-        void save(std::string*);
+        IOBuffer::IOMemoryBuffer* toBuffer();
     };
 }
 

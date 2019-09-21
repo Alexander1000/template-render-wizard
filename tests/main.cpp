@@ -91,6 +91,12 @@ CppUnitTest::TestCase* testRender_TemplateAndValues_Positive()
     TemplateRenderWizard::Render* render;
     render = new TemplateRenderWizard::Render("./fixtures/001-simple-text.txt", &tree);
 
+    std::cout << "Before render" << std::endl;
+
+    IOBuffer::IOMemoryBuffer* buffer = render->toBuffer();
+
+    std::cout << "After render" << std::endl;
+
     t->finish();
     return t;
 }

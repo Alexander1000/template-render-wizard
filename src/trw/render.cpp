@@ -1,5 +1,7 @@
 #include <trw/render.h>
 #include <io-buffer.h>
+#include <memory.h>
+#include <iostream>
 
 namespace TemplateRenderWizard
 {
@@ -25,13 +27,31 @@ namespace TemplateRenderWizard
         this->tree = tree;
     }
 
-    void Render::save()
+    IOBuffer::IOMemoryBuffer* Render::toBuffer()
     {
-        // do render
-    }
+        IOBuffer::IOMemoryBuffer* buffer;
+        buffer = new IOBuffer::IOMemoryBuffer(4096);
+        char* tBuffer = (char*) malloc(sizeof(char) * 1024);
 
-    void Render::save(std::string* output)
-    {
-        // do render
+        std::cout << "Before get token" << std::endl;
+
+        TemplateRenderWizard::Token::Token* token;
+        token = this->stream->getNextToken();
+        std::cout << "Before if" << std::endl;
+        if (token != nullptr && token->getType() == TemplateRenderWizard::Token::Type::PlainTextType) {
+            IOBuffer::IOReader* reader = token->getReader();
+            int nSizeRead = 0;
+            std::cout << "Before loop" << std::endl;
+            do {
+                memset(tBuffer, 0, sizeof(char) * 1024);
+                nSizeRead = reader->read(tBuffer, 1024);
+                buffer->write(tBuffer, nSizeRead);
+                std::cout << "Size:" << nSizeRead << std::endl;
+            } while(nSizeRead == 1024);
+        }
+
+        free(tBuffer);
+
+        return buffer;
     }
 }
