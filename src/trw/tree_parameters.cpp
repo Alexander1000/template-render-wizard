@@ -58,7 +58,8 @@ namespace TemplateRenderWizard::Tree
         }
     }
 
-    LeafElement* Tree::convert(YamlParser::Element* yamlElement) {
+    LeafElement* Tree::convert(YamlParser::Element* yamlElement)
+    {
         switch (yamlElement->getType())  {
             case YamlParser::ElementType::PlainTextType: {
                 return new LeafElement(LeafElementType::LeafElementText, yamlElement->getData());
@@ -95,6 +96,15 @@ namespace TemplateRenderWizard::Tree
 
         LeafElement* foundElement = nullptr;
         LeafElement* relativeElement = this->root;
+
+        int nStart = 0, nStop = 0;
+
+        for (int i = 0; i < strlen(path); i++) {
+            if (path[i] == '.') {
+                nStop = i;
+                // do find
+            }
+        }
 
         return foundElement;
     }
