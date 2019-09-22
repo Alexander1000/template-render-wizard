@@ -110,9 +110,7 @@ CppUnitTest::TestCase* testRender_TemplateAndValues_Positive()
     memset(tBuffer, 0, sizeof(char) * 1024);
     int tSize = buffer->read(tBuffer, 1024);
 
-    std::cout << "Given: " << tBuffer << std::endl;
-
-    CppUnitTest::assertEquals(t, "Hello world!\nMy name is test-data!", tBuffer);
+    CppUnitTest::assertEquals(t, "Hello world!\nMy name is test-data!\n", tBuffer);
 
     free(tBuffer);
 
