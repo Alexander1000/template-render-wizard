@@ -39,14 +39,19 @@ namespace TemplateRenderWizard
 
         TemplateRenderWizard::Token::Token* token;
         token = this->stream->getNextToken();
-        if (token != nullptr && token->getType() == TemplateRenderWizard::Token::Type::PlainTextType) {
-            IOBuffer::IOReader* reader = token->getReader();
-            int nSizeRead = 0;
-            do {
-                memset(tBuffer, 0, sizeof(char) * 1024);
-                nSizeRead = reader->read(tBuffer, 1024);
-                buffer->write(tBuffer, nSizeRead);
-            } while(nSizeRead == 1024);
+
+        while (token != nullptr) {
+            if (token->getType() == TemplateRenderWizard::Token::Type::PlainTextType) {
+                IOBuffer::IOReader *reader = token->getReader();
+                int nSizeRead = 0;
+                do {
+                    memset(tBuffer, 0, sizeof(char) * 1024);
+                    nSizeRead = reader->read(tBuffer, 1024);
+                    buffer->write(tBuffer, nSizeRead);
+                } while (nSizeRead == 1024);
+            }
+
+            token = this->stream->getNextToken();
         }
 
         free(tBuffer);
