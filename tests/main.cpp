@@ -9,6 +9,13 @@ void assertEquals(CppUnitTest::TestCase* t, TemplateRenderWizard::Token::Type ex
     }
 }
 
+void assertEquals(CppUnitTest::TestCase* t, TemplateRenderWizard::Tree::LeafElementType expectedLeafType, TemplateRenderWizard::Tree::LeafElementType actualLeafType) {
+    t->increment();
+    if (expectedLeafType != actualLeafType) {
+        throw new CppUnitTest::AssertEqualsException;
+    }
+}
+
 CppUnitTest::TestCase* testParseToken_Template_Positive() {
     CppUnitTest::TestCase* t = nullptr;
     t = new CppUnitTest::TestCase("001-simple-text");
@@ -76,6 +83,9 @@ CppUnitTest::TestCase* testTreeMergeWithEmpty_ValuesFile_Positive()
 
     TemplateRenderWizard::Tree::LeafElement* leafElement = tree.get("data.foo");
     CppUnitTest::assertNotNull(t, leafElement);
+
+    assertEquals(t, TemplateRenderWizard::Tree::LeafElementType::LeafElementText, leafElement->getType());
+    CppUnitTest::assertEquals(t, "bar", (std::string*) leafElement->getData());
 
     t->finish();
     return t;
