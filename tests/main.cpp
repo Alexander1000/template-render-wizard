@@ -74,6 +74,9 @@ CppUnitTest::TestCase* testTreeMergeWithEmpty_ValuesFile_Positive()
     TemplateRenderWizard::Tree::Tree tree;
     tree.scan("./fixtures/002-tree-merge-with-empty.yaml");
 
+    TemplateRenderWizard::Tree::LeafElement* leafElement = tree.get("data.foo");
+    CppUnitTest::assertNotNull(t, leafElement);
+
     t->finish();
     return t;
 }
