@@ -100,9 +100,27 @@ namespace TemplateRenderWizard::Tree
         int nStart = 0, nStop = 0;
 
         for (int i = 0; i < strlen(path); i++) {
-            if (path[i] == '.') {
+            if (path[i] == '.' || i == strlen(path) - 1) {
                 nStop = i;
-                // do find
+                // get leaf name
+                char* leafName = (char*) malloc(sizeof(char) * (nStop - nStart + 1));
+                memset(leafName, 0, sizeof(char) * (nStop - nStart + 1));
+                switch (relativeElement->getType()) {
+                    case LeafElementType::LeafElementObject: {
+                        LeafObject* tlObject = (LeafObject*) relativeElement->getData();
+                        if (tlObject->find(leafName) != tlObject->end()) {
+                            relativeElement = tlObject->at(leafName);
+                        } else {
+                            // not found
+                            return nullptr;
+                        }
+                        break;
+                    }
+                }
+                free(leafName);
+
+                // for next part
+                nStart = i + 1;
             }
         }
 
