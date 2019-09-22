@@ -86,4 +86,16 @@ namespace TemplateRenderWizard::Tree
         }
         return nullptr;
     }
+
+    LeafElement* Tree::get(const char* path)
+    {
+        if (path == nullptr) {
+            return this->root;
+        }
+
+        LeafElement* foundElement = nullptr;
+        LeafElement* relativeElement = this->root;
+
+        return foundElement;
+    }
 }
