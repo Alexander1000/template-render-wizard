@@ -3,6 +3,9 @@
 #include <memory.h>
 #include <iostream>
 
+#define TRW_RENDER_MEMORY_BLOCK_SIZE 4096
+#define TRW_RENDER_BUFFER_SIZE 1024
+
 namespace TemplateRenderWizard
 {
     Render::Render(std::string* srcTemplateFile, TemplateRenderWizard::Tree::Tree* tree)
@@ -34,8 +37,8 @@ namespace TemplateRenderWizard
     IOBuffer::IOMemoryBuffer* Render::toBuffer()
     {
         IOBuffer::IOMemoryBuffer* buffer;
-        buffer = new IOBuffer::IOMemoryBuffer(4096);
-        char* tBuffer = (char*) malloc(sizeof(char) * 1024);
+        buffer = new IOBuffer::IOMemoryBuffer(TRW_RENDER_MEMORY_BLOCK_SIZE);
+        char* tBuffer = (char*) malloc(sizeof(char) * TRW_RENDER_BUFFER_SIZE);
 
         TemplateRenderWizard::Token::Token* token;
         token = this->stream->getNextToken();
@@ -46,10 +49,10 @@ namespace TemplateRenderWizard
                     IOBuffer::IOReader *reader = token->getReader();
                     int nSizeRead = 0;
                     do {
-                        memset(tBuffer, 0, sizeof(char) * 1024);
-                        nSizeRead = reader->read(tBuffer, 1024);
+                        memset(tBuffer, 0, sizeof(char) * TRW_RENDER_BUFFER_SIZE);
+                        nSizeRead = reader->read(tBuffer, TRW_RENDER_BUFFER_SIZE);
                         buffer->write(tBuffer, nSizeRead);
-                    } while (nSizeRead == 1024);
+                    } while (nSizeRead == TRW_RENDER_BUFFER_SIZE);
                     break;
                 }
                 case TemplateRenderWizard::Token::Type::PlainValueType: {
