@@ -29,7 +29,7 @@ namespace TemplateRenderWizard
                     if (nextChar == nullptr) {
                         ioWriter = new IOBuffer::IOMemoryBuffer(2);
                         ioWriter->write(curSymbol, 1);
-                        token = new Token::PlainText(0, 0, nullptr); // todo: fixme
+                        token = new Token::OpenTagValue(0, 0); // todo: fixme
                         return token;
                     }
 

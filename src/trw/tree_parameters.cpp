@@ -58,7 +58,8 @@ namespace TemplateRenderWizard::Tree
         }
     }
 
-    LeafElement* Tree::convert(YamlParser::Element* yamlElement) {
+    LeafElement* Tree::convert(YamlParser::Element* yamlElement)
+    {
         switch (yamlElement->getType())  {
             case YamlParser::ElementType::PlainTextType: {
                 return new LeafElement(LeafElementType::LeafElementText, yamlElement->getData());
@@ -85,5 +86,51 @@ namespace TemplateRenderWizard::Tree
             }
         }
         return nullptr;
+    }
+
+    LeafElement* Tree::get(const char* path)
+    {
+        if (path == nullptr) {
+            return this->root;
+        }
+
+        LeafElement* foundElement = nullptr;
+        LeafElement* relativeElement = this->root;
+
+        int nStart = 0, nStop = 0;
+
+        for (int i = 0; i < strlen(path); i++) {
+            if (path[i] == '.' || i == strlen(path) - 1) {
+                nStop = i;
+                if (i == strlen(path) - 1) {
+                    nStop++;
+                }
+                // get leaf name
+                char* leafName = (char*) malloc(sizeof(char) * (nStop - nStart + 1));
+                memset(leafName, 0, sizeof(char) * (nStop - nStart + 1));
+                memcpy(leafName, path + nStart, sizeof(char) * (nStop - nStart));
+                switch (relativeElement->getType()) {
+                    case LeafElementType::LeafElementObject: {
+                        LeafObject* tlObject = (LeafObject*) relativeElement->getData();
+                        if (tlObject->find(leafName) != tlObject->end()) {
+                            relativeElement = tlObject->at(leafName);
+                            if (i == strlen(path) - 1) {
+                                foundElement = relativeElement;
+                            }
+                        } else {
+                            // not found
+                            return nullptr;
+                        }
+                        break;
+                    }
+                }
+                free(leafName);
+
+                // for next part
+                nStart = i + 1;
+            }
+        }
+
+        return foundElement;
     }
 }

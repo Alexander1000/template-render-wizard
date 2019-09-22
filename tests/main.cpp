@@ -9,6 +9,13 @@ void assertEquals(CppUnitTest::TestCase* t, TemplateRenderWizard::Token::Type ex
     }
 }
 
+void assertEquals(CppUnitTest::TestCase* t, TemplateRenderWizard::Tree::LeafElementType expectedLeafType, TemplateRenderWizard::Tree::LeafElementType actualLeafType) {
+    t->increment();
+    if (expectedLeafType != actualLeafType) {
+        throw new CppUnitTest::AssertEqualsException;
+    }
+}
+
 CppUnitTest::TestCase* testParseToken_Template_Positive() {
     CppUnitTest::TestCase* t = nullptr;
     t = new CppUnitTest::TestCase("001-simple-text");
@@ -74,6 +81,12 @@ CppUnitTest::TestCase* testTreeMergeWithEmpty_ValuesFile_Positive()
     TemplateRenderWizard::Tree::Tree tree;
     tree.scan("./fixtures/002-tree-merge-with-empty.yaml");
 
+    TemplateRenderWizard::Tree::LeafElement* leafElement = tree.get("data.foo");
+    CppUnitTest::assertNotNull(t, leafElement);
+
+    assertEquals(t, TemplateRenderWizard::Tree::LeafElementType::LeafElementText, leafElement->getType());
+    CppUnitTest::assertEquals(t, "bar", (std::string*) leafElement->getData());
+
     t->finish();
     return t;
 }
@@ -89,7 +102,17 @@ CppUnitTest::TestCase* testRender_TemplateAndValues_Positive()
     tree.scan("./fixtures/003-values.yaml");
 
     TemplateRenderWizard::Render* render;
-    render = new TemplateRenderWizard::Render("./fixtures/001-simple-text.txt", &tree);
+    render = new TemplateRenderWizard::Render("./fixtures/003-simple-text.txt", &tree);
+
+    IOBuffer::IOMemoryBuffer* buffer = render->toBuffer();
+
+    char* tBuffer = (char*) malloc(sizeof(char) * 1024);
+    memset(tBuffer, 0, sizeof(char) * 1024);
+    int tSize = buffer->read(tBuffer, 1024);
+
+    CppUnitTest::assertEquals(t, "Hello world!\nMy name is test-data!\n", tBuffer);
+
+    free(tBuffer);
 
     t->finish();
     return t;
