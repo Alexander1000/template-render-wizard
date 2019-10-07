@@ -45,5 +45,22 @@ int main(int argc, char** argv) {
     IOBuffer::CharStream charStream(&fileReader);
     TemplateRenderWizard::Stream tokenStream(&charStream);
 
+    TemplateRenderWizard::Render* render;
+    render = new TemplateRenderWizard::Render(&tokenStream, config.getTree());
+
+    IOBuffer::IOMemoryBuffer* output = render->toBuffer();
+
+    int nRead = 0;
+    char* buffer = (char*) malloc(sizeof(char) * 1024);
+    do {
+        memset(buffer, 0, sizeof(char) * 1024);
+        nRead = output->read(buffer, 1023);
+        if (nRead > 0) {
+            std::cout << buffer;
+        }
+    } while(nRead != 0);
+
+    std::cout << std::endl;
+
     return 0;
 }
