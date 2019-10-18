@@ -110,4 +110,9 @@ namespace TemplateRenderWizard
     {
         return this->tree;
     }
+
+    std::map<std::string, std::string>* Config::getValues()
+    {
+        return this->values;
+    }
 }

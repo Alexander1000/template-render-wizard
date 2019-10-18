@@ -21,6 +21,8 @@ namespace TemplateRenderWizard
         std::string* getTemplateFile();
         std::string* getValuesFile();
 
+        std::map<std::string, std::string>* getValues();
+
         Tree::Tree* getTree();
 
     private:
