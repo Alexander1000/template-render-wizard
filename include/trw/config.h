@@ -13,10 +13,10 @@ namespace TemplateRenderWizard
         Config(int argc, char** argv);
 
         bool isHelp();
-        const char* getHelpText();
+        static const char* getHelpText();
 
         bool isVersion();
-        const char* getVersionText();
+        static const char* getVersionText();
 
         std::string* getTemplateFile();
         std::string* getValuesFile();
