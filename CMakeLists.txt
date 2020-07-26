@@ -25,6 +25,7 @@ set(TRW_SOURCES
 
 include_directories(
     include
+    /usr/local/include
 )
 
 find_library(IO_BUFFER libio-buffer.a)
@@ -56,7 +57,10 @@ set(TRW_SOURCES_TEST
     ${TRW_SHARED_SOURCES}
 )
 
-include_directories(include)
+include_directories(
+    include
+    /usr/local/include
+)
 
 find_library(CPP_UNIT_TEST libcpp-unit-test.a)
 message(STATUS "Found cpp-unit-test: ${CPP_UNIT_TEST}")
