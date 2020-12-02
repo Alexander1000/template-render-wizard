@@ -5,6 +5,7 @@
 #include <iostream>
 #include <string>
 #include <sys/stat.h>
+#include <memory.h>
 
 #include <trw.h>
 #include <io-buffer.h>

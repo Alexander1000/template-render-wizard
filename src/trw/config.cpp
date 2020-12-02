@@ -1,6 +1,7 @@
 #include <trw.h>
 #include <string>
 #include <map>
+#include <memory.h>
 
 namespace TemplateRenderWizard
 {

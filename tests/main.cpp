@@ -1,6 +1,7 @@
 #include <trw.h>
 #include <io-buffer.h>
 #include <cpp-unit-test.h>
+#include <memory.h>
 
 void assertEquals(CppUnitTest::TestCase* t, TemplateRenderWizard::Token::Type expectedTokenType, TemplateRenderWizard::Token::Type actualTokenType) {
     t->increment();

@@ -4,6 +4,7 @@
 #include <yaml-parser.h>
 #include <map>
 #include <list>
+#include <cstring>
 
 typedef std::map<std::string, YamlParser::Element*> YamlObject;
 typedef std::map<std::string, TemplateRenderWizard::Tree::LeafElement*> LeafObject;
