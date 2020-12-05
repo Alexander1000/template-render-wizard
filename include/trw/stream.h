@@ -23,11 +23,13 @@ namespace TemplateRenderWizard
         IOBuffer::CharStream* charStream;
         StreamMode mode;
         std::stack<char*>* charStack;
+        std::stack<Position*>* positionStack;
 
         Position *position;
 
         char* getNextChar();
         void setMode(StreamMode);
+        void pushStackChar(char*);
     };
 }
 
