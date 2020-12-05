@@ -25,11 +25,14 @@ namespace TemplateRenderWizard
         StreamMode mode;
         std::stack<char*>* charStack;
         std::stack<Position*>* positionStack;
+        std::stack<StreamMode>* modeStack;
 
         Position *position;
 
+        void switchToMode(StreamMode);
+        void switchToPreviousMode();
+
         char* getNextChar();
-        void setMode(StreamMode);
         void pushStackChar(char*);
     };
 }

@@ -10,6 +10,7 @@ namespace TemplateRenderWizard
     {
         this->charStream = charStream;
         this->mode = StreamMode::PlainText;
+        this->modeStack = new std::stack<StreamMode>;
 
         this->charStack = new std::stack<char*>;
 
@@ -39,13 +40,13 @@ namespace TemplateRenderWizard
 
                     if (*nextChar == '{') {
                         token = new Token::OpenTagValue(this->position->getLine(), this->position->getColumn());
-                        this->setMode(StreamMode::ValueMode);
+                        this->switchToMode(StreamMode::ValueMode);
                         return token;
                     }
 
                     if (*nextChar == '%') {
                         token = new Token::OpenControlTag(this->position->getLine(), this->position->getColumn());
-                        this->setMode(StreamMode::ControlMode);
+                        this->switchToMode(StreamMode::ControlMode);
                         return token;
                     }
 
@@ -105,7 +106,7 @@ namespace TemplateRenderWizard
                     char* nextSymbol = this->getNextChar();
                     if (*nextSymbol == '}') {
                         token = new Token::CloseTagValue(this->position->getLine(), this->position->getColumn());
-                        this->mode = StreamMode::PlainText;
+                        this->switchToPreviousMode();
                         break;
                     }
 
@@ -156,11 +157,6 @@ namespace TemplateRenderWizard
         return token;
     }
 
-    void Stream::setMode(StreamMode streamMode)
-    {
-        this->mode = streamMode;
-    }
-
     char* Stream::getNextChar()
     {
         if (!this->charStack->empty()) {
@@ -189,5 +185,15 @@ namespace TemplateRenderWizard
         this->charStack->push(curChar);
         auto p = new Position(this->position->getLine(), this->position->getColumn());
         this->positionStack->push(p);
+    }
+
+    void Stream::switchToMode(StreamMode newMode) {
+        this->modeStack->push(this->mode);
+        this->mode = newMode;
+    }
+
+    void Stream::switchToPreviousMode() {
+        this->mode = this->modeStack->top();
+        this->modeStack->pop();
     }
 }
