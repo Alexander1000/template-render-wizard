@@ -38,11 +38,14 @@ namespace TemplateRenderWizard
                     }
 
                     if (*nextChar == '{') {
-                        ioWriter = new IOBuffer::IOMemoryBuffer(3);
-                        ioWriter->write(curSymbol, 1);
-                        ioWriter->write(nextChar, 1);
                         token = new Token::OpenTagValue(this->position->getLine(), this->position->getColumn());
                         this->setMode(StreamMode::ValueMode);
+                        return token;
+                    }
+
+                    if (*nextChar == '%') {
+                        token = new Token::OpenControlTag(this->position->getLine(), this->position->getColumn());
+                        this->setMode(StreamMode::ControlMode);
                         return token;
                     }
 

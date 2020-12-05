@@ -10,7 +10,8 @@ namespace TemplateRenderWizard
 {
     enum StreamMode{
         PlainText,
-        ValueMode
+        ValueMode,
+        ControlMode,
     };
 
     class Stream
