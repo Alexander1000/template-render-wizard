@@ -4,6 +4,7 @@
 #include <io-buffer.h>
 #include <trw/token.h>
 #include <stack>
+#include <trw/position.h>
 
 namespace TemplateRenderWizard
 {
@@ -22,6 +23,8 @@ namespace TemplateRenderWizard
         IOBuffer::CharStream* charStream;
         StreamMode mode;
         std::stack<char*>* charStack;
+
+        Position *position;
 
         char* getNextChar();
         void setMode(StreamMode);

@@ -9,5 +9,6 @@
 #include <trw/token.h>
 #include <trw/tree_parameters.h>
 #include <trw/render.h>
+#include <trw/position.h>
 
 #endif
