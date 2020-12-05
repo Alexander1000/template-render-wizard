@@ -9,7 +9,9 @@ namespace TemplateRenderWizard::Token
         PlainTextType,
         OpenTagValueType,
         CloseTagValueType,
-        PlainValueType
+        PlainValueType,
+        OpenControlTagType,
+        CloseControlTagType,
     };
 
     class Token
@@ -30,28 +32,42 @@ namespace TemplateRenderWizard::Token
     {
     public:
         OpenTagValue(int line, int column);
-        Type getType();
+        Type getType() final;
     };
 
     class CloseTagValue : public Token
     {
     public:
         CloseTagValue(int line, int column);
-        Type getType();
+        Type getType() final;
+    };
+
+    class OpenControlTag : public Token
+    {
+    public:
+        OpenControlTag(int line, int column);
+        Type getType() final;
+    };
+
+    class CloseControlTag : public Token
+    {
+    public:
+        CloseControlTag(int line, int column);
+        Type getType() final;
     };
 
     class PlainText : public Token
     {
     public:
         PlainText(int line, int column, IOBuffer::IOReader *reader);
-        Type getType();
+        Type getType() final;
     };
 
     class PlainValue : public Token
     {
     public:
         PlainValue(int line, int column, IOBuffer::IOReader *reader);
-        Type getType();
+        Type getType() final;
     };
 }
 
