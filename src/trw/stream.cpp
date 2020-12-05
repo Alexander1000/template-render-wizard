@@ -136,6 +136,21 @@ namespace TemplateRenderWizard
                 token = new Token::PlainValue(this->position->getLine(), this->position->getColumn(), ioWriter);
                 break;
             }
+
+            case StreamMode::ControlMode: {
+                if (*curSymbol == 0x20) {
+                    // skip spaces
+                    do {
+                        curSymbol = this->getNextChar();
+                    } while(curSymbol != nullptr && *curSymbol == 0x20);
+                }
+
+                if (curSymbol == nullptr) {
+                    return nullptr;
+                }
+
+                break;
+            }
         }
 
         return token;
