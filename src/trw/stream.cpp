@@ -33,7 +33,7 @@ namespace TemplateRenderWizard
                     if (nextChar == nullptr) {
                         ioWriter = new IOBuffer::IOMemoryBuffer(2);
                         ioWriter->write(curSymbol, 1);
-                        token = new Token::OpenTagValue(0, 0); // todo: fixme
+                        token = new Token::OpenTagValue(this->position->getLine(), this->position->getColumn());
                         return token;
                     }
 
@@ -41,7 +41,7 @@ namespace TemplateRenderWizard
                         ioWriter = new IOBuffer::IOMemoryBuffer(3);
                         ioWriter->write(curSymbol, 1);
                         ioWriter->write(nextChar, 1);
-                        token = new Token::OpenTagValue(0, 0); // todo: fixme
+                        token = new Token::OpenTagValue(this->position->getLine(), this->position->getColumn());
                         this->setMode(StreamMode::ValueMode);
                         return token;
                     }
@@ -82,7 +82,7 @@ namespace TemplateRenderWizard
                     ioWriter->write(curSymbol, 1);
                 } while (true);
 
-                token = new Token::PlainText(0, 0, ioWriter); // todo: fixme
+                token = new Token::PlainText(this->position->getLine(), this->position->getColumn(), ioWriter);
                 break;
             }
 
@@ -101,7 +101,7 @@ namespace TemplateRenderWizard
                 if (*curSymbol == '}') {
                     char* nextSymbol = this->getNextChar();
                     if (*nextSymbol == '}') {
-                        token = new Token::CloseTagValue(0, 0);
+                        token = new Token::CloseTagValue(this->position->getLine(), this->position->getColumn());
                         this->mode = StreamMode::PlainText;
                         break;
                     }
@@ -130,7 +130,7 @@ namespace TemplateRenderWizard
                     ioWriter->write(curSymbol, 1);
                 } while(true);
 
-                token = new Token::PlainValue(0, 0, ioWriter); // todo: fixme
+                token = new Token::PlainValue(this->position->getLine(), this->position->getColumn(), ioWriter);
                 break;
             }
         }
