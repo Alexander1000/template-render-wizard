@@ -253,6 +253,11 @@ namespace TemplateRenderWizard
                         }
                     }
 
+                    if (*curSymbol == ')') {
+                        this->pushStackChar(curSymbol);
+                        break;
+                    }
+
                     ioWriter->write(curSymbol, 1);
                     curSymbol = this->getNextChar();
                 } while(curSymbol != nullptr && *curSymbol != 0x20);

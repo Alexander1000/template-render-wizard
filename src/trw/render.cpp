@@ -155,7 +155,8 @@ namespace TemplateRenderWizard
             return this->getValueFromToken(token);
         }
 
-        std::list<SyntaxElement*> lElement;
+        std::list<SyntaxElement*>* lElement;
+        lElement = new std::list<SyntaxElement*>;
 
         for (auto it = tokens->begin(); it != tokens->end(); it++) {
             if ((*it)->getType() == Token::RoundBracketOpenType) {
@@ -168,24 +169,26 @@ namespace TemplateRenderWizard
                     it++;
                     if ((*it)->getType() == Token::RoundBracketOpenType) {
                         nestedLevel++;
+                        nestedTokens->push_back(*it);
                         continue;
                     }
                     if ((*it)->getType() == Token::RoundBracketCloseType) {
                         if (nestedLevel == 0) {
                             break;
                         } else {
+                            nestedTokens->push_back(*it);
                             nestedLevel--;
                         }
                     }
                 } while(it != tokens->end());
 
-                lElement.push_back(new SyntaxElement(this->get_value(nestedTokens)));
+                lElement->push_back(new SyntaxElement(this->get_value(nestedTokens)));
             } else {
-                lElement.push_back(new SyntaxElement(*it));
+                lElement->push_back(new SyntaxElement(*it));
             }
         }
 
-        this->make_expression(&lElement);
+        // this->make_expression(&lElement);
 
         // do analyze and separate by expressions
 
