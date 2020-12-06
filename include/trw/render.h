@@ -5,6 +5,8 @@
 #include <trw/stream.h>
 #include <trw/tree_parameters.h>
 #include <io-buffer.h>
+#include <list>
+#include <trw/token.h>
 
 namespace TemplateRenderWizard
 {
@@ -15,6 +17,7 @@ namespace TemplateRenderWizard
 
         void renderControlExpression();
         bool ifExpressionControlTag();
+        int get_value(std::list<Token::Token*>*);
 
     public:
         Render(const char*, TemplateRenderWizard::Tree::Tree*);

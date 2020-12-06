@@ -126,4 +126,8 @@ namespace TemplateRenderWizard
 
         return true;
     }
+
+    int Render::get_value(std::list<Token::Token*> *tokens) {
+        return 0;
+    }
 }
