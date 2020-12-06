@@ -13,6 +13,8 @@ namespace TemplateRenderWizard::Token
         OpenControlTagType,
         CloseControlTagType,
         KeywordType,
+        RoundBracketOpenType,
+        RoundBracketCloseType,
     };
 
     class Token
@@ -75,6 +77,20 @@ namespace TemplateRenderWizard::Token
     {
     public:
         Keyword(int line, int column, IOBuffer::IOReader *reader);
+        Type getType() final;
+    };
+
+    class RoundBracketOpen : public Token
+    {
+    public:
+        RoundBracketOpen(int line, int column);
+        Type getType() final;
+    };
+
+    class RoundBracketClose : public Token
+    {
+    public:
+        RoundBracketClose(int line, int column);
         Type getType() final;
     };
 }

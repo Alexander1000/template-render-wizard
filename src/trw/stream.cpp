@@ -208,11 +208,13 @@ namespace TemplateRenderWizard
                 }
 
                 if (*curSymbol == '(') {
-                    //
+                    token = new Token::RoundBracketOpen(this->position->getLine(), this->position->getColumn());
+                    return token;
                 }
 
                 if (*curSymbol == ')') {
-                    //
+                    token = new Token::RoundBracketClose(this->position->getLine(), this->position->getColumn());
+                    return token;
                 }
 
                 break;
