@@ -192,6 +192,29 @@ namespace TemplateRenderWizard
                 if (curSymbol == nullptr) {
                     return nullptr;
                 }
+
+                if (*curSymbol == '%') {
+                    char* nextSymbol = this->getNextChar();
+                    if (nextSymbol == nullptr) {
+                        return nullptr;
+                    }
+                    if (*nextSymbol == '}') {
+                        this->switchToPreviousMode(); // <- switch on control mode
+                        this->switchToPreviousMode(); // <- switch on parent mode
+                        token = new Token::CloseControlTag(this->position->getLine(), this->position->getColumn());
+                        return token;
+                    }
+                    this->pushStackChar(nextSymbol);
+                }
+
+                if (*curSymbol == '(') {
+                    //
+                }
+
+                if (*curSymbol == ')') {
+                    //
+                }
+
                 break;
             }
         }
