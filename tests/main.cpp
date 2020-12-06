@@ -138,6 +138,9 @@ CppUnitTest::TestCase* testRender_TemplateWithConditions_Positive()
     memset(tBuffer, 0, sizeof(char) * 1024);
     int tSize = buffer->read(tBuffer, 1024);
 
+    // todo: remove after success debug
+    std::cout << "Given text: " << tBuffer << std::endl;
+
     CppUnitTest::assertEquals(
         t,
         " - Hello Alexander1000!\n"

@@ -2,6 +2,7 @@
 #include <io-buffer.h>
 #include <memory.h>
 #include <iostream>
+#include <trw/exceptions.h>
 
 #define TRW_RENDER_MEMORY_BLOCK_SIZE 4096
 #define TRW_RENDER_BUFFER_SIZE 1024
@@ -77,6 +78,9 @@ namespace TemplateRenderWizard
                 case TemplateRenderWizard::Token::Type::CloseTagValueType: {
                     break;
                 }
+                case TemplateRenderWizard::Token::Type::OpenControlTagType: {
+                    this->renderControlExpression();
+                }
             }
 
             token = this->stream->getNextToken();
@@ -85,5 +89,15 @@ namespace TemplateRenderWizard
         free(tBuffer);
 
         return buffer;
+    }
+
+    void Render::renderControlExpression()
+    {
+        TemplateRenderWizard::Token::Token* token;
+        token = this->stream->getNextToken();
+
+        if (token->getType() != TemplateRenderWizard::Token::Type::KeywordType) {
+            throw new UnexpectedToken;
+        }
     }
 }

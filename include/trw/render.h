@@ -13,6 +13,8 @@ namespace TemplateRenderWizard
         TemplateRenderWizard::Tree::Tree* tree;
         TemplateRenderWizard::Stream* stream;
 
+        void renderControlExpression();
+
     public:
         Render(const char*, TemplateRenderWizard::Tree::Tree*);
         Render(std::string*, TemplateRenderWizard::Tree::Tree*);
