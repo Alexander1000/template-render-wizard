@@ -155,6 +155,10 @@ namespace TemplateRenderWizard
             return this->getValueFromToken(token);
         }
 
+        for (auto it = tokens->begin(); it != tokens->end(); it++) {
+
+        }
+
         // do analyze and separate by expressions
 
         return nullptr;
