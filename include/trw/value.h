@@ -4,6 +4,7 @@
 namespace TemplateRenderWizard
 {
     enum ValueType {
+        None,
         String,
         Integer,
         Float,
@@ -14,6 +15,10 @@ namespace TemplateRenderWizard
     public:
         Value();
         ValueType getType();
+        void setType(ValueType);
+        void setData(int data);
+        void setData(char* data);
+        void setData(float data);
 
     private:
         ValueType type;

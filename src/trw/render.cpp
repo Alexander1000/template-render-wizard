@@ -138,10 +138,16 @@ namespace TemplateRenderWizard
             return this->getValueFromToken(token);
         }
 
+        // do analyze and separate by expressions
+
         return nullptr;
     }
 
     Value* Render::getValueFromToken(Token::Token *token) {
+        if (token->getType() != TemplateRenderWizard::Token::Type::ExpressionValueType) {
+            throw new UnexpectedToken;
+        }
+
         return nullptr;
     }
 }
