@@ -155,6 +155,21 @@ namespace TemplateRenderWizard
             return this->getValueFromToken(token);
         }
 
+        if (count == 3) {
+            Expression* expr;
+            auto it = tokens->begin();
+            Token::Token* t1 = *it;
+            it++;
+            Token::Token* t2 = *it;
+            it++;
+            Token::Token* t3 = *it;
+            expr = new Expression(new SyntaxElement(t1), new SyntaxElement(t3), t2);
+
+            // todo: make calculations
+
+            return nullptr;
+        }
+
         std::list<SyntaxElement*>* lElement;
         lElement = new std::list<SyntaxElement*>;
 
