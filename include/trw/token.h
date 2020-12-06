@@ -15,6 +15,7 @@ namespace TemplateRenderWizard::Token
         KeywordType,
         RoundBracketOpenType,
         RoundBracketCloseType,
+        CompareType,
     };
 
     class Token
@@ -91,6 +92,13 @@ namespace TemplateRenderWizard::Token
     {
     public:
         RoundBracketClose(int line, int column);
+        Type getType() final;
+    };
+
+    class Compare : public Token
+    {
+    public:
+        Compare(int line, int column, IOBuffer::IOReader *reader);
         Type getType() final;
     };
 }

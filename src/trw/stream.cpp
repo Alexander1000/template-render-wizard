@@ -217,6 +217,23 @@ namespace TemplateRenderWizard
                     return token;
                 }
 
+                if (*curSymbol == '=' || *curSymbol == '>' || *curSymbol == '<' || *curSymbol == '!') {
+                    ioWriter = new IOBuffer::IOMemoryBuffer(4);
+                    ioWriter->write(curSymbol, 1);
+
+                    char* nextSymbol = this->getNextChar();
+                    if (nextSymbol == nullptr) {
+                        return nullptr;
+                    }
+
+                    if (*nextSymbol == '=') {
+                        ioWriter->write(nextSymbol, 1);
+                    }
+
+                    token = new Token::Compare(this->position->getLine(), this->position->getColumn(), ioWriter);
+                    return token;
+                }
+
                 break;
             }
         }
