@@ -158,6 +158,7 @@ namespace TemplateRenderWizard
         std::list<SyntaxElement*>* lElement;
         lElement = new std::list<SyntaxElement*>;
 
+        // first priority check braces
         for (auto it = tokens->begin(); it != tokens->end(); it++) {
             if ((*it)->getType() == Token::RoundBracketOpenType) {
                 it++;
@@ -186,6 +187,11 @@ namespace TemplateRenderWizard
             } else {
                 lElement->push_back(new SyntaxElement(*it));
             }
+        }
+
+        // check operations * and /
+        for (auto it = lElement->begin(); it != lElement->end(); it++) {
+            // todo:
         }
 
         // this->make_expression(&lElement);
