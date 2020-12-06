@@ -180,6 +180,20 @@ namespace TemplateRenderWizard
 
                 break;
             }
+
+            case StreamMode::ControlModeExpression: {
+                if (*curSymbol == 0x20) {
+                    // skip spaces
+                    do {
+                        curSymbol = this->getNextChar();
+                    } while(curSymbol != nullptr && *curSymbol == 0x20);
+                }
+
+                if (curSymbol == nullptr) {
+                    return nullptr;
+                }
+                break;
+            }
         }
 
         return token;
