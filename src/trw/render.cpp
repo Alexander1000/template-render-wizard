@@ -155,8 +155,9 @@ namespace TemplateRenderWizard
             return this->getValueFromToken(token);
         }
 
+        std::list<SyntaxElement*> lElement;
         for (auto it = tokens->begin(); it != tokens->end(); it++) {
-
+            lElement.push_back(new SyntaxElement(*it));
         }
 
         // do analyze and separate by expressions
