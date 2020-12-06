@@ -14,6 +14,7 @@ namespace TemplateRenderWizard
         TemplateRenderWizard::Stream* stream;
 
         void renderControlExpression();
+        bool ifExpressionControlTag();
 
     public:
         Render(const char*, TemplateRenderWizard::Tree::Tree*);

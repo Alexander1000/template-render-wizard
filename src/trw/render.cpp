@@ -106,6 +106,16 @@ namespace TemplateRenderWizard
 
         if (strcmp(keyword, "if") == 0) {
             // calculate condition
+            this->ifExpressionControlTag();
         }
+    }
+
+    bool Render::ifExpressionControlTag() {
+        TemplateRenderWizard::Token::Token* token;
+        token = this->stream->getNextToken();
+
+        token->getType();
+
+        return true;
     }
 }
