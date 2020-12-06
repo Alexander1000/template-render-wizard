@@ -25,6 +25,7 @@ set(TRW_SHARED_SOURCES
     src/trw/leaf_element.cpp
     src/trw/tree_parameters.cpp
     src/trw/render.cpp
+    src/trw/value.cpp
 )
 
 set(TRW_SOURCES
