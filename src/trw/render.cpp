@@ -3,6 +3,7 @@
 #include <memory.h>
 #include <iostream>
 #include <trw/exceptions.h>
+#include <list>
 
 #define TRW_RENDER_MEMORY_BLOCK_SIZE 4096
 #define TRW_RENDER_BUFFER_SIZE 1024
@@ -111,10 +112,17 @@ namespace TemplateRenderWizard
     }
 
     bool Render::ifExpressionControlTag() {
+        std::list<TemplateRenderWizard::Token::Token*> tokens;
+
         TemplateRenderWizard::Token::Token* token;
         token = this->stream->getNextToken();
 
-        token->getType();
+        while (token->getType() != TemplateRenderWizard::Token::Type::CloseControlTagType) {
+            tokens.push_back(token);
+            token = this->stream->getNextToken();
+        }
+
+        // todo: compare(get_value(tokens), get_value(tokens), condition_token)
 
         return true;
     }
