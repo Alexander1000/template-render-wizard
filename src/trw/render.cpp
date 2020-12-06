@@ -169,11 +169,17 @@ namespace TemplateRenderWizard
         memset(tokenValue, 0, sizeof(char) * 128);
         token->getReader()->read(tokenValue, 128);
 
-        std::cout << "Convert token: " << tokenValue << std::endl;
-
         auto leafValue = this->tree->get(tokenValue);
         if (leafValue != nullptr) {
             leafValue->getType();
+        } else {
+            Value* v = new Value;
+            int length = strlen(tokenValue) + 1;
+            char* strValue = (char*) malloc(length * sizeof(char));
+            memset(strValue, 0, sizeof(char) * length);
+            memcpy(strValue, tokenValue, sizeof(char) * length);
+            v->setData(strValue);
+            return v;
         }
 
         return nullptr;
