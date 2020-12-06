@@ -119,6 +119,38 @@ CppUnitTest::TestCase* testRender_TemplateAndValues_Positive()
     return t;
 }
 
+CppUnitTest::TestCase* testRender_TemplateWithConditions_Positive()
+{
+    CppUnitTest::TestCase* t = nullptr;
+    t = new CppUnitTest::TestCase("004-template-with-conditions");
+
+    t->printTitle();
+
+    TemplateRenderWizard::Tree::Tree tree;
+    tree.scan("./fixtures/004-values.yaml");
+
+    TemplateRenderWizard::Render* render;
+    render = new TemplateRenderWizard::Render("./fixtures/004-text-with-condition.tpl", &tree);
+
+    IOBuffer::IOMemoryBuffer* buffer = render->toBuffer();
+
+    char* tBuffer = (char*) malloc(sizeof(char) * 1024);
+    memset(tBuffer, 0, sizeof(char) * 1024);
+    int tSize = buffer->read(tBuffer, 1024);
+
+    CppUnitTest::assertEquals(
+        t,
+        " - Hello Alexander1000!\n"
+        " - Can you go to aquapark?\n"
+        " - Perfect!\n"
+        "(Test text with template and conditions)",
+        tBuffer
+    );
+
+    t->finish();
+    return t;
+}
+
 int main(int argc, char** argv) {
     CppUnitTest::TestSuite testSuite;
 
@@ -127,6 +159,8 @@ int main(int argc, char** argv) {
     testSuite.addTestCase(testTreeMergeWithEmpty_ValuesFile_Positive());
 
     testSuite.addTestCase(testRender_TemplateAndValues_Positive());
+
+    testSuite.addTestCase(testRender_TemplateWithConditions_Positive());
 
     testSuite.printTotal();
 
