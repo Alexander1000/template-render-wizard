@@ -160,8 +160,22 @@ namespace TemplateRenderWizard
                         curSymbol = this->getNextChar();
                     }
 
+                    this->switchToMode(StreamMode::ControlModeExpression);
                     token = new Token::Keyword(this->position->getLine(), this->position->getColumn(), ioWriter);
                     return token;
+                }
+
+                if (*curSymbol == '%') {
+                    char* nextSymbol = this->getNextChar();
+                    if (nextSymbol == nullptr) {
+                        return nullptr;
+                    }
+                    if (*nextSymbol == '}') {
+                        this->switchToPreviousMode();
+                        token = new Token::CloseControlTag(this->position->getLine(), this->position->getColumn());
+                        return token;
+                    }
+                    this->pushStackChar(nextSymbol);
                 }
 
                 break;
