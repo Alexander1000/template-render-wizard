@@ -99,5 +99,13 @@ namespace TemplateRenderWizard
         if (token->getType() != TemplateRenderWizard::Token::Type::KeywordType) {
             throw new UnexpectedToken;
         }
+
+        char* keyword = new char[32];
+        memset(keyword, 0, sizeof(char) * 32);
+        token->getReader()->read(keyword, 32);
+
+        if (strcmp(keyword, "if") == 0) {
+            // calculate condition
+        }
     }
 }
