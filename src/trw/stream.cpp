@@ -234,14 +234,30 @@ namespace TemplateRenderWizard
                     return token;
                 }
 
-                if (*curSymbol == '+' || *curSymbol == '-' || *curSymbol == '*' || *curSymbol == '/') {
+                if (*curSymbol == '+' || *curSymbol == '-' || *curSymbol == '*' || *curSymbol == '/' || *curSymbol == '%') {
                     ioWriter = new IOBuffer::IOMemoryBuffer(4);
                     ioWriter->write(curSymbol, 1);
                     token = new Token::MathOperation(this->position->getLine(), this->position->getColumn(), ioWriter);
                     return token;
                 }
 
-                break;
+                ioWriter = new IOBuffer::IOMemoryBuffer(64);
+                do {
+                    if (*curSymbol == '%') {
+                        char* nextChar = this->getNextChar();
+                        if (*nextChar == '}') {
+                            this->pushStackChar(nextChar);
+                            this->pushStackChar(curSymbol);
+                            break;
+                        }
+                    }
+
+                    ioWriter->write(curSymbol, 1);
+                    curSymbol = this->getNextChar();
+                } while(curSymbol != nullptr || *curSymbol != 0x20);
+
+                token = new Token::ExpressionValue(this->position->getLine(), this->position->getColumn(), ioWriter);
+                return token;
             }
         }
 
