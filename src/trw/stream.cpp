@@ -150,6 +150,20 @@ namespace TemplateRenderWizard
                     return nullptr;
                 }
 
+                if (this->isWord(curSymbol)) {
+                    // expected keyword for control mode
+                    int lengthKeyword = 0;
+                    ioWriter = new IOBuffer::IOMemoryBuffer(16);
+                    while (curSymbol != nullptr && this->isWord(curSymbol)) {
+                        ioWriter->write(curSymbol, 1);
+                        lengthKeyword++;
+                        curSymbol = this->getNextChar();
+                    }
+
+                    token = new Token::Keyword(this->position->getLine(), this->position->getColumn(), ioWriter);
+                    return token;
+                }
+
                 break;
             }
         }
@@ -195,5 +209,9 @@ namespace TemplateRenderWizard
     void Stream::switchToPreviousMode() {
         this->mode = this->modeStack->top();
         this->modeStack->pop();
+    }
+
+    bool Stream::isWord(const char *symbol) {
+        return (*symbol >= 'a' && *symbol <= 'z') || (*symbol >= 'A' && *symbol <= 'Z');
     }
 }

@@ -12,6 +12,7 @@ namespace TemplateRenderWizard::Token
         PlainValueType,
         OpenControlTagType,
         CloseControlTagType,
+        KeywordType,
     };
 
     class Token
@@ -67,6 +68,13 @@ namespace TemplateRenderWizard::Token
     {
     public:
         PlainValue(int line, int column, IOBuffer::IOReader *reader);
+        Type getType() final;
+    };
+
+    class Keyword : public Token
+    {
+    public:
+        Keyword(int line, int column, IOBuffer::IOReader *reader);
         Type getType() final;
     };
 }

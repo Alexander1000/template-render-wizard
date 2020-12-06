@@ -34,6 +34,8 @@ namespace TemplateRenderWizard
 
         char* getNextChar();
         void pushStackChar(char*);
+
+        static bool isWord(const char* symbol);
     };
 }
 
