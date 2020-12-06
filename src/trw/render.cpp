@@ -1,9 +1,8 @@
-#include <trw/render.h>
 #include <io-buffer.h>
 #include <memory.h>
 #include <iostream>
-#include <trw/exceptions.h>
 #include <list>
+#include <trw.h>
 
 #define TRW_RENDER_MEMORY_BLOCK_SIZE 4096
 #define TRW_RENDER_BUFFER_SIZE 1024
@@ -127,7 +126,22 @@ namespace TemplateRenderWizard
         return true;
     }
 
-    int Render::get_value(std::list<Token::Token*> *tokens) {
-        return 0;
+    Value* Render::get_value(std::list<Token::Token*> *tokens) {
+        Token::Token* token = nullptr;
+        int count = 0;
+        for (auto it = tokens->begin(); it != tokens->end(); it++) {
+            token = *it;
+            count++;
+        }
+
+        if (count == 1) {
+            return this->getValueFromToken(token);
+        }
+
+        return nullptr;
+    }
+
+    Value* Render::getValueFromToken(Token::Token *token) {
+        return nullptr;
     }
 }

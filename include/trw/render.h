@@ -7,6 +7,7 @@
 #include <io-buffer.h>
 #include <list>
 #include <trw/token.h>
+#include <trw/value.h>
 
 namespace TemplateRenderWizard
 {
@@ -17,7 +18,8 @@ namespace TemplateRenderWizard
 
         void renderControlExpression();
         bool ifExpressionControlTag();
-        int get_value(std::list<Token::Token*>*);
+        Value* get_value(std::list<Token::Token*>*);
+        Value* getValueFromToken(Token::Token*);
 
     public:
         Render(const char*, TemplateRenderWizard::Tree::Tree*);
