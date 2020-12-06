@@ -8,6 +8,7 @@
 #include <list>
 #include <trw/token.h>
 #include <trw/value.h>
+#include <trw/expression.h>
 
 namespace TemplateRenderWizard
 {
@@ -21,6 +22,7 @@ namespace TemplateRenderWizard
         Value* get_value(std::list<Token::Token*>*);
         Value* getValueFromToken(Token::Token*);
         int compare_value(Value*, Value*, Token::Token*);
+        Expression* make_expression(std::list<SyntaxElement*>*);
 
     public:
         Render(const char*, TemplateRenderWizard::Tree::Tree*);

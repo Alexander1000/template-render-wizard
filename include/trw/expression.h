@@ -19,6 +19,9 @@ namespace TemplateRenderWizard
         SyntaxElement(Token::Token*);
         SyntaxElement(Value*);
         SyntaxElement(Expression*);
+
+        SyntaxElementType getType();
+        void* getData();
     private:
         SyntaxElementType type;
 

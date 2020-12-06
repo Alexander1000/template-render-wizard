@@ -22,4 +22,12 @@ namespace TemplateRenderWizard
         this->type = SyntaxTokenType;
         this->data.token = token;
     }
+
+    SyntaxElementType SyntaxElement::getType() {
+        return this->type;
+    }
+
+    void* SyntaxElement::getData() {
+        return (void*) this->data.token;
+    }
 }

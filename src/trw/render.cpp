@@ -156,9 +156,36 @@ namespace TemplateRenderWizard
         }
 
         std::list<SyntaxElement*> lElement;
+
         for (auto it = tokens->begin(); it != tokens->end(); it++) {
-            lElement.push_back(new SyntaxElement(*it));
+            if ((*it)->getType() == Token::RoundBracketOpenType) {
+                it++;
+                std::list<Token::Token*>* nestedTokens;
+                nestedTokens = new std::list<Token::Token*>;
+                int nestedLevel = 0;
+                do {
+                    nestedTokens->push_back(*it);
+                    it++;
+                    if ((*it)->getType() == Token::RoundBracketOpenType) {
+                        nestedLevel++;
+                        continue;
+                    }
+                    if ((*it)->getType() == Token::RoundBracketCloseType) {
+                        if (nestedLevel == 0) {
+                            break;
+                        } else {
+                            nestedLevel--;
+                        }
+                    }
+                } while(it != tokens->end());
+
+                lElement.push_back(new SyntaxElement(this->get_value(nestedTokens)));
+            } else {
+                lElement.push_back(new SyntaxElement(*it));
+            }
         }
+
+        this->make_expression(&lElement);
 
         // do analyze and separate by expressions
 
@@ -192,5 +219,18 @@ namespace TemplateRenderWizard
 
     int Render::compare_value(Value *v1, Value *v2, Token::Token *token) {
         return 0;
+    }
+
+    Expression* Render::make_expression(std::list<SyntaxElement*>* lElement)
+    {
+        for (auto it = lElement->begin(); it != lElement->end(); it++) {
+            if ((*it)->getType() == SyntaxTokenType) {
+                Token::Token* t = (Token::Token*)((*it)->getData());
+                if (t->getType() == Token::RoundBracketOpenType) {
+                    //
+                }
+            }
+        }
+        return nullptr;
     }
 }
