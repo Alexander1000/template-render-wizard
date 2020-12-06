@@ -3,6 +3,7 @@
 #include <trw/token.h>
 #include <trw/position.h>
 #include <stack>
+#include <iostream>
 
 namespace TemplateRenderWizard
 {
@@ -254,7 +255,7 @@ namespace TemplateRenderWizard
 
                     ioWriter->write(curSymbol, 1);
                     curSymbol = this->getNextChar();
-                } while(curSymbol != nullptr || *curSymbol != 0x20);
+                } while(curSymbol != nullptr && *curSymbol != 0x20);
 
                 token = new Token::ExpressionValue(this->position->getLine(), this->position->getColumn(), ioWriter);
                 return token;

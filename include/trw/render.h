@@ -20,6 +20,7 @@ namespace TemplateRenderWizard
         bool ifExpressionControlTag();
         Value* get_value(std::list<Token::Token*>*);
         Value* getValueFromToken(Token::Token*);
+        int compare_value(Value*, Value*, Token::Token*);
 
     public:
         Render(const char*, TemplateRenderWizard::Tree::Tree*);

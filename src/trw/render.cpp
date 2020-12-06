@@ -121,7 +121,24 @@ namespace TemplateRenderWizard
             token = this->stream->getNextToken();
         }
 
-        // todo: compare(get_value(tokens), get_value(tokens), condition_token)
+        bool leftSide = true;
+        std::list<TemplateRenderWizard::Token::Token*> lTokens, rTokens;
+        TemplateRenderWizard::Token::Token* cmpToken;
+
+        for (auto it = tokens.begin(); it != tokens.end(); it++) {
+            if (leftSide) {
+                if ((*it)->getType() == TemplateRenderWizard::Token::Type::CompareType) {
+                    leftSide = false;
+                    cmpToken = *it;
+                    continue;
+                }
+                lTokens.push_back(*it);
+            } else {
+                rTokens.push_back(*it);
+            }
+        }
+
+        this->compare_value(this->get_value(&lTokens), this->get_value(&rTokens), cmpToken);
 
         return true;
     }
@@ -148,6 +165,21 @@ namespace TemplateRenderWizard
             throw new UnexpectedToken;
         }
 
+        char* tokenValue = (char*) malloc(sizeof(char) * 128);
+        memset(tokenValue, 0, sizeof(char) * 128);
+        token->getReader()->read(tokenValue, 128);
+
+        std::cout << "Convert token: " << tokenValue << std::endl;
+
+        auto leafValue = this->tree->get(tokenValue);
+        if (leafValue != nullptr) {
+            leafValue->getType();
+        }
+
         return nullptr;
+    }
+
+    int Render::compare_value(Value *v1, Value *v2, Token::Token *token) {
+        return 0;
     }
 }
