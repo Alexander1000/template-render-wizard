@@ -20,6 +20,7 @@ set(TRW_SHARED_SOURCES
     src/trw/tokens/round_bracket_open.cpp
     src/trw/tokens/round_bracket_close.cpp
     src/trw/tokens/compare.cpp
+    src/trw/tokens/math_operation.cpp
     src/trw/leaf_element.cpp
     src/trw/tree_parameters.cpp
     src/trw/render.cpp

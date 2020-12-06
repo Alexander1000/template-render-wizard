@@ -16,6 +16,7 @@ namespace TemplateRenderWizard::Token
         RoundBracketOpenType,
         RoundBracketCloseType,
         CompareType,
+        MathOperationType,
     };
 
     class Token
@@ -99,6 +100,13 @@ namespace TemplateRenderWizard::Token
     {
     public:
         Compare(int line, int column, IOBuffer::IOReader *reader);
+        Type getType() final;
+    };
+
+    class MathOperation : public Token
+    {
+    public:
+        MathOperation(int line, int column, IOBuffer::IOReader *reader);
         Type getType() final;
     };
 }
