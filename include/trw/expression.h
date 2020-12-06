@@ -5,15 +5,39 @@
 
 namespace TemplateRenderWizard
 {
+    class Expression;
+
+    enum SyntaxElementType {
+        SyntaxTokenType,
+        SyntaxValueType,
+        SyntaxExpressionType,
+    };
+
+    class SyntaxElement
+    {
+    public:
+        SyntaxElement(Token::Token*);
+        SyntaxElement(Value*);
+        SyntaxElement(Expression*);
+    private:
+        SyntaxElementType type;
+
+        union {
+            Token::Token* token;
+            Value* value;
+            Expression* expression;
+        } data;
+    };
+
     class Expression
     {
     public:
-        Expression(Token::Token*, Token::Token*, Token::Token*);
+        Expression(SyntaxElement*, SyntaxElement*, Token::Token*);
 
     private:
-        void* lValue;
-        void* rValue;
-        void* relation;
+        SyntaxElement* lValue;
+        SyntaxElement* rValue;
+        Token::Token* relation;
     };
 }
 
