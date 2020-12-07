@@ -36,6 +36,9 @@ namespace TemplateRenderWizard
     {
     public:
         Expression(SyntaxElement*, SyntaxElement*, Token::Token*);
+        SyntaxElement* getLValue();
+        SyntaxElement* getRValue();
+        Token::Token* getToken();
 
     private:
         SyntaxElement* lValue;

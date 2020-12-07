@@ -30,4 +30,16 @@ namespace TemplateRenderWizard
     void* SyntaxElement::getData() {
         return (void*) this->data.token;
     }
+
+    SyntaxElement* Expression::getLValue() {
+        return this->lValue;
+    }
+
+    SyntaxElement* Expression::getRValue() {
+        return this->rValue;
+    }
+
+    Token::Token* Expression::getToken() {
+        return this->relation;
+    }
 }

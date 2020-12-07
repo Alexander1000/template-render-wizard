@@ -163,11 +163,7 @@ namespace TemplateRenderWizard
             Token::Token* t2 = *it;
             it++;
             Token::Token* t3 = *it;
-            expr = new Expression(new SyntaxElement(t1), new SyntaxElement(t3), t2);
-
-            // todo: make calculations
-
-            return nullptr;
+            return this->calc_expr(new Expression(new SyntaxElement(t1), new SyntaxElement(t3), t2));
         }
 
         std::list<SyntaxElement*>* lElement;
@@ -255,6 +251,10 @@ namespace TemplateRenderWizard
                 }
             }
         }
+        return nullptr;
+    }
+
+    Value* Render::calc_expr(Expression *expr) {
         return nullptr;
     }
 }

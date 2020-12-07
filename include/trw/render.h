@@ -23,6 +23,7 @@ namespace TemplateRenderWizard
         Value* getValueFromToken(Token::Token*);
         int compare_value(Value*, Value*, Token::Token*);
         Expression* make_expression(std::list<SyntaxElement*>*);
+        Value* calc_expr(Expression*);
 
     public:
         Render(const char*, TemplateRenderWizard::Tree::Tree*);
