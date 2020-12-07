@@ -20,6 +20,11 @@ namespace TemplateRenderWizard
         void setData(char* data);
         void setData(float data);
 
+        template<typename T> T getData()
+        {
+            return this->getDataTyped((T*) nullptr);
+        }
+
     private:
         ValueType type;
 
@@ -28,6 +33,10 @@ namespace TemplateRenderWizard
             char* c_data;
             float f_data;
         } _data;
+
+        int getDataTyped(int* nothing);
+        char* getDataTyped(char* nothing);
+        float getDataTyped(float* nothing);
     };
 }
 

@@ -29,4 +29,19 @@ namespace TemplateRenderWizard
         this->type = Float;
         this->_data.f_data = data;
     }
+
+    int Value::getDataTyped(int* nothing)
+    {
+        return this->_data.i_data;
+    }
+
+    char* Value::getDataTyped(char* nothing)
+    {
+        return this->_data.c_data;
+    }
+
+    float Value::getDataTyped(float* nothing)
+    {
+        return this->_data.f_data;
+    }
 }

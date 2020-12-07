@@ -297,6 +297,12 @@ namespace TemplateRenderWizard
 
         if (strcmp(opValue, "+") == 0) {
             std::cout << "Op+" << std::endl;
+            if (lValue->getType() == ValueType::Integer && rValue->getType() == ValueType::Integer) {
+                Value* v;
+                v = new Value();
+                v->setData(lValue->getData<int>() + rValue->getData<int>());
+                return v;
+            }
         }
 
         return nullptr;
