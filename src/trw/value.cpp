@@ -17,7 +17,8 @@ namespace TemplateRenderWizard
 
     void Value::setData(int data) {
         this->type = Integer;
-        this->_data.i_data = data;
+        this->_data.i_data = new int;
+        *this->_data.i_data = data;
     }
 
     void Value::setData(char *data) {
@@ -27,10 +28,11 @@ namespace TemplateRenderWizard
 
     void Value::setData(float data) {
         this->type = Float;
-        this->_data.f_data = data;
+        this->_data.f_data = new float;
+        *this->_data.f_data = data;
     }
 
-    int Value::getDataTyped(int* nothing)
+    int* Value::getDataTyped(int* nothing)
     {
         return this->_data.i_data;
     }
@@ -40,7 +42,7 @@ namespace TemplateRenderWizard
         return this->_data.c_data;
     }
 
-    float Value::getDataTyped(float* nothing)
+    float* Value::getDataTyped(float* nothing)
     {
         return this->_data.f_data;
     }

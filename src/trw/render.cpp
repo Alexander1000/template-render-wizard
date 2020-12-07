@@ -315,11 +315,23 @@ namespace TemplateRenderWizard
         expr->getToken()->getReader()->read(opValue, 3);
 
         if (strcmp(opValue, "+") == 0) {
+            if (lValue->getType() == ValueType::String && ctype_digits(lValue->getData<char*>())) {
+                const char* src = lValue->getData<char*>();
+                int size = strlen(src) + 1;
+                char* dst = (char*) malloc(sizeof(char) * size);
+                memset(dst, 0, sizeof(char) * size);
+                memcpy(dst, src, sizeof(char) * (size - 1));
+                Value* v;
+                v = new Value();
+                v->setData(atoi(lValue->getData<char *>()));
+                lValue = v;
+            }
+
             std::cout << "Op+" << std::endl;
             if (lValue->getType() == ValueType::Integer && rValue->getType() == ValueType::Integer) {
                 Value* v;
                 v = new Value();
-                v->setData(lValue->getData<int>() + rValue->getData<int>());
+                v->setData(*lValue->getData<int*>() + *rValue->getData<int*>());
                 return v;
             }
         }
