@@ -259,27 +259,43 @@ namespace TemplateRenderWizard
             throw new UnexpectedToken;
         }
 
+        Value* lValue;
+        switch (expr->getLValue()->getType()) {
+            case SyntaxTokenType: {
+                lValue = this->getValueFromToken((Token::Token *) expr->getLValue()->getData());
+                break;
+            }
+            case SyntaxValueType: {
+                lValue = (Value*) expr->getLValue()->getData();
+                break;
+            }
+            case SyntaxExpressionType: {
+                lValue = this->calc_expr((Expression*) expr->getLValue()->getData());
+                break;
+            }
+        }
+
+        Value* rValue;
+        switch (expr->getRValue()->getType()) {
+            case SyntaxTokenType: {
+                rValue = this->getValueFromToken((Token::Token *) expr->getRValue()->getData());
+                break;
+            }
+            case SyntaxValueType: {
+                rValue = (Value*) expr->getRValue()->getData();
+                break;
+            }
+            case SyntaxExpressionType: {
+                rValue = this->calc_expr((Expression*) expr->getRValue()->getData());
+                break;
+            }
+        }
+
         char* opValue = (char*) malloc(sizeof(char) * 3);
         memset(opValue, 0, sizeof(char) * 3);
         expr->getToken()->getReader()->read(opValue, 3);
 
         if (strcmp(opValue, "+") == 0) {
-            Value* lValue;
-            switch (expr->getLValue()->getType()) {
-                case SyntaxTokenType: {
-                    lValue = this->getValueFromToken((Token::Token *) expr->getLValue()->getData());
-                    break;
-                }
-                case SyntaxValueType: {
-                    lValue = (Value*) expr->getLValue()->getData();
-                    break;
-                }
-                case SyntaxExpressionType: {
-                    lValue = this->calc_expr((Expression*) expr->getLValue()->getData());
-                    break;
-                }
-            }
-            
             std::cout << "Op+" << std::endl;
         }
 
