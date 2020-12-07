@@ -255,6 +255,34 @@ namespace TemplateRenderWizard
     }
 
     Value* Render::calc_expr(Expression *expr) {
+        if (expr->getToken()->getType() != Token::Type::MathOperationType) {
+            throw new UnexpectedToken;
+        }
+
+        char* opValue = (char*) malloc(sizeof(char) * 3);
+        memset(opValue, 0, sizeof(char) * 3);
+        expr->getToken()->getReader()->read(opValue, 3);
+
+        if (strcmp(opValue, "+") == 0) {
+            Value* lValue;
+            switch (expr->getLValue()->getType()) {
+                case SyntaxTokenType: {
+                    lValue = this->getValueFromToken((Token::Token *) expr->getLValue()->getData());
+                    break;
+                }
+                case SyntaxValueType: {
+                    lValue = (Value*) expr->getLValue()->getData();
+                    break;
+                }
+                case SyntaxExpressionType: {
+                    lValue = this->calc_expr((Expression*) expr->getLValue()->getData());
+                    break;
+                }
+            }
+            
+            std::cout << "Op+" << std::endl;
+        }
+
         return nullptr;
     }
 }
