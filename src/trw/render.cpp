@@ -223,7 +223,26 @@ namespace TemplateRenderWizard
 
         auto leafValue = this->tree->get(tokenValue);
         if (leafValue != nullptr) {
-            leafValue->getType();
+            switch(leafValue->getType()) {
+                case TemplateRenderWizard::Tree::LeafElementType::LeafElementText: {
+                    auto str = (std::string*) leafValue->getData();
+                    Value* v;
+                    v = new Value();
+                    int nSize = str->length() + 1;
+                    char* newStr = (char*) malloc(sizeof(char) * nSize);
+                    memset(newStr, 0, sizeof(char) * nSize);
+                    v->setData(newStr);
+                    return v;
+                }
+                case TemplateRenderWizard::Tree::LeafElementType::LeafElementArray: {
+                    throw new UnexpectedToken;
+                    break;
+                }
+                case TemplateRenderWizard::Tree::LeafElementType::LeafElementObject: {
+                    throw new UnexpectedToken;
+                    break;
+                }
+            }
         } else {
             Value* v = new Value;
             int length = strlen(tokenValue) + 1;
@@ -262,7 +281,7 @@ namespace TemplateRenderWizard
         Value* lValue;
         switch (expr->getLValue()->getType()) {
             case SyntaxTokenType: {
-                lValue = this->getValueFromToken((Token::Token *) expr->getLValue()->getData());
+                lValue = this->getValueFromToken((Token::Token*) expr->getLValue()->getData());
                 break;
             }
             case SyntaxValueType: {
