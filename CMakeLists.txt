@@ -27,6 +27,7 @@ set(TRW_SHARED_SOURCES
     src/trw/render.cpp
     src/trw/value.cpp
     src/trw/expression.cpp
+    src/trw/utils/ctype_digits.cpp
 )
 
 set(TRW_SOURCES
