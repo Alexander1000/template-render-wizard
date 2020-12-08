@@ -21,7 +21,7 @@ namespace TemplateRenderWizard
         bool ifExpressionControlTag();
         Value* get_value(std::list<Token::Token*>*);
         Value* getValueFromToken(Token::Token*);
-        int compare_value(Value*, Value*, Token::Token*);
+        bool compare_value(Value*, Value*, Token::Token*);
         Expression* make_expression(std::list<SyntaxElement*>*);
         Value* calc_expr(Expression*);
 

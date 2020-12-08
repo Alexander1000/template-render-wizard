@@ -138,9 +138,7 @@ namespace TemplateRenderWizard
             }
         }
 
-        this->compare_value(this->get_value(&lTokens), this->get_value(&rTokens), cmpToken);
-
-        return true;
+        return this->compare_value(this->get_value(&lTokens), this->get_value(&rTokens), cmpToken);
     }
 
     Value* Render::get_value(std::list<Token::Token*> *tokens) {
@@ -355,8 +353,46 @@ namespace TemplateRenderWizard
         return nullptr;
     }
 
-    int Render::compare_value(Value *v1, Value *v2, Token::Token *token) {
-        return 0;
+    bool Render::compare_value(Value *lValue, Value *rValue, Token::Token *token) {
+        auto reader = (IOBuffer::IOMemoryBuffer*) token->getReader();
+        reader->setPosition(0);
+        char *cmpValue = (char*) malloc(sizeof(char) * 4);
+        memset(cmpValue, 0, sizeof(char) * 4);
+        reader->read(cmpValue, 4);
+
+        if (lValue->getType() == ValueType::String && ctype_digits(lValue->getData<char*>())) {
+            const char* src = lValue->getData<char*>();
+            int size = strlen(src) + 1;
+            char* dst = (char*) malloc(sizeof(char) * size);
+            memset(dst, 0, sizeof(char) * size);
+            memcpy(dst, src, sizeof(char) * (size - 1));
+            Value* v;
+            v = new Value();
+            v->setData(atoi(lValue->getData<char *>()));
+            lValue = v;
+        }
+
+        if (rValue->getType() == ValueType::String && ctype_digits(rValue->getData<char*>())) {
+            const char* src = rValue->getData<char*>();
+            int size = strlen(src) + 1;
+            char* dst = (char*) malloc(sizeof(char) * size);
+            memset(dst, 0, sizeof(char) * size);
+            memcpy(dst, src, sizeof(char) * (size - 1));
+            Value* v;
+            v = new Value();
+            v->setData(atoi(rValue->getData<char *>()));
+            rValue = v;
+        }
+
+        if (lValue->getType() == ValueType::Integer && rValue->getType() == ValueType::Integer) {
+            if (strcmp(cmpValue, ">=") == 0) {
+                return *lValue->getData<int*>() >= *rValue->getData<int*>();
+            }
+        }
+
+        throw new UnexpectedToken;
+
+        return false;
     }
 
     Expression* Render::make_expression(std::list<SyntaxElement*>* lElement)
