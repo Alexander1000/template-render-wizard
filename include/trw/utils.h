@@ -7,6 +7,10 @@
         reader->setPosition(0); \
     } while(0);
 
+#define INIT_CHAR_STRING(str, length) \
+    char* str = new char[length];     \
+    memset(str, 0, length * sizeof(char));
+
 namespace TemplateRenderWizard
 {
     bool ctype_digits(const char*);

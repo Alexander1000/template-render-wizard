@@ -104,8 +104,7 @@ namespace TemplateRenderWizard
             throw new UnexpectedToken;
         }
 
-        char* keyword = new char[32];
-        memset(keyword, 0, sizeof(char) * 32);
+        INIT_CHAR_STRING(keyword, 32)
         token->getReader()->read(keyword, 32);
 
         if (strcmp(keyword, "if") == 0) {
@@ -366,8 +365,7 @@ namespace TemplateRenderWizard
             if ((*it)->getType() == SyntaxElementType::SyntaxTokenType) {
                 auto t = (Token::Token*) (*it)->getData();
                 if (t->getType() == TemplateRenderWizard::Token::Type::MathOperationType) {
-                    char* strMathOp = (char*) malloc(sizeof(char) * 4);
-                    memset(strMathOp, 0, sizeof(char) * 4);
+                    INIT_CHAR_STRING(strMathOp, 4)
                     t->getReader()->read(strMathOp, 4);
                     if (strcmp(strMathOp, "*") == 0 || strcmp(strMathOp, "/") == 0) {
                         lSecondElement->pop_back();
@@ -442,8 +440,7 @@ namespace TemplateRenderWizard
             if ((*it)->getType() == SyntaxElementType::SyntaxTokenType) {
                 auto t = (Token::Token*) (*it)->getData();
                 if (t->getType() == TemplateRenderWizard::Token::Type::MathOperationType) {
-                    char* strMathOp = (char*) malloc(sizeof(char) * 4);
-                    memset(strMathOp, 0, sizeof(char) * 4);
+                    INIT_CHAR_STRING(strMathOp, 4)
                     RESET_TOKEN_READER(t);
                     t->getReader()->read(strMathOp, 4);
                     if (strcmp(strMathOp, "+") == 0 || strcmp(strMathOp, "-") == 0) {
@@ -471,8 +468,7 @@ namespace TemplateRenderWizard
             throw new UnexpectedToken;
         }
 
-        char* tokenValue = (char*) malloc(sizeof(char) * 128);
-        memset(tokenValue, 0, sizeof(char) * 128);
+        INIT_CHAR_STRING(tokenValue, 128)
         token->getReader()->read(tokenValue, 128);
 
         auto leafValue = this->tree->get(tokenValue);
@@ -483,8 +479,7 @@ namespace TemplateRenderWizard
                     Value* v;
                     v = new Value();
                     int nSize = str->length() + 1;
-                    char* newStr = (char*) malloc(sizeof(char) * nSize);
-                    memset(newStr, 0, sizeof(char) * nSize);
+                    INIT_CHAR_STRING(newStr, nSize)
                     memcpy(newStr, str->c_str(), (nSize - 1) * sizeof(char));
                     v->setData(newStr);
                     return v;
@@ -501,8 +496,7 @@ namespace TemplateRenderWizard
         } else {
             Value* v = new Value;
             int length = strlen(tokenValue) + 1;
-            char* strValue = (char*) malloc(length * sizeof(char));
-            memset(strValue, 0, sizeof(char) * length);
+            INIT_CHAR_STRING(strValue, length)
             memcpy(strValue, tokenValue, sizeof(char) * length);
             v->setData(strValue);
             return v;
@@ -514,15 +508,13 @@ namespace TemplateRenderWizard
     bool Render::compare_value(Value *lValue, Value *rValue, Token::Token *token)
     {
         RESET_TOKEN_READER(token);
-        char *cmpValue = (char*) malloc(sizeof(char) * 4);
-        memset(cmpValue, 0, sizeof(char) * 4);
+        INIT_CHAR_STRING(cmpValue, 4)
         token->getReader()->read(cmpValue, 4);
 
         if (lValue->getType() == ValueType::String && ctype_digits(lValue->getData<char*>())) {
             const char* src = lValue->getData<char*>();
             int size = strlen(src) + 1;
-            char* dst = (char*) malloc(sizeof(char) * size);
-            memset(dst, 0, sizeof(char) * size);
+            INIT_CHAR_STRING(dst, size)
             memcpy(dst, src, sizeof(char) * (size - 1));
             Value* v;
             v = new Value();
@@ -533,8 +525,7 @@ namespace TemplateRenderWizard
         if (rValue->getType() == ValueType::String && ctype_digits(rValue->getData<char*>())) {
             const char* src = rValue->getData<char*>();
             int size = strlen(src) + 1;
-            char* dst = (char*) malloc(sizeof(char) * size);
-            memset(dst, 0, sizeof(char) * size);
+            INIT_CHAR_STRING(dst, size)
             memcpy(dst, src, sizeof(char) * (size - 1));
             Value* v;
             v = new Value();
@@ -590,8 +581,7 @@ namespace TemplateRenderWizard
             }
         }
 
-        char* opValue = (char*) malloc(sizeof(char) * 3);
-        memset(opValue, 0, sizeof(char) * 3);
+        INIT_CHAR_STRING(opValue, 3)
         RESET_TOKEN_READER(expr->getToken());
         expr->getToken()->getReader()->read(opValue, 3);
 
@@ -599,8 +589,7 @@ namespace TemplateRenderWizard
             if (lValue->getType() == ValueType::String && ctype_digits(lValue->getData<char*>())) {
                 const char* src = lValue->getData<char*>();
                 int size = strlen(src) + 1;
-                char* dst = (char*) malloc(sizeof(char) * size);
-                memset(dst, 0, sizeof(char) * size);
+                INIT_CHAR_STRING(dst, size)
                 memcpy(dst, src, sizeof(char) * (size - 1));
                 Value* v;
                 v = new Value();
@@ -611,8 +600,7 @@ namespace TemplateRenderWizard
             if (rValue->getType() == ValueType::String && ctype_digits(rValue->getData<char*>())) {
                 const char* src = rValue->getData<char*>();
                 int size = strlen(src) + 1;
-                char* dst = (char*) malloc(sizeof(char) * size);
-                memset(dst, 0, sizeof(char) * size);
+                INIT_CHAR_STRING(dst, size)
                 memcpy(dst, src, sizeof(char) * (size - 1));
                 Value* v;
                 v = new Value();
@@ -632,8 +620,7 @@ namespace TemplateRenderWizard
             if (lValue->getType() == ValueType::String && ctype_digits(lValue->getData<char*>())) {
                 const char* src = lValue->getData<char*>();
                 int size = strlen(src) + 1;
-                char* dst = (char*) malloc(sizeof(char) * size);
-                memset(dst, 0, sizeof(char) * size);
+                INIT_CHAR_STRING(dst, size)
                 memcpy(dst, src, sizeof(char) * (size - 1));
                 Value* v;
                 v = new Value();
@@ -644,8 +631,7 @@ namespace TemplateRenderWizard
             if (rValue->getType() == ValueType::String && ctype_digits(rValue->getData<char*>())) {
                 const char* src = rValue->getData<char*>();
                 int size = strlen(src) + 1;
-                char* dst = (char*) malloc(sizeof(char) * size);
-                memset(dst, 0, sizeof(char) * size);
+                INIT_CHAR_STRING(dst, size)
                 memcpy(dst, src, sizeof(char) * (size - 1));
                 Value* v;
                 v = new Value();
