@@ -11,6 +11,9 @@
 #include <trw/expression.h>
 #include <stack>
 
+#define TRW_RENDER_MEMORY_BLOCK_SIZE 4096
+#define TRW_RENDER_BUFFER_SIZE 1024
+
 namespace TemplateRenderWizard
 {
     class Render
