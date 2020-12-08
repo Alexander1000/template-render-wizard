@@ -444,9 +444,8 @@ namespace TemplateRenderWizard
                 if (t->getType() == TemplateRenderWizard::Token::Type::MathOperationType) {
                     char* strMathOp = (char*) malloc(sizeof(char) * 4);
                     memset(strMathOp, 0, sizeof(char) * 4);
-                    auto reader = (IOBuffer::IOMemoryBuffer*) t->getReader();
-                    reader->setPosition(0);
-                    reader->read(strMathOp, 4);
+                    RESET_TOKEN_READER(t);
+                    t->getReader()->read(strMathOp, 4);
                     if (strcmp(strMathOp, "+") == 0 || strcmp(strMathOp, "-") == 0) {
                         lReturnElements->pop_back();
                         it++;
@@ -512,12 +511,12 @@ namespace TemplateRenderWizard
         return nullptr;
     }
 
-    bool Render::compare_value(Value *lValue, Value *rValue, Token::Token *token) {
-        auto reader = (IOBuffer::IOMemoryBuffer*) token->getReader();
-        reader->setPosition(0);
+    bool Render::compare_value(Value *lValue, Value *rValue, Token::Token *token)
+    {
+        RESET_TOKEN_READER(token);
         char *cmpValue = (char*) malloc(sizeof(char) * 4);
         memset(cmpValue, 0, sizeof(char) * 4);
-        reader->read(cmpValue, 4);
+        token->getReader()->read(cmpValue, 4);
 
         if (lValue->getType() == ValueType::String && ctype_digits(lValue->getData<char*>())) {
             const char* src = lValue->getData<char*>();
@@ -593,9 +592,8 @@ namespace TemplateRenderWizard
 
         char* opValue = (char*) malloc(sizeof(char) * 3);
         memset(opValue, 0, sizeof(char) * 3);
-        auto reader = (IOBuffer::IOMemoryBuffer*) expr->getToken()->getReader();
-        reader->setPosition(0);
-        reader->read(opValue, 3);
+        RESET_TOKEN_READER(expr->getToken());
+        expr->getToken()->getReader()->read(opValue, 3);
 
         if (strcmp(opValue, "+") == 0) {
             if (lValue->getType() == ValueType::String && ctype_digits(lValue->getData<char*>())) {
