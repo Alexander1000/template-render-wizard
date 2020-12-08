@@ -18,7 +18,7 @@ namespace TemplateRenderWizard
         charStream = new IOBuffer::CharStream(fileReader);
         this->stream = new TemplateRenderWizard::Stream(charStream);
         this->tree = tree;
-        this->tokens = new std::stack<Token::Token*>;
+        this->tokenStack = new std::stack<Token::Token*>;
     }
 
     Render::Render(const char* srcTemplateFile, TemplateRenderWizard::Tree::Tree* tree)
@@ -29,14 +29,14 @@ namespace TemplateRenderWizard
         charStream = new IOBuffer::CharStream(fileReader);
         this->stream = new TemplateRenderWizard::Stream(charStream);
         this->tree = tree;
-        this->tokens = new std::stack<Token::Token*>;
+        this->tokenStack = new std::stack<Token::Token*>;
     }
 
     Render::Render(TemplateRenderWizard::Stream* stream, TemplateRenderWizard::Tree::Tree* tree)
     {
         this->stream = stream;
         this->tree = tree;
-        this->tokens = new std::stack<Token::Token*>;
+        this->tokenStack = new std::stack<Token::Token*>;
     }
 
     IOBuffer::IOMemoryBuffer* Render::toBuffer()
@@ -664,21 +664,5 @@ namespace TemplateRenderWizard
         }
 
         return nullptr;
-    }
-
-    Token::Token* Render::getNextToken()
-    {
-        if (!this->tokens->empty()) {
-            auto token = this->tokens->top();
-            this->tokens->pop();
-            return token;
-        }
-
-        return this->stream->getNextToken();
-    }
-
-    void Render::pushBackToken(Token::Token *token)
-    {
-        this->tokens->push(token);
     }
 }

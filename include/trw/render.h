@@ -17,7 +17,7 @@ namespace TemplateRenderWizard
     {
         TemplateRenderWizard::Tree::Tree* tree;
         TemplateRenderWizard::Stream* stream;
-        std::stack<Token::Token*>* tokens;
+        std::stack<Token::Token*>* tokenStack;
 
         void renderControlExpression(IOBuffer::IOMemoryBuffer*);
         bool ifExpressionControlTag();
