@@ -231,6 +231,7 @@ namespace TemplateRenderWizard
                     int nSize = str->length() + 1;
                     char* newStr = (char*) malloc(sizeof(char) * nSize);
                     memset(newStr, 0, sizeof(char) * nSize);
+                    memcpy(newStr, str->c_str(), (nSize - 1) * sizeof(char));
                     v->setData(newStr);
                     return v;
                 }
@@ -325,8 +326,6 @@ namespace TemplateRenderWizard
                 v = new Value();
                 v->setData(atoi(lValue->getData<char *>()));
                 lValue = v;
-
-                std::cout << "LValue: " << *v->getData<int*>() << std::endl;
             }
 
             if (rValue->getType() == ValueType::String && ctype_digits(rValue->getData<char*>())) {
@@ -339,16 +338,12 @@ namespace TemplateRenderWizard
                 v = new Value();
                 v->setData(atoi(rValue->getData<char *>()));
                 rValue = v;
-
-                std::cout << "RValue: " << *v->getData<int*>() << std::endl;
             }
 
-            std::cout << "Op+" << std::endl;
             if (lValue->getType() == ValueType::Integer && rValue->getType() == ValueType::Integer) {
                 Value* v;
                 v = new Value();
                 v->setData(*lValue->getData<int*>() + *rValue->getData<int*>());
-                std::cout << "Result: " << *v->getData<int*>() << std::endl;
                 return v;
             }
         }
