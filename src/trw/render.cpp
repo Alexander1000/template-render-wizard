@@ -106,7 +106,12 @@ namespace TemplateRenderWizard
 
         if (strcmp(keyword, "if") == 0) {
             // calculate condition
-            this->ifExpressionControlTag();
+            bool result = this->ifExpressionControlTag();
+            if (result) {
+                // todo: render inner block while not be else/endif, and skip block between else-endif
+            } else {
+                // todo: skip inner block between if-else/if-endif
+            }
         }
     }
 
