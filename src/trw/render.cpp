@@ -254,6 +254,7 @@ namespace TemplateRenderWizard
             if ((*it)->getType() == SyntaxElementType::SyntaxTokenType) {
                 auto t = (Token::Token*) (*it)->getData();
                 std::cout << "Token: " << t->getType() << "; Coords (Line:" << t->getLine() << "; Column: " << t->getColumn() << ")" << std::endl;
+                std::cout << "Value: " << this->getValueFromToken(t)->getData<char*>() << std::endl;
                 isExists = true;
                 break;
             }
@@ -274,7 +275,9 @@ namespace TemplateRenderWizard
                 if (t->getType() == TemplateRenderWizard::Token::Type::MathOperationType) {
                     char* strMathOp = (char*) malloc(sizeof(char) * 4);
                     memset(strMathOp, 0, sizeof(char) * 4);
-                    t->getReader()->read(strMathOp, 4);
+                    auto reader = (IOBuffer::IOMemoryBuffer*) t->getReader();
+                    reader->setPosition(0);
+                    reader->read(strMathOp, 4);
                     if (strcmp(strMathOp, "+") == 0 || strcmp(strMathOp, "-") == 0) {
                         lReturnElements->pop_back();
                         it++;
