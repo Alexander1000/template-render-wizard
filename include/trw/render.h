@@ -24,7 +24,6 @@ namespace TemplateRenderWizard
         Value* get_value(std::list<Token::Token*>*);
         Value* getValueFromToken(Token::Token*);
         bool compare_value(Value*, Value*, Token::Token*);
-        Expression* make_expression(std::list<SyntaxElement*>*);
         Value* calc_expr(Expression*);
 
         std::list<SyntaxElement*>* filter_low_priority_operations(std::list<SyntaxElement*>*);

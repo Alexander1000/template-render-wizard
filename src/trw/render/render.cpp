@@ -554,19 +554,6 @@ namespace TemplateRenderWizard
         return false;
     }
 
-    Expression* Render::make_expression(std::list<SyntaxElement*>* lElement)
-    {
-        for (auto it = lElement->begin(); it != lElement->end(); it++) {
-            if ((*it)->getType() == SyntaxTokenType) {
-                Token::Token* t = (Token::Token*)((*it)->getData());
-                if (t->getType() == Token::RoundBracketOpenType) {
-                    //
-                }
-            }
-        }
-        return nullptr;
-    }
-
     Value* Render::calc_expr(Expression *expr) {
         if (expr->getToken()->getType() != Token::Type::MathOperationType) {
             throw new UnexpectedToken;
