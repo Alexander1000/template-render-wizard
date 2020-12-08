@@ -27,6 +27,8 @@ namespace TemplateRenderWizard
 
         std::list<SyntaxElement*>* filter_low_priority_operations(std::list<SyntaxElement*>*);
 
+        bool is_unprocessed_token_exist(std::list<SyntaxElement*>*);
+
     public:
         Render(const char*, TemplateRenderWizard::Tree::Tree*);
         Render(std::string*, TemplateRenderWizard::Tree::Tree*);

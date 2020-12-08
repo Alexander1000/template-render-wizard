@@ -230,11 +230,34 @@ namespace TemplateRenderWizard
         }
 
         // low priority operations
-        lElement = this->filter_low_priority_operations(lSecondElement);
+        int tryCount = 0;
+        lElement = lSecondElement;
+        do {
+            if (tryCount == 100) {
+                std::cout << "Loop detected" << std::endl;
+                break;
+            }
+            lElement = this->filter_low_priority_operations(lElement);
+            tryCount++;
+        } while(this->is_unprocessed_token_exist(lElement));
 
         // do analyze and separate by expressions
 
         return nullptr;
+    }
+
+    bool Render::is_unprocessed_token_exist(std::list<SyntaxElement*>* lElements)
+    {
+        bool isExists = false;
+
+        for (auto it = lElements->begin(); it != lElements->end(); it++) {
+            if ((*it)->getType() == SyntaxElementType::SyntaxTokenType) {
+                isExists = true;
+                break;
+            }
+        }
+
+        return isExists;
     }
 
     std::list<SyntaxElement*>* Render::filter_low_priority_operations(std::list<SyntaxElement*>* lElements)
