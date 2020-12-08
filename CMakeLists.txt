@@ -24,7 +24,7 @@ set(TRW_SHARED_SOURCES
     src/trw/tokens/expression_value.cpp
     src/trw/leaf_element.cpp
     src/trw/tree_parameters.cpp
-    src/trw/render.cpp
+    src/trw/render/render.cpp
     src/trw/value.cpp
     src/trw/expression.cpp
     src/trw/utils/ctype_digits.cpp
