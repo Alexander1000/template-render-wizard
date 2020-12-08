@@ -553,65 +553,17 @@ namespace TemplateRenderWizard
         expr->getToken()->getReader()->read(opValue, 3);
 
         if (strcmp(opValue, "+") == 0) {
-            if (lValue->getType() == ValueType::String && ctype_digits(lValue->getData<char*>())) {
-                const char* src = lValue->getData<char*>();
-                int size = strlen(src) + 1;
-                INIT_CHAR_STRING(dst, size)
-                memcpy(dst, src, sizeof(char) * (size - 1));
-                Value* v;
-                v = new Value();
-                v->setData(atoi(lValue->getData<char *>()));
-                lValue = v;
-            }
-
-            if (rValue->getType() == ValueType::String && ctype_digits(rValue->getData<char*>())) {
-                const char* src = rValue->getData<char*>();
-                int size = strlen(src) + 1;
-                INIT_CHAR_STRING(dst, size)
-                memcpy(dst, src, sizeof(char) * (size - 1));
-                Value* v;
-                v = new Value();
-                v->setData(atoi(rValue->getData<char *>()));
-                rValue = v;
-            }
-
-            if (lValue->getType() == ValueType::Integer && rValue->getType() == ValueType::Integer) {
-                Value* v;
-                v = new Value();
-                v->setData(*lValue->getData<int*>() + *rValue->getData<int*>());
-                return v;
-            }
+            Value* v;
+            v = new Value();
+            v->setData(cast_value_to_int(lValue) + cast_value_to_int(rValue));
+            return v;
         }
 
         if (strcmp(opValue, "*") == 0) {
-            if (lValue->getType() == ValueType::String && ctype_digits(lValue->getData<char*>())) {
-                const char* src = lValue->getData<char*>();
-                int size = strlen(src) + 1;
-                INIT_CHAR_STRING(dst, size)
-                memcpy(dst, src, sizeof(char) * (size - 1));
-                Value* v;
-                v = new Value();
-                v->setData(atoi(lValue->getData<char *>()));
-                lValue = v;
-            }
-
-            if (rValue->getType() == ValueType::String && ctype_digits(rValue->getData<char*>())) {
-                const char* src = rValue->getData<char*>();
-                int size = strlen(src) + 1;
-                INIT_CHAR_STRING(dst, size)
-                memcpy(dst, src, sizeof(char) * (size - 1));
-                Value* v;
-                v = new Value();
-                v->setData(atoi(rValue->getData<char *>()));
-                rValue = v;
-            }
-
-            if (lValue->getType() == ValueType::Integer && rValue->getType() == ValueType::Integer) {
-                Value* v;
-                v = new Value();
-                v->setData(*lValue->getData<int*>() * *rValue->getData<int*>());
-                return v;
-            }
+            Value* v;
+            v = new Value();
+            v->setData(cast_value_to_int(lValue) * cast_value_to_int(rValue));
+            return v;
         }
 
         return nullptr;
