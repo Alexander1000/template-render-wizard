@@ -12,4 +12,12 @@ namespace TemplateRenderWizard::Token
     IOBuffer::IOReader* Token::getReader() {
         return this->reader;
     }
+
+    int Token::getColumn() {
+        return this->column;
+    }
+
+    int Token::getLine() {
+        return this->line;
+    }
 }

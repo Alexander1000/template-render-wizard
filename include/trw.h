@@ -10,5 +10,8 @@
 #include <trw/tree_parameters.h>
 #include <trw/render.h>
 #include <trw/position.h>
+#include <trw/value.h>
+#include <trw/expression.h>
+#include <trw/utils.h>
 
 #endif
