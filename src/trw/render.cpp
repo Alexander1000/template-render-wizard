@@ -29,12 +29,14 @@ namespace TemplateRenderWizard
         charStream = new IOBuffer::CharStream(fileReader);
         this->stream = new TemplateRenderWizard::Stream(charStream);
         this->tree = tree;
+        this->tokens = new std::stack<Token::Token*>;
     }
 
     Render::Render(TemplateRenderWizard::Stream* stream, TemplateRenderWizard::Tree::Tree* tree)
     {
         this->stream = stream;
         this->tree = tree;
+        this->tokens = new std::stack<Token::Token*>;
     }
 
     IOBuffer::IOMemoryBuffer* Render::toBuffer()
@@ -44,7 +46,7 @@ namespace TemplateRenderWizard
         char* tBuffer = (char*) malloc(sizeof(char) * TRW_RENDER_BUFFER_SIZE);
 
         TemplateRenderWizard::Token::Token* token;
-        token = this->stream->getNextToken();
+        token = this->getNextToken();
 
         while (token != nullptr) {
             switch (token->getType()) {
@@ -85,7 +87,7 @@ namespace TemplateRenderWizard
                 }
             }
 
-            token = this->stream->getNextToken();
+            token = this->getNextToken();
         }
 
         free(tBuffer);
@@ -110,7 +112,7 @@ namespace TemplateRenderWizard
             // calculate condition
             bool result = this->ifExpressionControlTag();
             if (result) {
-                token = this->stream->getNextToken();
+                token = this->getNextToken();
                 char* tBuffer = (char*) malloc(sizeof(char) * TRW_RENDER_BUFFER_SIZE);
 
                 bool skipBlock = false;
@@ -187,7 +189,7 @@ namespace TemplateRenderWizard
                     token = this->getNextToken();
                 }
             } else {
-                token = this->stream->getNextToken();
+                token = this->getNextToken();
                 char* tBuffer = (char*) malloc(sizeof(char) * TRW_RENDER_BUFFER_SIZE);
 
                 bool skipBlock = true;
@@ -271,11 +273,11 @@ namespace TemplateRenderWizard
         std::list<TemplateRenderWizard::Token::Token*> tokens;
 
         TemplateRenderWizard::Token::Token* token;
-        token = this->stream->getNextToken();
+        token = this->getNextToken();
 
         while (token->getType() != TemplateRenderWizard::Token::Type::CloseControlTagType) {
             tokens.push_back(token);
-            token = this->stream->getNextToken();
+            token = this->getNextToken();
         }
 
         bool leftSide = true;
