@@ -229,11 +229,45 @@ namespace TemplateRenderWizard
             lSecondElement->push_back(*it);
         }
 
-        // this->make_expression(&lElement);
+        // low priority operations
+        lElement = this->filter_low_priority_operations(lSecondElement);
 
         // do analyze and separate by expressions
 
         return nullptr;
+    }
+
+    std::list<SyntaxElement*>* Render::filter_low_priority_operations(std::list<SyntaxElement*>* lElements)
+    {
+        std::list<SyntaxElement*>* lReturnElements;
+        lReturnElements = new std::list<SyntaxElement*>;
+        SyntaxElement* prevElement = nullptr;
+
+        for (auto it = lElements->begin(); it != lElements->end(); it++) {
+            if ((*it)->getType() == SyntaxElementType::SyntaxTokenType) {
+                auto t = (Token::Token*) (*it)->getData();
+                if (t->getType() == TemplateRenderWizard::Token::Type::MathOperationType) {
+                    char* strMathOp = (char*) malloc(sizeof(char) * 4);
+                    memset(strMathOp, 0, sizeof(char) * 4);
+                    t->getReader()->read(strMathOp, 4);
+                    if (strcmp(strMathOp, "+") == 0 || strcmp(strMathOp, "-") == 0) {
+                        lReturnElements->pop_back();
+                        it++;
+                        SyntaxElement* rValue = *it;
+                        Expression* expr;
+                        expr = new Expression(prevElement, rValue, t);
+                        prevElement = new SyntaxElement(this->calc_expr(expr));
+                        lReturnElements->push_back(prevElement);
+                        continue;
+                    }
+                }
+            }
+
+            prevElement = *it;
+            lReturnElements->push_back(*it);
+        }
+
+        return lReturnElements;
     }
 
     Value* Render::getValueFromToken(Token::Token *token) {

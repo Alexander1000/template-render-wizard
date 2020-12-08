@@ -25,6 +25,8 @@ namespace TemplateRenderWizard
         Expression* make_expression(std::list<SyntaxElement*>*);
         Value* calc_expr(Expression*);
 
+        std::list<SyntaxElement*>* filter_low_priority_operations(std::list<SyntaxElement*>*);
+
     public:
         Render(const char*, TemplateRenderWizard::Tree::Tree*);
         Render(std::string*, TemplateRenderWizard::Tree::Tree*);
