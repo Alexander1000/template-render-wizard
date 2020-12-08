@@ -200,9 +200,33 @@ namespace TemplateRenderWizard
             }
         }
 
+        std::list<SyntaxElement*>* lSecondElement;
+        lSecondElement = new std::list<SyntaxElement*>;
+
         // check operations * and /
+        SyntaxElement* prevElement = nullptr;
         for (auto it = lElement->begin(); it != lElement->end(); it++) {
-            // todo:
+            if ((*it)->getType() == SyntaxElementType::SyntaxTokenType) {
+                auto t = (Token::Token*) (*it)->getData();
+                if (t->getType() == TemplateRenderWizard::Token::Type::MathOperationType) {
+                    char* strMathOp = (char*) malloc(sizeof(char) * 4);
+                    memset(strMathOp, 0, sizeof(char) * 4);
+                    t->getReader()->read(strMathOp, 4);
+                    if (strcmp(strMathOp, "*") == 0 || strcmp(strMathOp, "/") == 0) {
+                        lSecondElement->pop_back();
+                        it++;
+                        SyntaxElement* rValue = *it;
+                        Expression* expr;
+                        expr = new Expression(prevElement, rValue, t);
+                        prevElement = new SyntaxElement(this->calc_expr(expr));
+                        lSecondElement->push_back(prevElement);
+                        continue;
+                    }
+                }
+            }
+
+            prevElement = *it;
+            lSecondElement->push_back(*it);
         }
 
         // this->make_expression(&lElement);
@@ -346,6 +370,10 @@ namespace TemplateRenderWizard
                 v->setData(*lValue->getData<int*>() + *rValue->getData<int*>());
                 return v;
             }
+        }
+
+        if (strcmp(opValue, "*") == 0) {
+            std::cout << "Op*" << std::endl;
         }
 
         return nullptr;
