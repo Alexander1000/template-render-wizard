@@ -241,7 +241,19 @@ namespace TemplateRenderWizard
             tryCount++;
         } while(this->is_unprocessed_token_exist(lElement));
 
-        // do analyze and separate by expressions
+        count = 0;
+        for (auto it = lElement->begin(); it != lElement->end(); it++) {
+            count++;
+        }
+
+        if (count == 1) {
+            SyntaxElement* el = (*lElement->begin());
+            if (el->getType() == SyntaxValueType) {
+                return (Value*) el->getData();
+            }
+        }
+
+        throw new UnexpectedToken;
 
         return nullptr;
     }
