@@ -252,6 +252,8 @@ namespace TemplateRenderWizard
 
         for (auto it = lElements->begin(); it != lElements->end(); it++) {
             if ((*it)->getType() == SyntaxElementType::SyntaxTokenType) {
+                auto t = (Token::Token*) (*it)->getData();
+                std::cout << "Token: " << t->getType() << "; Coords (Line:" << t->getLine() << "; Column: " << t->getColumn() << ")" << std::endl;
                 isExists = true;
                 break;
             }
