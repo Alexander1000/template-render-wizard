@@ -38,6 +38,8 @@ namespace TemplateRenderWizard
         char* getDataTyped(char* nothing);
         float* getDataTyped(float* nothing);
     };
+
+    int cast_value_to_int(Value*);
 }
 
 #endif
