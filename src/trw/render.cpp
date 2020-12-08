@@ -337,7 +337,9 @@ namespace TemplateRenderWizard
 
         char* opValue = (char*) malloc(sizeof(char) * 3);
         memset(opValue, 0, sizeof(char) * 3);
-        expr->getToken()->getReader()->read(opValue, 3);
+        auto reader = (IOBuffer::IOMemoryBuffer*) expr->getToken()->getReader();
+        reader->setPosition(0);
+        reader->read(opValue, 3);
 
         if (strcmp(opValue, "+") == 0) {
             if (lValue->getType() == ValueType::String && ctype_digits(lValue->getData<char*>())) {
@@ -373,7 +375,36 @@ namespace TemplateRenderWizard
         }
 
         if (strcmp(opValue, "*") == 0) {
-            std::cout << "Op*" << std::endl;
+            if (lValue->getType() == ValueType::String && ctype_digits(lValue->getData<char*>())) {
+                const char* src = lValue->getData<char*>();
+                int size = strlen(src) + 1;
+                char* dst = (char*) malloc(sizeof(char) * size);
+                memset(dst, 0, sizeof(char) * size);
+                memcpy(dst, src, sizeof(char) * (size - 1));
+                Value* v;
+                v = new Value();
+                v->setData(atoi(lValue->getData<char *>()));
+                lValue = v;
+            }
+
+            if (rValue->getType() == ValueType::String && ctype_digits(rValue->getData<char*>())) {
+                const char* src = rValue->getData<char*>();
+                int size = strlen(src) + 1;
+                char* dst = (char*) malloc(sizeof(char) * size);
+                memset(dst, 0, sizeof(char) * size);
+                memcpy(dst, src, sizeof(char) * (size - 1));
+                Value* v;
+                v = new Value();
+                v->setData(atoi(rValue->getData<char *>()));
+                rValue = v;
+            }
+
+            if (lValue->getType() == ValueType::Integer && rValue->getType() == ValueType::Integer) {
+                Value* v;
+                v = new Value();
+                v->setData(*lValue->getData<int*>() * *rValue->getData<int*>());
+                return v;
+            }
         }
 
         return nullptr;
