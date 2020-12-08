@@ -9,6 +9,7 @@
 #include <trw/token.h>
 #include <trw/value.h>
 #include <trw/expression.h>
+#include <stack>
 
 namespace TemplateRenderWizard
 {
@@ -16,8 +17,9 @@ namespace TemplateRenderWizard
     {
         TemplateRenderWizard::Tree::Tree* tree;
         TemplateRenderWizard::Stream* stream;
+        std::stack<Token::Token*>* tokens;
 
-        void renderControlExpression();
+        void renderControlExpression(IOBuffer::IOMemoryBuffer*);
         bool ifExpressionControlTag();
         Value* get_value(std::list<Token::Token*>*);
         Value* getValueFromToken(Token::Token*);
@@ -28,6 +30,9 @@ namespace TemplateRenderWizard
         std::list<SyntaxElement*>* filter_low_priority_operations(std::list<SyntaxElement*>*);
 
         bool is_unprocessed_token_exist(std::list<SyntaxElement*>*);
+
+        Token::Token* getNextToken();
+        void pushBackToken(Token::Token*);
 
     public:
         Render(const char*, TemplateRenderWizard::Tree::Tree*);
