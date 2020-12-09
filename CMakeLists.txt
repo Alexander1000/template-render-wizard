@@ -27,6 +27,7 @@ set(TRW_SHARED_SOURCES
     src/trw/render/construct.cpp
     src/trw/render/render.cpp
     src/trw/render/token_stack.cpp
+    src/trw/render/get_value_from_token.cpp
     src/trw/value.cpp
     src/trw/value/cast_value_to_int.cpp
     src/trw/expression.cpp

@@ -397,15 +397,14 @@ namespace TemplateRenderWizard
         return isExists;
     }
 
-    std::list<SyntaxElement*>* Render::filter_low_priority_operations(std::list<SyntaxElement*>* lElements)
-    {
-        std::list<SyntaxElement*>* lReturnElements;
-        lReturnElements = new std::list<SyntaxElement*>;
-        SyntaxElement* prevElement = nullptr;
+    std::list<SyntaxElement*>* Render::filter_low_priority_operations(std::list<SyntaxElement*>* lElements) {
+        std::list<SyntaxElement *> *lReturnElements;
+        lReturnElements = new std::list<SyntaxElement *>;
+        SyntaxElement *prevElement = nullptr;
 
         for (auto it = lElements->begin(); it != lElements->end(); it++) {
             if ((*it)->getType() == SyntaxElementType::SyntaxTokenType) {
-                auto t = (Token::Token*) (*it)->getData();
+                auto t = (Token::Token *) (*it)->getData();
                 if (t->getType() == TemplateRenderWizard::Token::Type::MathOperationType) {
                     INIT_CHAR_STRING(strMathOp, 4)
                     RESET_TOKEN_READER(t);
@@ -413,8 +412,8 @@ namespace TemplateRenderWizard
                     if (strcmp(strMathOp, "+") == 0 || strcmp(strMathOp, "-") == 0) {
                         lReturnElements->pop_back();
                         it++;
-                        SyntaxElement* rValue = *it;
-                        Expression* expr;
+                        SyntaxElement *rValue = *it;
+                        Expression *expr;
                         expr = new Expression(prevElement, rValue, t);
                         prevElement = new SyntaxElement(this->calc_expr(expr));
                         lReturnElements->push_back(prevElement);
@@ -428,48 +427,6 @@ namespace TemplateRenderWizard
         }
 
         return lReturnElements;
-    }
-
-    Value* Render::getValueFromToken(Token::Token *token) {
-        if (token->getType() != TemplateRenderWizard::Token::Type::ExpressionValueType) {
-            throw new UnexpectedToken;
-        }
-
-        INIT_CHAR_STRING(tokenValue, 128)
-        token->getReader()->read(tokenValue, 128);
-
-        auto leafValue = this->tree->get(tokenValue);
-        if (leafValue != nullptr) {
-            switch(leafValue->getType()) {
-                case TemplateRenderWizard::Tree::LeafElementType::LeafElementText: {
-                    auto str = (std::string*) leafValue->getData();
-                    Value* v;
-                    v = new Value();
-                    int nSize = str->length() + 1;
-                    INIT_CHAR_STRING(newStr, nSize)
-                    memcpy(newStr, str->c_str(), (nSize - 1) * sizeof(char));
-                    v->setData(newStr);
-                    return v;
-                }
-                case TemplateRenderWizard::Tree::LeafElementType::LeafElementArray: {
-                    throw new UnexpectedToken;
-                    break;
-                }
-                case TemplateRenderWizard::Tree::LeafElementType::LeafElementObject: {
-                    throw new UnexpectedToken;
-                    break;
-                }
-            }
-        } else {
-            Value* v = new Value;
-            int length = strlen(tokenValue) + 1;
-            INIT_CHAR_STRING(strValue, length)
-            memcpy(strValue, tokenValue, sizeof(char) * length);
-            v->setData(strValue);
-            return v;
-        }
-
-        return nullptr;
     }
 
     bool Render::compare_value(Value *lValue, Value *rValue, Token::Token *token)
