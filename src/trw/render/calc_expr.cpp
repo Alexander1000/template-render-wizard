@@ -8,37 +8,9 @@ namespace TemplateRenderWizard
             throw new UnexpectedToken;
         }
 
-        Value* lValue;
-        switch (expr->getLValue()->getType()) {
-            case SyntaxTokenType: {
-                lValue = this->getValueFromToken((Token::Token*) expr->getLValue()->getData());
-                break;
-            }
-            case SyntaxValueType: {
-                lValue = (Value*) expr->getLValue()->getData();
-                break;
-            }
-            case SyntaxExpressionType: {
-                lValue = this->calc_expr((Expression*) expr->getLValue()->getData());
-                break;
-            }
-        }
+        Value* lValue = this->get_value_from_syntax_element(expr->getLValue());
 
-        Value* rValue;
-        switch (expr->getRValue()->getType()) {
-            case SyntaxTokenType: {
-                rValue = this->getValueFromToken((Token::Token *) expr->getRValue()->getData());
-                break;
-            }
-            case SyntaxValueType: {
-                rValue = (Value*) expr->getRValue()->getData();
-                break;
-            }
-            case SyntaxExpressionType: {
-                rValue = this->calc_expr((Expression*) expr->getRValue()->getData());
-                break;
-            }
-        }
+        Value* rValue = this->get_value_from_syntax_element(expr->getRValue());
 
         INIT_CHAR_STRING(opValue, 3)
         RESET_TOKEN_READER(expr->getToken());

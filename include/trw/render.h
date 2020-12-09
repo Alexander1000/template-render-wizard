@@ -36,6 +36,8 @@ namespace TemplateRenderWizard
         Token::Token* getNextToken();
         void pushBackToken(Token::Token*);
 
+        Value* get_value_from_syntax_element(SyntaxElement*);
+
     public:
         Render(const char*, TemplateRenderWizard::Tree::Tree*);
         Render(std::string*, TemplateRenderWizard::Tree::Tree*);

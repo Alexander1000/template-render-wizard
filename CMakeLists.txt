@@ -25,6 +25,7 @@ set(TRW_SHARED_SOURCES
     src/trw/leaf_element.cpp
     src/trw/tree_parameters.cpp
     src/trw/render/construct.cpp
+    src/trw/render/get_value_from_syntax_element.cpp
     src/trw/render/render.cpp
     src/trw/render/token_stack.cpp
     src/trw/render/get_value_from_token.cpp
