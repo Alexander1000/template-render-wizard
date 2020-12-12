@@ -151,10 +151,10 @@ CppUnitTest::TestCase* testRender_TemplateWithConditions_Positive()
     return t;
 }
 
-CppUnitTest::TestCase* testRender_TemplateWithNestedConditions_Positive()
+CppUnitTest::TestCase* testRender_TemplateWithNestedConditionsCase01_Positive()
 {
     CppUnitTest::TestCase* t = nullptr;
-    t = new CppUnitTest::TestCase("005-template-with-nested-conditions");
+    t = new CppUnitTest::TestCase("005-template-with-nested-conditions-test01");
 
     t->printTitle();
 
@@ -191,6 +191,90 @@ CppUnitTest::TestCase* testRender_TemplateWithNestedConditions_Positive()
     return t;
 }
 
+CppUnitTest::TestCase* testRender_TemplateWithNestedConditionsCase02_Positive()
+{
+    CppUnitTest::TestCase* t = nullptr;
+    t = new CppUnitTest::TestCase("005-template-with-nested-conditions-test02");
+
+    t->printTitle();
+
+    TemplateRenderWizard::Tree::Tree tree;
+    tree.scan("./fixtures/005-values-test02.yaml");
+
+    TemplateRenderWizard::Render* render;
+    render = new TemplateRenderWizard::Render("./fixtures/005-text-with-nested-conditions.tpl", &tree);
+
+    IOBuffer::IOMemoryBuffer* buffer = render->toBuffer();
+
+    INIT_CHAR_STRING(tBuffer, 1024);
+    buffer->read(tBuffer, 1024);
+
+    CppUnitTest::assertEquals(
+            t,
+            "<html>\n"
+            "<head>\n"
+            "    <title>dankovtsev.pro</title>\n"
+            "</head>\n"
+            "<body>\n"
+            "    <h1>Hello on </h1>\n"
+            "    <div>\n"
+            "        \n" // if-else expr
+            "            Go to login page: <a href=\"/login\">Login</a>\n"
+            "            \n" // if site.redesign
+            "                <div>test-content</div>\n"
+            "            \n" // endif
+            "        \n" // endif
+            "    </div>\n"
+            "</body>\n"
+            "</html>\n",
+            tBuffer
+    );
+
+    t->finish();
+    return t;
+}
+
+CppUnitTest::TestCase* testRender_TemplateWithNestedConditionsCase03_Positive()
+{
+    CppUnitTest::TestCase* t = nullptr;
+    t = new CppUnitTest::TestCase("005-template-with-nested-conditions-test03");
+
+    t->printTitle();
+
+    TemplateRenderWizard::Tree::Tree tree;
+    tree.scan("./fixtures/005-values-test03.yaml");
+
+    TemplateRenderWizard::Render* render;
+    render = new TemplateRenderWizard::Render("./fixtures/005-text-with-nested-conditions.tpl", &tree);
+
+    IOBuffer::IOMemoryBuffer* buffer = render->toBuffer();
+
+    INIT_CHAR_STRING(tBuffer, 1024);
+    buffer->read(tBuffer, 1024);
+
+    CppUnitTest::assertEquals(
+            t,
+            "<html>\n"
+            "<head>\n"
+            "    <title>dankovtsev.pro</title>\n"
+            "</head>\n"
+            "<body>\n"
+            "    <h1>Hello on Alexander1000 home page</h1>\n"
+            "    <div>\n"
+            "        \n" // if-else expr
+            "            Go to login page: <a href=\"/login\">Login</a>\n"
+            "            \n" // if site.redesign
+            "        \n" // endif
+            "    </div>\n"
+            "</body>\n"
+            "</html>\n",
+            tBuffer
+    );
+
+    t->finish();
+    return t;
+}
+
 int main(int argc, char** argv) {
     CppUnitTest::TestSuite testSuite;
 
@@ -202,7 +286,9 @@ int main(int argc, char** argv) {
 
     testSuite.addTestCase(testRender_TemplateWithConditions_Positive());
 
-    testSuite.addTestCase(testRender_TemplateWithNestedConditions_Positive());
+    testSuite.addTestCase(testRender_TemplateWithNestedConditionsCase01_Positive());
+    testSuite.addTestCase(testRender_TemplateWithNestedConditionsCase02_Positive());
+    testSuite.addTestCase(testRender_TemplateWithNestedConditionsCase03_Positive());
 
     testSuite.printTotal();
 
