@@ -151,6 +151,46 @@ CppUnitTest::TestCase* testRender_TemplateWithConditions_Positive()
     return t;
 }
 
+CppUnitTest::TestCase* testRender_TemplateWithNestedConditions_Positive()
+{
+    CppUnitTest::TestCase* t = nullptr;
+    t = new CppUnitTest::TestCase("005-template-with-nested-conditions");
+
+    t->printTitle();
+
+    TemplateRenderWizard::Tree::Tree tree;
+    tree.scan("./fixtures/005-values-test01.yaml");
+
+    TemplateRenderWizard::Render* render;
+    render = new TemplateRenderWizard::Render("./fixtures/005-text-with-nested-conditions.tpl", &tree);
+
+    IOBuffer::IOMemoryBuffer* buffer = render->toBuffer();
+
+    INIT_CHAR_STRING(tBuffer, 1024);
+    buffer->read(tBuffer, 1024);
+
+    CppUnitTest::assertEquals(
+        t,
+        "<html>\n"
+        "<head>\n"
+        "    <title>dankovtsev.pro[Alexander1000]</title>\n"
+        "</head>\n"
+        "<body>\n"
+        "    <h1>Hello on </h1>\n"
+        "    <div>\n"
+        "        \n" // if expr
+        "            <a href=\"/logout\">Выйти[Alexander1000]</a>\n"
+        "        \n" // else
+        "    </div>\n"
+        "</body>\n"
+        "</html>\n",
+        tBuffer
+    );
+
+    t->finish();
+    return t;
+}
+
 int main(int argc, char** argv) {
     CppUnitTest::TestSuite testSuite;
 
@@ -161,6 +201,8 @@ int main(int argc, char** argv) {
     testSuite.addTestCase(testRender_TemplateAndValues_Positive());
 
     testSuite.addTestCase(testRender_TemplateWithConditions_Positive());
+
+    testSuite.addTestCase(testRender_TemplateWithNestedConditions_Positive());
 
     testSuite.printTotal();
 
