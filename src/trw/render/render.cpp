@@ -61,7 +61,6 @@ namespace TemplateRenderWizard
             bool result = this->ifExpressionControlTag();
             if (result) {
                 token = this->getNextToken();
-                char* tBuffer = (char*) malloc(sizeof(char) * TRW_RENDER_BUFFER_SIZE);
 
                 bool skipBlock = false;
                 bool stopRender = false;
@@ -120,7 +119,6 @@ namespace TemplateRenderWizard
                 }
             } else {
                 token = this->getNextToken();
-                char* tBuffer = (char*) malloc(sizeof(char) * TRW_RENDER_BUFFER_SIZE);
 
                 bool skipBlock = true;
                 bool stopRender = false;
@@ -225,7 +223,6 @@ namespace TemplateRenderWizard
         }
 
         if (count == 3) {
-            Expression* expr;
             auto it = tokens->begin();
             Token::Token* t1 = *it;
             it++;
@@ -322,8 +319,6 @@ namespace TemplateRenderWizard
         }
 
         throw new UnexpectedToken;
-
-        return nullptr;
     }
 
     bool Render::is_unprocessed_token_exist(std::list<SyntaxElement*>* lElements)
@@ -410,7 +405,5 @@ namespace TemplateRenderWizard
         }
 
         throw new UnexpectedToken;
-
-        return false;
     }
 }

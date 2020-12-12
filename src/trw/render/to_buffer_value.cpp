@@ -1,5 +1,4 @@
 #include <trw.h>
-#include <iostream>
 
 namespace TemplateRenderWizard
 {
