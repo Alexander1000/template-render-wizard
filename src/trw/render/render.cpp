@@ -18,13 +18,7 @@ namespace TemplateRenderWizard
         while (token != nullptr) {
             switch (token->getType()) {
                 case TemplateRenderWizard::Token::Type::PlainTextType: {
-                    IOBuffer::IOReader* reader = token->getReader();
-                    int nSizeRead = 0;
-                    do {
-                        memset(tBuffer, 0, sizeof(char) * TRW_RENDER_BUFFER_SIZE);
-                        nSizeRead = reader->read(tBuffer, TRW_RENDER_BUFFER_SIZE);
-                        buffer->write(tBuffer, nSizeRead);
-                    } while (nSizeRead == TRW_RENDER_BUFFER_SIZE);
+                    this->to_buffer_plain_text(buffer, token);
                     break;
                 }
                 case TemplateRenderWizard::Token::Type::PlainValueType: {
@@ -90,13 +84,7 @@ namespace TemplateRenderWizard
                             if (skipBlock) {
                                 break;
                             }
-                            IOBuffer::IOReader* reader = token->getReader();
-                            int nSizeRead = 0;
-                            do {
-                                memset(tBuffer, 0, sizeof(char) * TRW_RENDER_BUFFER_SIZE);
-                                nSizeRead = reader->read(tBuffer, TRW_RENDER_BUFFER_SIZE);
-                                buffer->write(tBuffer, nSizeRead);
-                            } while (nSizeRead == TRW_RENDER_BUFFER_SIZE);
+                            this->to_buffer_plain_text(buffer, token);
                             break;
                         }
                         case TemplateRenderWizard::Token::Type::PlainValueType: {
@@ -167,13 +155,7 @@ namespace TemplateRenderWizard
                             if (skipBlock) {
                                 break;
                             }
-                            IOBuffer::IOReader* reader = token->getReader();
-                            int nSizeRead = 0;
-                            do {
-                                memset(tBuffer, 0, sizeof(char) * TRW_RENDER_BUFFER_SIZE);
-                                nSizeRead = reader->read(tBuffer, TRW_RENDER_BUFFER_SIZE);
-                                buffer->write(tBuffer, nSizeRead);
-                            } while (nSizeRead == TRW_RENDER_BUFFER_SIZE);
+                            this->to_buffer_plain_text(buffer, token);
                             break;
                         }
                         case TemplateRenderWizard::Token::Type::PlainValueType: {

@@ -30,6 +30,7 @@ set(TRW_SHARED_SOURCES
     src/trw/render/token_stack.cpp
     src/trw/render/get_value_from_token.cpp
     src/trw/render/calc_expr.cpp
+    src/trw/render/to_buffer_plain_text.cpp
     src/trw/value.cpp
     src/trw/value/cast_value_to_int.cpp
     src/trw/expression.cpp

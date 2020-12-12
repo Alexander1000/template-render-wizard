@@ -38,6 +38,8 @@ namespace TemplateRenderWizard
 
         Value* get_value_from_syntax_element(SyntaxElement*);
 
+        void to_buffer_plain_text(IOBuffer::IOBuffer* buffer, Token::Token* token);
+
     public:
         Render(const char*, TemplateRenderWizard::Tree::Tree*);
         Render(std::string*, TemplateRenderWizard::Tree::Tree*);
