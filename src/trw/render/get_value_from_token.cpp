@@ -1,4 +1,5 @@
 #include <trw.h>
+#include <iostream>
 
 namespace TemplateRenderWizard
 {
@@ -9,6 +10,7 @@ namespace TemplateRenderWizard
             allow = true;
         }
         if (!allow) {
+            std::cout << "Line: " << token->getLine() << "; Column: " << token->getColumn() << std::endl;
             throw new UnexpectedToken;
         }
 
@@ -20,6 +22,7 @@ namespace TemplateRenderWizard
             auto leafValue = this->tree->get(tokenValue);
             if (leafValue != nullptr) {
                 if (leafValue->getType() != TemplateRenderWizard::Tree::LeafElementType::LeafElementText) {
+                    std::cout << "Unexpected leaf" << std::endl;
                     throw new UnexpectedToken;
                 }
 

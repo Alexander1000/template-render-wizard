@@ -50,6 +50,7 @@ namespace TemplateRenderWizard
         token = this->getNextToken();
 
         if (token->getType() != TemplateRenderWizard::Token::Type::KeywordType) {
+            std::cout << "Line: " << token->getLine() << "; Column: " << token->getColumn() << std::endl;
             throw new UnexpectedToken;
         }
 
@@ -206,6 +207,7 @@ namespace TemplateRenderWizard
             }
         }
 
+        std::cout << "Line: " << token->getLine() << "; Column: " << token->getColumn() << std::endl;
         throw new UnexpectedToken;
     }
 
@@ -292,6 +294,7 @@ namespace TemplateRenderWizard
             }
         }
 
+        std::cout << "Line: " << token->getLine() << "; Column: " << token->getColumn() << std::endl;
         throw new UnexpectedToken;
     }
 }

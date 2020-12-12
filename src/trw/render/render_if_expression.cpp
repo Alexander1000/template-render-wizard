@@ -1,4 +1,5 @@
 #include <trw.h>
+#include <iostream>
 
 namespace TemplateRenderWizard
 {
@@ -36,6 +37,7 @@ namespace TemplateRenderWizard
                 case TemplateRenderWizard::Token::Type::OpenControlTagType: {
                     token = this->getNextToken();
                     if (token->getType() != TemplateRenderWizard::Token::Type::KeywordType) {
+                        std::cout << "Line: " << token->getLine() << "; Column: " << token->getColumn() << std::endl;
                         throw new UnexpectedToken;
                     }
                     memset(keyword, 0, sizeof(char) * 32);
@@ -60,6 +62,7 @@ namespace TemplateRenderWizard
                 }
 
                 default: {
+                    std::cout << "Line: " << token->getLine() << "; Column: " << token->getColumn() << std::endl;
                     throw new UnexpectedToken;
                 }
             }

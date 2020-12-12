@@ -1,4 +1,5 @@
 #include <trw.h>
+#include <iostream>
 
 namespace TemplateRenderWizard
 {
@@ -15,6 +16,7 @@ namespace TemplateRenderWizard
                 return strlen(value->getData<char*>()) > 0;
             }
             default: {
+                std::cout << "Unexpected value" << std::endl;
                 throw new UnexpectedToken;
             }
         }

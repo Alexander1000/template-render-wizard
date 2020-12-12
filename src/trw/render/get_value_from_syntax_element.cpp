@@ -1,4 +1,5 @@
 #include <trw.h>
+#include <iostream>
 
 namespace TemplateRenderWizard
 {
@@ -16,6 +17,7 @@ namespace TemplateRenderWizard
             }
         }
 
+        std::cout << "Unexpected syntax element" << std::endl;
         throw new UnexpectedToken;
     }
 }
