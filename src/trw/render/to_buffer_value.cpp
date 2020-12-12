@@ -1,4 +1,5 @@
 #include <trw.h>
+#include <iostream>
 
 namespace TemplateRenderWizard
 {
@@ -28,6 +29,7 @@ namespace TemplateRenderWizard
             }
 
             default: {
+                std::cout << "to_buffer_value.cpp: unexpected value type" << std::endl;
                 throw new UnexpectedToken;
             }
         }

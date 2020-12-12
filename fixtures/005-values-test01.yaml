@@ -1,0 +1,8 @@
+site:
+  title: dankovtsev.pro
+  redesign: true
+  content: test-content
+
+user:
+  name: Alexander1000
+  auth: true

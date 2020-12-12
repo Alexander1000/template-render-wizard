@@ -1,10 +1,12 @@
 #include <trw.h>
+#include <iostream>
 
 namespace TemplateRenderWizard
 {
     Value* Render::calc_expr(Expression *expr)
     {
         if (expr->getToken()->getType() != Token::Type::MathOperationType) {
+            std::cout << "Line: " << expr->getToken()->getLine() << "; Column: " << expr->getToken()->getColumn() << std::endl;
             throw new UnexpectedToken;
         }
 
