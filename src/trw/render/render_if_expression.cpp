@@ -14,8 +14,6 @@ namespace TemplateRenderWizard
 
         int levelNested = 0;
 
-        std::cout << "Result: " << result << std::endl;
-
         while (token != nullptr) {
             switch (token->getType()) {
                 case TemplateRenderWizard::Token::Type::PlainTextType: {
@@ -53,14 +51,8 @@ namespace TemplateRenderWizard
                             this->pushBackToken(token);
                             this->renderControlExpression(buffer);
                         } else {
-                            std::cout << "Level Nested Up" << std::endl;
                             levelNested++;
                             while (token->getType() != TemplateRenderWizard::Token::Type::CloseControlTagType) {
-                                // tokens.push_back(token);
-                                INIT_CHAR_STRING(sToken, 1024)
-                                RESET_TOKEN_READER(token)
-                                token->getReader()->read(sToken, 1024);
-                                std::cout << "Token: " << sToken << std::endl;
                                 token = this->getNextToken();
                             }
                             break;
@@ -69,10 +61,7 @@ namespace TemplateRenderWizard
 
                     if (strcmp(keyword, "else") == 0) {
                         if (levelNested == 0) {
-                            std::cout << "Else nested == 0" << std::endl;
                             skipBlock = result;
-                        } else {
-                            std::cout << "Else nested" << std::endl;
                         }
                         this->getNextToken(); // close tag
                     }
@@ -81,7 +70,6 @@ namespace TemplateRenderWizard
                         if (levelNested == 0) {
                             stopRender = true;
                         } else {
-                            std::cout << "nested endif out" << std::endl;
                             levelNested--;
                         }
                         this->getNextToken(); // close tag
@@ -91,11 +79,6 @@ namespace TemplateRenderWizard
 
                 default: {
                     std::cout << "Line: " << token->getLine() << "; Column: " << token->getColumn() << std::endl;
-                    std::cout << "Type: " << token->getType() << std::endl;
-                    INIT_CHAR_STRING(str, 1024)
-                    RESET_TOKEN_READER(token)
-                    token->getReader()->read(str, 1024);
-                    std::cout << "Value: " << str << std::endl;
                     throw new UnexpectedToken;
                 }
             }
