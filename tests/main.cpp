@@ -152,130 +152,6 @@ CppUnitTest::TestCase* testRender_TemplateWithConditions_Positive()
     return t;
 }
 
-CppUnitTest::TestCase* testRender_TemplateWithNestedConditionsCase01_Positive()
-{
-    CppUnitTest::TestCase* t = nullptr;
-    t = new CppUnitTest::TestCase("005-template-with-nested-conditions-test01");
-
-    t->printTitle();
-
-    TemplateRenderWizard::Tree::Tree tree;
-    tree.scan("./fixtures/005-values-test01.yaml");
-
-    TemplateRenderWizard::Render* render;
-    render = new TemplateRenderWizard::Render("./fixtures/005-text-with-nested-conditions.tpl", &tree);
-
-    IOBuffer::IOMemoryBuffer* buffer = render->toBuffer();
-
-    INIT_CHAR_STRING(tBuffer, 1024);
-    buffer->read(tBuffer, 1024);
-
-    CppUnitTest::assertEquals(
-        t,
-        "<html>\n"
-        "<head>\n"
-        "    <title>dankovtsev.pro[Alexander1000]</title>\n"
-        "</head>\n"
-        "<body>\n"
-        "    <h1>Hello on </h1>\n"
-        "    <div>\n"
-        "        \n" // if expr
-        "            <a href=\"/logout\">Выйти[Alexander1000]</a>\n"
-        "        \n" // else
-        "    </div>\n"
-        "</body>\n"
-        "</html>\n",
-        tBuffer
-    );
-
-    t->finish();
-    return t;
-}
-
-CppUnitTest::TestCase* testRender_TemplateWithNestedConditionsCase02_Positive()
-{
-    CppUnitTest::TestCase* t = nullptr;
-    t = new CppUnitTest::TestCase("005-template-with-nested-conditions-test02");
-
-    t->printTitle();
-
-    TemplateRenderWizard::Tree::Tree tree;
-    tree.scan("./fixtures/005-values-test02.yaml");
-
-    TemplateRenderWizard::Render* render;
-    render = new TemplateRenderWizard::Render("./fixtures/005-text-with-nested-conditions.tpl", &tree);
-
-    IOBuffer::IOMemoryBuffer* buffer = render->toBuffer();
-
-    INIT_CHAR_STRING(tBuffer, 1024);
-    buffer->read(tBuffer, 1024);
-
-    CppUnitTest::assertEquals(
-        t,
-        "<html>\n"
-        "<head>\n"
-        "    <title>dankovtsev.pro</title>\n"
-        "</head>\n"
-        "<body>\n"
-        "    <h1>Hello on </h1>\n"
-        "    <div>\n"
-        "        \n" // if-else expr
-        "            Go to login page: <a href=\"/login\">Login</a>\n"
-        "            \n" // if site.redesign
-        "                <div>test-content</div>\n"
-        "            \n" // endif
-        "        \n" // endif
-        "    </div>\n"
-        "</body>\n"
-        "</html>\n",
-        tBuffer
-    );
-
-    t->finish();
-    return t;
-}
-
-CppUnitTest::TestCase* testRender_TemplateWithNestedConditionsCase03_Positive()
-{
-    CppUnitTest::TestCase* t = nullptr;
-    t = new CppUnitTest::TestCase("005-template-with-nested-conditions-test03");
-
-    t->printTitle();
-
-    TemplateRenderWizard::Tree::Tree tree;
-    tree.scan("./fixtures/005-values-test03.yaml");
-
-    TemplateRenderWizard::Render* render;
-    render = new TemplateRenderWizard::Render("./fixtures/005-text-with-nested-conditions.tpl", &tree);
-
-    IOBuffer::IOMemoryBuffer* buffer = render->toBuffer();
-
-    INIT_CHAR_STRING(tBuffer, 1024);
-    buffer->read(tBuffer, 1024);
-
-    CppUnitTest::assertEquals(
-        t,
-        "<html>\n"
-        "<head>\n"
-        "    <title>dankovtsev.pro</title>\n"
-        "</head>\n"
-        "<body>\n"
-        "    <h1>Hello on Alexander1000 home page</h1>\n"
-        "    <div>\n"
-        "        \n" // if-else expr
-        "            Go to login page: <a href=\"/login\">Login</a>\n"
-        "            \n" // if site.redesign
-        "        \n" // endif
-        "    </div>\n"
-        "</body>\n"
-        "</html>\n",
-        tBuffer
-    );
-
-    t->finish();
-    return t;
-}
-
 CppUnitTest::TestCase* testRender_Template_Positive(char* templateName, char* valuesFile)
 {
     CppUnitTest::TestCase* t = nullptr;
@@ -305,13 +181,9 @@ CppUnitTest::TestCase* testRender_Template_Positive(char* templateName, char* va
     INIT_CHAR_STRING(strFileExpected, 1024)
     sprintf(strFileExpected, "./fixtures/%s.out", fileExpected);
 
-    std::cout << "OutFile: " << strFileExpected << std::endl;
-
     IOBuffer::IOFileReader* fileReader;
     fileReader = new IOBuffer::IOFileReader(strFileExpected);
     fileReader->read(expected, 1024);
-
-    std::cout << "Expected: " << expected << std::endl;
 
     CppUnitTest::assertEquals(t, expected, tBuffer);
 
@@ -370,7 +242,6 @@ void scanTests(CppUnitTest::TestSuite* testSuite) {
             memcpy(strYamlNum, yamlList[j]->d_name, 3 * sizeof(char));
 
             if (strcmp(strTplNum, strYamlNum) == 0) {
-                std::cout << "Link: " << namelist[i]->d_name << "; " << yamlList[j]->d_name << std::endl;
                 testSuite->addTestCase(testRender_Template_Positive(namelist[i]->d_name, yamlList[j]->d_name));
             }
         }
@@ -391,10 +262,6 @@ int main(int argc, char** argv) {
     testSuite.addTestCase(testRender_TemplateAndValues_Positive());
 
     testSuite.addTestCase(testRender_TemplateWithConditions_Positive());
-
-    testSuite.addTestCase(testRender_TemplateWithNestedConditionsCase01_Positive());
-    testSuite.addTestCase(testRender_TemplateWithNestedConditionsCase02_Positive());
-    testSuite.addTestCase(testRender_TemplateWithNestedConditionsCase03_Positive());
 
     scanTests(&testSuite);
 
