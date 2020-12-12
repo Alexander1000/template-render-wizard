@@ -247,7 +247,6 @@ void scanTests(CppUnitTest::TestSuite* testSuite) {
         }
 
         free(namelist[i]);
-        std::cout << std::endl;
     }
     free(namelist);
 }
