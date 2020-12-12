@@ -32,6 +32,7 @@ set(TRW_SHARED_SOURCES
     src/trw/render/calc_expr.cpp
     src/trw/render/to_buffer_plain_text.cpp
     src/trw/render/to_buffer_value.cpp
+    src/trw/render/render_if_expression.cpp
     src/trw/value.cpp
     src/trw/value/cast_value_to_int.cpp
     src/trw/expression.cpp

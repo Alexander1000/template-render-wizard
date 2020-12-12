@@ -22,7 +22,7 @@ namespace TemplateRenderWizard
         TemplateRenderWizard::Stream* stream;
         std::stack<Token::Token*>* tokenStack;
 
-        void renderControlExpression(IOBuffer::IOMemoryBuffer*);
+        void renderControlExpression(IOBuffer::IOBuffer*);
         bool ifExpressionControlTag();
         Value* get_value(std::list<Token::Token*>*);
         Value* getValueFromToken(Token::Token*);
@@ -41,6 +41,8 @@ namespace TemplateRenderWizard
         void to_buffer_plain_text(IOBuffer::IOBuffer* buffer, Token::Token* token);
         void to_buffer_value(IOBuffer::IOBuffer* buffer, Value* value);
         void to_buffer_value(IOBuffer::IOBuffer* buffer, Token::Token* token);
+
+        void render_if_expression(IOBuffer::IOBuffer* buffer, bool result);
 
     public:
         Render(const char*, TemplateRenderWizard::Tree::Tree*);

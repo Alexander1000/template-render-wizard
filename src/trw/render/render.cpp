@@ -44,7 +44,7 @@ namespace TemplateRenderWizard
         return buffer;
     }
 
-    void Render::renderControlExpression(IOBuffer::IOMemoryBuffer* buffer)
+    void Render::renderControlExpression(IOBuffer::IOBuffer* buffer)
     {
         TemplateRenderWizard::Token::Token* token;
         token = this->getNextToken();
@@ -59,123 +59,7 @@ namespace TemplateRenderWizard
         if (strcmp(keyword, "if") == 0) {
             // calculate condition
             bool result = this->ifExpressionControlTag();
-            if (result) {
-                token = this->getNextToken();
-
-                bool skipBlock = false;
-                bool stopRender = false;
-
-                while (token != nullptr) {
-                    switch (token->getType()) {
-                        case TemplateRenderWizard::Token::Type::PlainTextType: {
-                            if (skipBlock) {
-                                break;
-                            }
-                            this->to_buffer_plain_text(buffer, token);
-                            break;
-                        }
-                        case TemplateRenderWizard::Token::Type::PlainValueType: {
-                            if (skipBlock) {
-                                break;
-                            }
-                            this->to_buffer_value(buffer, token);
-                            break;
-                        }
-                        case TemplateRenderWizard::Token::Type::OpenTagValueType: {
-                            break;
-                        }
-                        case TemplateRenderWizard::Token::Type::CloseTagValueType: {
-                            break;
-                        }
-                        case TemplateRenderWizard::Token::Type::OpenControlTagType: {
-                            token = this->getNextToken();
-                            if (token->getType() != TemplateRenderWizard::Token::Type::KeywordType) {
-                                throw new UnexpectedToken;
-                            }
-                            keyword = new char[32];
-                            memset(keyword, 0, sizeof(char) * 32);
-                            token->getReader()->read(keyword, 32);
-
-                            if (strcmp(keyword, "if") == 0) {
-                                this->pushBackToken(token);
-                                this->renderControlExpression(buffer);
-                            }
-                            if (strcmp(keyword, "else") == 0) {
-                                skipBlock = true;
-                                this->getNextToken(); // close tag
-                            }
-                            if (strcmp(keyword, "endif") == 0) {
-                                this->getNextToken(); // close tag
-                                stopRender = true;
-                            }
-                        }
-                    }
-
-                    if (stopRender) {
-                        break;
-                    }
-
-                    token = this->getNextToken();
-                }
-            } else {
-                token = this->getNextToken();
-
-                bool skipBlock = true;
-                bool stopRender = false;
-
-                while (token != nullptr) {
-                    switch (token->getType()) {
-                        case TemplateRenderWizard::Token::Type::PlainTextType: {
-                            if (skipBlock) {
-                                break;
-                            }
-                            this->to_buffer_plain_text(buffer, token);
-                            break;
-                        }
-                        case TemplateRenderWizard::Token::Type::PlainValueType: {
-                            if (skipBlock) {
-                                break;
-                            }
-                            this->to_buffer_value(buffer, token);
-                            break;
-                        }
-                        case TemplateRenderWizard::Token::Type::OpenTagValueType: {
-                            break;
-                        }
-                        case TemplateRenderWizard::Token::Type::CloseTagValueType: {
-                            break;
-                        }
-                        case TemplateRenderWizard::Token::Type::OpenControlTagType: {
-                            token = this->getNextToken();
-                            if (token->getType() != TemplateRenderWizard::Token::Type::KeywordType) {
-                                throw new UnexpectedToken;
-                            }
-                            keyword = new char[32];
-                            memset(keyword, 0, sizeof(char) * 32);
-                            token->getReader()->read(keyword, 32);
-
-                            if (strcmp(keyword, "if") == 0) {
-                                this->pushBackToken(token);
-                                this->renderControlExpression(buffer);
-                            }
-                            if (strcmp(keyword, "else") == 0) {
-                                skipBlock = false;
-                                this->getNextToken(); // close tag
-                            }
-                            if (strcmp(keyword, "endif") == 0) {
-                                this->getNextToken(); // close tag
-                                stopRender = true;
-                            }
-                        }
-                    }
-
-                    if (stopRender) {
-                        break;
-                    }
-
-                    token = this->getNextToken();
-                }
-            }
+            this->render_if_expression(buffer, result);
         }
     }
 
