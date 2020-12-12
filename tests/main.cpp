@@ -136,17 +136,14 @@ CppUnitTest::TestCase* testRender_TemplateWithConditions_Positive()
 
     char* tBuffer = (char*) malloc(sizeof(char) * 1024);
     memset(tBuffer, 0, sizeof(char) * 1024);
-    int tSize = buffer->read(tBuffer, 1024);
-
-    // todo: remove after success debug
-    std::cout << "Given text: " << tBuffer << std::endl;
+    buffer->read(tBuffer, 1024);
 
     CppUnitTest::assertEquals(
         t,
         " - Hello Alexander1000!\n"
         " - Can you go to aquapark?\n"
         " - Perfect!\n"
-        "(Test text with template and conditions)",
+        "(Test text with template and conditions)\n",
         tBuffer
     );
 
