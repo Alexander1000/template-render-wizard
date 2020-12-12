@@ -6,7 +6,7 @@
     <h1>Hello on {{ site.name }}</h1>
     <div>
         {% if user.auth %}
-            <a href="/logout">Выйти{% if user.name %}[{{ user.name }}]{% else %}Anonymous{% endif %}</a>
+            <a href="/logout">Выйти{% if user.name %}[{{ user.name }}]{% else %} Anonymous{% endif %}</a>
         {% else %}
             Go to login page: <a href="/login">Login</a>
             {% if site.redesign %}

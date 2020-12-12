@@ -1,0 +1,13 @@
+<html>
+<head>
+    <title></title>
+</head>
+<body>
+    <h1>Hello on </h1>
+    <div>
+        
+            <a href="/logout">Выйти Anonymous</a>
+        
+    </div>
+</body>
+</html>
