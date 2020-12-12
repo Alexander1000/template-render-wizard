@@ -210,24 +210,24 @@ CppUnitTest::TestCase* testRender_TemplateWithNestedConditionsCase02_Positive()
     buffer->read(tBuffer, 1024);
 
     CppUnitTest::assertEquals(
-            t,
-            "<html>\n"
-            "<head>\n"
-            "    <title>dankovtsev.pro</title>\n"
-            "</head>\n"
-            "<body>\n"
-            "    <h1>Hello on </h1>\n"
-            "    <div>\n"
-            "        \n" // if-else expr
-            "            Go to login page: <a href=\"/login\">Login</a>\n"
-            "            \n" // if site.redesign
-            "                <div>test-content</div>\n"
-            "            \n" // endif
-            "        \n" // endif
-            "    </div>\n"
-            "</body>\n"
-            "</html>\n",
-            tBuffer
+        t,
+        "<html>\n"
+        "<head>\n"
+        "    <title>dankovtsev.pro</title>\n"
+        "</head>\n"
+        "<body>\n"
+        "    <h1>Hello on </h1>\n"
+        "    <div>\n"
+        "        \n" // if-else expr
+        "            Go to login page: <a href=\"/login\">Login</a>\n"
+        "            \n" // if site.redesign
+        "                <div>test-content</div>\n"
+        "            \n" // endif
+        "        \n" // endif
+        "    </div>\n"
+        "</body>\n"
+        "</html>\n",
+        tBuffer
     );
 
     t->finish();
@@ -253,22 +253,22 @@ CppUnitTest::TestCase* testRender_TemplateWithNestedConditionsCase03_Positive()
     buffer->read(tBuffer, 1024);
 
     CppUnitTest::assertEquals(
-            t,
-            "<html>\n"
-            "<head>\n"
-            "    <title>dankovtsev.pro</title>\n"
-            "</head>\n"
-            "<body>\n"
-            "    <h1>Hello on Alexander1000 home page</h1>\n"
-            "    <div>\n"
-            "        \n" // if-else expr
-            "            Go to login page: <a href=\"/login\">Login</a>\n"
-            "            \n" // if site.redesign
-            "        \n" // endif
-            "    </div>\n"
-            "</body>\n"
-            "</html>\n",
-            tBuffer
+        t,
+        "<html>\n"
+        "<head>\n"
+        "    <title>dankovtsev.pro</title>\n"
+        "</head>\n"
+        "<body>\n"
+        "    <h1>Hello on Alexander1000 home page</h1>\n"
+        "    <div>\n"
+        "        \n" // if-else expr
+        "            Go to login page: <a href=\"/login\">Login</a>\n"
+        "            \n" // if site.redesign
+        "        \n" // endif
+        "    </div>\n"
+        "</body>\n"
+        "</html>\n",
+        tBuffer
     );
 
     t->finish();
