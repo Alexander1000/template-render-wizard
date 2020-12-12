@@ -55,6 +55,7 @@ namespace TemplateRenderWizard
         }
 
         INIT_CHAR_STRING(keyword, 32)
+        RESET_TOKEN_READER(token)
         token->getReader()->read(keyword, 32);
 
         if (strcmp(keyword, "if") == 0) {

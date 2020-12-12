@@ -69,6 +69,7 @@ namespace TemplateRenderWizard
 
                     if (strcmp(keyword, "else") == 0) {
                         if (levelNested == 0) {
+                            std::cout << "Else nested == 0" << std::endl;
                             skipBlock = result;
                         } else {
                             std::cout << "Else nested" << std::endl;
