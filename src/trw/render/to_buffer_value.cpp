@@ -23,6 +23,10 @@ namespace TemplateRenderWizard
                 break;
             }
 
+            case ValueType::None: {
+                break;
+            }
+
             default: {
                 throw new UnexpectedToken;
             }

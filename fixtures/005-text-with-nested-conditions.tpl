@@ -1,6 +1,6 @@
 <html>
 <head>
-    <title>{{ site.title }}{% if user.name }}[{{ user.name }}]{% endif %}</title>
+    <title>{{ site.title }}{% if user.name %}[{{ user.name }}]{% endif %}</title>
 </head>
 <body>
     <h1>Hello on {{ site.name }}</h1>
