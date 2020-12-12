@@ -5,10 +5,10 @@
 <body>
     <h1>Hello on Alexander1000 home page</h1>
     <div>
-
+        
             Go to login page: <a href="/login">Login</a>
-
-
+            
+        
     </div>
 </body>
 </html>
