@@ -35,6 +35,7 @@ set(TRW_SHARED_SOURCES
     src/trw/render/render_if_expression.cpp
     src/trw/value.cpp
     src/trw/value/cast_value_to_int.cpp
+    src/trw/value/cast_value_to_bool.cpp
     src/trw/expression.cpp
     src/trw/utils/ctype_digits.cpp
 )

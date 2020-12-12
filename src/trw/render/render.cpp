@@ -91,6 +91,10 @@ namespace TemplateRenderWizard
             }
         }
 
+        if (leftSide) {
+            return cast_value_to_bool(this->get_value(&lTokens));
+        }
+
         return this->compare_value(this->get_value(&lTokens), this->get_value(&rTokens), cmpToken);
     }
 

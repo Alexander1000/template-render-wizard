@@ -40,6 +40,7 @@ namespace TemplateRenderWizard
     };
 
     int cast_value_to_int(Value*);
+    bool cast_value_to_bool(Value*);
 }
 
 #endif

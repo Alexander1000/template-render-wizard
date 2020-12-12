@@ -16,19 +16,25 @@ namespace TemplateRenderWizard
         RESET_TOKEN_READER(token);
         token->getReader()->read(tokenValue, 128);
 
-        auto leafValue = this->tree->get(tokenValue);
-        if (leafValue != nullptr) {
-            if (leafValue->getType() != TemplateRenderWizard::Tree::LeafElementType::LeafElementText) {
-                throw new UnexpectedToken;
+        if (!ctype_digits(tokenValue)) {
+            auto leafValue = this->tree->get(tokenValue);
+            if (leafValue != nullptr) {
+                if (leafValue->getType() != TemplateRenderWizard::Tree::LeafElementType::LeafElementText) {
+                    throw new UnexpectedToken;
+                }
+
+                auto str = (std::string *) leafValue->getData();
+                Value *v;
+                v = new Value();
+                int nSize = str->length() + 1;
+                INIT_CHAR_STRING(newStr, nSize)
+                memcpy(newStr, str->c_str(), (nSize - 1) * sizeof(char));
+                v->setData(newStr);
+                return v;
             }
 
-            auto str = (std::string*) leafValue->getData();
-            Value* v;
+            Value *v;
             v = new Value();
-            int nSize = str->length() + 1;
-            INIT_CHAR_STRING(newStr, nSize)
-            memcpy(newStr, str->c_str(), (nSize - 1) * sizeof(char));
-            v->setData(newStr);
             return v;
         }
 
