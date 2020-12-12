@@ -22,19 +22,7 @@ namespace TemplateRenderWizard
                     break;
                 }
                 case TemplateRenderWizard::Token::Type::PlainValueType: {
-                    IOBuffer::IOReader* reader = token->getReader();
-                    memset(tBuffer, 0, sizeof(char) * TRW_RENDER_BUFFER_SIZE);
-                    reader->read(tBuffer, TRW_RENDER_BUFFER_SIZE);
-                    TemplateRenderWizard::Tree::LeafElement* leafElement = this->tree->get(tBuffer);
-                    if (leafElement != nullptr) {
-                        switch (leafElement->getType()) {
-                            case TemplateRenderWizard::Tree::LeafElementType::LeafElementText: {
-                                std::string* tbValue = (std::string*) leafElement->getData();
-                                buffer->write((char*) tbValue->c_str(), strlen(tbValue->c_str()));
-                                break;
-                            }
-                        }
-                    }
+                    this->to_buffer_value(buffer, token);
                     break;
                 }
                 case TemplateRenderWizard::Token::Type::OpenTagValueType: {
@@ -91,19 +79,7 @@ namespace TemplateRenderWizard
                             if (skipBlock) {
                                 break;
                             }
-                            IOBuffer::IOReader* reader = token->getReader();
-                            memset(tBuffer, 0, sizeof(char) * TRW_RENDER_BUFFER_SIZE);
-                            reader->read(tBuffer, TRW_RENDER_BUFFER_SIZE);
-                            TemplateRenderWizard::Tree::LeafElement* leafElement = this->tree->get(tBuffer);
-                            if (leafElement != nullptr) {
-                                switch (leafElement->getType()) {
-                                    case TemplateRenderWizard::Tree::LeafElementType::LeafElementText: {
-                                        std::string* tbValue = (std::string*) leafElement->getData();
-                                        buffer->write((char*) tbValue->c_str(), strlen(tbValue->c_str()));
-                                        break;
-                                    }
-                                }
-                            }
+                            this->to_buffer_value(buffer, token);
                             break;
                         }
                         case TemplateRenderWizard::Token::Type::OpenTagValueType: {
@@ -162,19 +138,7 @@ namespace TemplateRenderWizard
                             if (skipBlock) {
                                 break;
                             }
-                            IOBuffer::IOReader* reader = token->getReader();
-                            memset(tBuffer, 0, sizeof(char) * TRW_RENDER_BUFFER_SIZE);
-                            reader->read(tBuffer, TRW_RENDER_BUFFER_SIZE);
-                            TemplateRenderWizard::Tree::LeafElement* leafElement = this->tree->get(tBuffer);
-                            if (leafElement != nullptr) {
-                                switch (leafElement->getType()) {
-                                    case TemplateRenderWizard::Tree::LeafElementType::LeafElementText: {
-                                        std::string* tbValue = (std::string*) leafElement->getData();
-                                        buffer->write((char*) tbValue->c_str(), strlen(tbValue->c_str()));
-                                        break;
-                                    }
-                                }
-                            }
+                            this->to_buffer_value(buffer, token);
                             break;
                         }
                         case TemplateRenderWizard::Token::Type::OpenTagValueType: {

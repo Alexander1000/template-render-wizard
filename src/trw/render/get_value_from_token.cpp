@@ -4,11 +4,16 @@ namespace TemplateRenderWizard
 {
     Value* Render::getValueFromToken(Token::Token *token)
     {
-        if (token->getType() != TemplateRenderWizard::Token::Type::ExpressionValueType) {
+        bool allow = false;
+        if (token->getType() == TemplateRenderWizard::Token::Type::ExpressionValueType || token->getType() == TemplateRenderWizard::Token::Type::PlainValueType) {
+            allow = true;
+        }
+        if (!allow) {
             throw new UnexpectedToken;
         }
 
         INIT_CHAR_STRING(tokenValue, 128)
+        RESET_TOKEN_READER(token);
         token->getReader()->read(tokenValue, 128);
 
         auto leafValue = this->tree->get(tokenValue);
