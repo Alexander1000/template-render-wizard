@@ -191,6 +191,34 @@ CppUnitTest::TestCase* testRender_Template_Positive(char* templateName, char* va
     return t;
 }
 
+CppUnitTest::TestCase* testLexer_Template_Positive(char* templateName)
+{
+    CppUnitTest::TestCase* t = nullptr;
+    t = new CppUnitTest::TestCase(templateName);
+
+    t->printTitle();
+
+    INIT_CHAR_STRING(srcTemplateFile, 1024)
+    sprintf(srcTemplateFile, "./fixtures/%s", templateName);
+
+    IOBuffer::IOFileReader* fileReader;
+    fileReader = new IOBuffer::IOFileReader(srcTemplateFile);
+    IOBuffer::CharStream* charStream;
+    charStream = new IOBuffer::CharStream(fileReader);
+    auto stream = new TemplateRenderWizard::Stream(charStream);
+
+    INIT_CHAR_STRING(strTokenFile, 1024)
+    INIT_CHAR_STRING(strTokenFileName, 1024)
+    memcpy(strTokenFileName, templateName, sizeof(char) * (strlen(templateName - 5)));
+    sprintf(strTokenFile, "./fixtures/%s.t", strTokenFileName);
+    free(strTokenFileName);
+
+    // todo: parse file tokens
+
+    t->finish();
+    return t;
+}
+
 static int filter_tpl(const struct dirent* dir_ent)
 {
     if (!strcmp(dir_ent->d_name, ".") || !strcmp(dir_ent->d_name, "..")) {
