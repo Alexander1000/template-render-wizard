@@ -38,6 +38,7 @@ set(TRW_SHARED_SOURCES
     src/trw/value/cast_value_to_bool.cpp
     src/trw/expression.cpp
     src/trw/utils/ctype_digits.cpp
+    src/trw/syntax/syntax.cpp
 )
 
 set(TRW_SOURCES

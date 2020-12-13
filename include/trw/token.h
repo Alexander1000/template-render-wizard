@@ -6,6 +6,7 @@
 namespace TemplateRenderWizard::Token
 {
     enum Type {
+        EofType,
         PlainTextType,
         OpenTagValueType,
         CloseTagValueType,

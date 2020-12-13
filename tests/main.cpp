@@ -93,33 +93,6 @@ CppUnitTest::TestCase* testTreeMergeWithEmpty_ValuesFile_Positive()
     return t;
 }
 
-CppUnitTest::TestCase* testRender_TemplateAndValues_Positive()
-{
-    CppUnitTest::TestCase* t = nullptr;
-    t = new CppUnitTest::TestCase("003-template-and-values-file");
-
-    t->printTitle();
-
-    TemplateRenderWizard::Tree::Tree tree;
-    tree.scan("./fixtures/003-values.yaml");
-
-    TemplateRenderWizard::Render* render;
-    render = new TemplateRenderWizard::Render("./fixtures/003-simple-text.txt", &tree);
-
-    IOBuffer::IOMemoryBuffer* buffer = render->toBuffer();
-
-    char* tBuffer = (char*) malloc(sizeof(char) * 1024);
-    memset(tBuffer, 0, sizeof(char) * 1024);
-    int tSize = buffer->read(tBuffer, 1024);
-
-    CppUnitTest::assertEquals(t, "Hello world!\nMy name is test-data!\n", tBuffer);
-
-    free(tBuffer);
-
-    t->finish();
-    return t;
-}
-
 CppUnitTest::TestCase* testRender_TemplateWithConditions_Positive()
 {
     CppUnitTest::TestCase* t = nullptr;
@@ -191,6 +164,44 @@ CppUnitTest::TestCase* testRender_Template_Positive(char* templateName, char* va
     return t;
 }
 
+CppUnitTest::TestCase* testLexer_Template_Positive(char* templateName)
+{
+    CppUnitTest::TestCase* t = nullptr;
+    t = new CppUnitTest::TestCase(templateName);
+
+    t->printTitle();
+
+    INIT_CHAR_STRING(srcTemplateFile, 1024)
+    sprintf(srcTemplateFile, "./fixtures/%s", templateName);
+
+    IOBuffer::IOFileReader* fileReader;
+    fileReader = new IOBuffer::IOFileReader(srcTemplateFile);
+    IOBuffer::CharStream* charStream;
+    charStream = new IOBuffer::CharStream(fileReader);
+    auto stream = new TemplateRenderWizard::Stream(charStream);
+
+    INIT_CHAR_STRING(strTokenFile, 1024)
+    INIT_CHAR_STRING(strTokenFileName, 1024)
+    memcpy(strTokenFileName, templateName, sizeof(char) * (strlen(templateName) - 4));
+    sprintf(strTokenFile, "./fixtures/%s.t", strTokenFileName);
+    free(strTokenFileName);
+
+    auto tokenFile = new TemplateRenderWizard::TokenFile(strTokenFile);
+    TemplateRenderWizard::Token::Type tokenType;
+    TemplateRenderWizard::Token::Token* token;
+
+    do {
+        tokenType = tokenFile->getNextTokenType();
+        token = stream->getNextToken();
+        if (token != nullptr) {
+            assertEquals(t, tokenType, token->getType());
+        }
+    } while(tokenType != TemplateRenderWizard::Token::Type::EofType);
+
+    t->finish();
+    return t;
+}
+
 static int filter_tpl(const struct dirent* dir_ent)
 {
     if (!strcmp(dir_ent->d_name, ".") || !strcmp(dir_ent->d_name, "..")) {
@@ -236,6 +247,7 @@ void scanTests(CppUnitTest::TestSuite* testSuite) {
     for (int i = 0; i<n; i++) {
         memset(strTplNum, 0, sizeof(char) * 5);
         memcpy(strTplNum, namelist[i]->d_name, 3 * sizeof(char));
+        testSuite->addTestCase(testLexer_Template_Positive(namelist[i]->d_name));
 
         for (int j = 0; j < nValues; j++) {
             memset(strYamlNum, 0, sizeof(char) * 5);
@@ -257,8 +269,6 @@ int main(int argc, char** argv) {
     testSuite.addTestCase(testParseToken_Template_Positive());
 
     testSuite.addTestCase(testTreeMergeWithEmpty_ValuesFile_Positive());
-
-    testSuite.addTestCase(testRender_TemplateAndValues_Positive());
 
     testSuite.addTestCase(testRender_TemplateWithConditions_Positive());
 
