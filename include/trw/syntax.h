@@ -28,6 +28,11 @@ namespace TemplateRenderWizard
             RuleMatchName,
         };
 
+        enum SyntaxElementType {
+            SyntaxType,
+            TokenType,
+        };
+
         class RuleMatch
         {
         public:
@@ -51,10 +56,18 @@ namespace TemplateRenderWizard
             std::list<RuleMatch*>* matches;
         };
 
-        class SyntaxRuleElement
+        class SyntaxElement
         {
         public:
-            SyntaxRuleElement();
+            SyntaxElement();
+
+        private:
+            Rule* rule;
+            SyntaxElementType type;
+            union {
+                TemplateRenderWizard::Token::Token* token;
+                SyntaxElement* syntaxElement;
+            } data;
         };
 
         class Tree

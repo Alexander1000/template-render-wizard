@@ -43,6 +43,7 @@ set(TRW_SHARED_SOURCES
     src/trw/syntax/rule_match.cpp
     src/trw/syntax/rule.cpp
     src/trw/syntax/tree.cpp
+    src/trw/syntax/syntax_element.cpp
 )
 
 set(TRW_SOURCES
