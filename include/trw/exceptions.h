@@ -5,6 +5,9 @@ namespace TemplateRenderWizard
 {
     class UnexpectedToken
     {};
+
+    class UnknownToken
+    {};
 }
 
 #endif

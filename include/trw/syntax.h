@@ -3,14 +3,9 @@
 
 #include <io-buffer.h>
 #include <trw/token.h>
-#include <map>
-#include <string>
 
 namespace TemplateRenderWizard
 {
-    class UnknownToken
-    {};
-
     class TokenFile
     {
     public:
@@ -20,7 +15,7 @@ namespace TemplateRenderWizard
 
     private:
         IOBuffer::CharStream* charStream;
-        std::map<std::string, TemplateRenderWizard::Token::Type>* tokenMap;
+        TemplateRenderWizard::Token::TokenMap* tokenMap;
 
         bool isEmptyChar(char*);
     };

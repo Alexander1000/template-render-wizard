@@ -22,6 +22,7 @@ set(TRW_SHARED_SOURCES
     src/trw/tokens/compare.cpp
     src/trw/tokens/math_operation.cpp
     src/trw/tokens/expression_value.cpp
+    src/trw/tokens/token_map.cpp
     src/trw/leaf_element.cpp
     src/trw/tree_parameters.cpp
     src/trw/render/construct.cpp
