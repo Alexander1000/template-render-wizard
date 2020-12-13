@@ -37,6 +37,7 @@ namespace TemplateRenderWizard
         while (!this->isEmptyChar(nextChar)) {
             ioWriter->write(nextChar, 1);
             length++;
+            nextChar = this->charStream->getNext();
         }
 
         length++;

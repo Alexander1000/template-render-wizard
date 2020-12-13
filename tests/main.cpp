@@ -209,7 +209,7 @@ CppUnitTest::TestCase* testLexer_Template_Positive(char* templateName)
 
     INIT_CHAR_STRING(strTokenFile, 1024)
     INIT_CHAR_STRING(strTokenFileName, 1024)
-    memcpy(strTokenFileName, templateName, sizeof(char) * (strlen(templateName - 5)));
+    memcpy(strTokenFileName, templateName, sizeof(char) * (strlen(templateName) - 4));
     sprintf(strTokenFile, "./fixtures/%s.t", strTokenFileName);
     free(strTokenFileName);
 
