@@ -13,6 +13,17 @@ namespace TemplateRenderWizard
 
         this->tokenMap = new std::map<std::string, Token::Type>;
         (*this->tokenMap)["plainText"] = Token::Type::PlainTextType;
+        (*this->tokenMap)["openTagValue"] = Token::Type::OpenTagValueType;
+        (*this->tokenMap)["closeTagValue"] = Token::Type::CloseTagValueType;
+        (*this->tokenMap)["plainValue"] = Token::Type::PlainValueType;
+        (*this->tokenMap)["openControlTag"] = Token::Type::OpenControlTagType;
+        (*this->tokenMap)["closeControlTag"] = Token::Type::CloseControlTagType;
+        (*this->tokenMap)["roundBracketOpen"] = Token::Type::RoundBracketOpenType;
+        (*this->tokenMap)["roundBracketClose"] = Token::Type::RoundBracketCloseType;
+        (*this->tokenMap)["exprValue"] = Token::Type::ExpressionValueType;
+        (*this->tokenMap)["mathOp"] = Token::Type::MathOperationType;
+        (*this->tokenMap)["compare"] = Token::Type::CompareType;
+        (*this->tokenMap)["keyword"] = Token::Type::KeywordType;
     }
 
     Token::Type TokenFile::getNextTokenType()
