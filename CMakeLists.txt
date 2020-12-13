@@ -40,6 +40,7 @@ set(TRW_SHARED_SOURCES
     src/trw/expression.cpp
     src/trw/utils/ctype_digits.cpp
     src/trw/syntax/syntax.cpp
+    src/trw/syntax/rule_match.cpp
 )
 
 set(TRW_SOURCES
