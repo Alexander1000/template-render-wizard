@@ -213,7 +213,17 @@ CppUnitTest::TestCase* testLexer_Template_Positive(char* templateName)
     sprintf(strTokenFile, "./fixtures/%s.t", strTokenFileName);
     free(strTokenFileName);
 
-    // todo: parse file tokens
+    auto tokenFile = new TemplateRenderWizard::TokenFile(strTokenFile);
+    TemplateRenderWizard::Token::Type tokenType;
+    TemplateRenderWizard::Token::Token* token;
+
+    do {
+        tokenType = tokenFile->getNextTokenType();
+        token = stream->getNextToken();
+        if (token != nullptr) {
+            assertEquals(t, tokenType, token->getType());
+        }
+    } while(tokenType != TemplateRenderWizard::Token::Type::EofType);
 
     t->finish();
     return t;
@@ -264,6 +274,7 @@ void scanTests(CppUnitTest::TestSuite* testSuite) {
     for (int i = 0; i<n; i++) {
         memset(strTplNum, 0, sizeof(char) * 5);
         memcpy(strTplNum, namelist[i]->d_name, 3 * sizeof(char));
+        testSuite->addTestCase(testLexer_Template_Positive(namelist[i]->d_name));
 
         for (int j = 0; j < nValues; j++) {
             memset(strYamlNum, 0, sizeof(char) * 5);
