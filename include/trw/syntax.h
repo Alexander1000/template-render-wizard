@@ -8,9 +8,6 @@
 
 namespace TemplateRenderWizard
 {
-    class UnknownToken
-    {};
-
     class TokenFile
     {
     public:

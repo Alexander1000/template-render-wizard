@@ -2,6 +2,7 @@
 #define H_TOKEN_INCLUDED
 
 #include <io-buffer.h>
+#include <map>
 
 namespace TemplateRenderWizard::Token
 {
@@ -19,6 +20,16 @@ namespace TemplateRenderWizard::Token
         CompareType,
         MathOperationType,
         ExpressionValueType,
+    };
+
+    class TokenMap
+    {
+    public:
+        TokenMap();
+        Type getType(const char*);
+        const char* getName(Type);
+    private:
+        std::map<std::string, Type>* tokenMap;
     };
 
     class Token
