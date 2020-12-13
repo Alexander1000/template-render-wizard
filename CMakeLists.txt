@@ -44,6 +44,7 @@ set(TRW_SHARED_SOURCES
     src/trw/syntax/rule.cpp
     src/trw/syntax/tree.cpp
     src/trw/syntax/syntax_element.cpp
+    src/trw/syntax/tree_parse_tokens.cpp
 )
 
 set(TRW_SOURCES

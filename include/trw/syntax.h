@@ -59,7 +59,8 @@ namespace TemplateRenderWizard
         class SyntaxElement
         {
         public:
-            SyntaxElement();
+            SyntaxElement(TemplateRenderWizard::Token::Token*);
+            SyntaxElement(SyntaxElement*);
 
         private:
             Rule* rule;
@@ -74,12 +75,15 @@ namespace TemplateRenderWizard
         {
         public:
             Tree();
+            SyntaxElement* parse(std::list<TemplateRenderWizard::Token::Token*>*);
 
         private:
             std::list<Rule*>* rules;
             TemplateRenderWizard::Token::TokenMap* tokenMap;
 
             void initializeDefaults();
+
+            SyntaxElement* parse(std::list<SyntaxElement*>*);
         };
     }
 }
