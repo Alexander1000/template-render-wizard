@@ -45,7 +45,7 @@ namespace TemplateRenderWizard
         {
         public:
             Rule(const char*);
-
+            void addMatch(RuleMatch*);
         private:
             const char* name;
             std::list<RuleMatch*>* matches;
@@ -64,6 +64,7 @@ namespace TemplateRenderWizard
 
         private:
             std::list<Rule*>* rules;
+            TemplateRenderWizard::Token::TokenMap* tokenMap;
 
             void initializeDefaults();
         };

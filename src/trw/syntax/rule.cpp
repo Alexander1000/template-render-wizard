@@ -8,4 +8,8 @@ namespace TemplateRenderWizard::Syntax
         this->name = ruleName;
         this->matches = new std::list<RuleMatch*>;
     }
+
+    void Rule::addMatch(RuleMatch *ruleMatch) {
+        this->matches->push_back(ruleMatch);
+    }
 }
