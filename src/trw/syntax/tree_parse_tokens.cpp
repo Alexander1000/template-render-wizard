@@ -12,6 +12,22 @@ namespace TemplateRenderWizard::Syntax
     }
 
     SyntaxElement* Tree::parse(std::list<SyntaxElement*>* elements) {
+        int count = 0;
+        for (auto it = elements->begin(); it != elements->end(); it++) {
+            count++;
+        }
+        if (count == 1) {
+            return *elements->begin();
+        }
+
+        for (auto it = this->rules->begin(); it != this->rules->end(); it++) {
+            elements = this->run_rule(*it, elements);
+        }
+        return nullptr;
+    }
+
+    std::list<SyntaxElement*>* Tree::run_rule(Rule *rule, std::list<SyntaxElement*> *elements)
+    {
         return nullptr;
     }
 }

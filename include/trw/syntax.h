@@ -84,6 +84,8 @@ namespace TemplateRenderWizard
             void initializeDefaults();
 
             SyntaxElement* parse(std::list<SyntaxElement*>*);
+
+            std::list<SyntaxElement*>* run_rule(Rule*, std::list<SyntaxElement*>*);
         };
     }
 }
