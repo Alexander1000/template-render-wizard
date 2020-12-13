@@ -1,4 +1,6 @@
-# syntax
+# syntax tree
+# t - token
+# s - syntax rule
 
 s:injectValue [t:openTagValue t:plainValue t:closeTagValue]
 s:expr [t:exprValue]
