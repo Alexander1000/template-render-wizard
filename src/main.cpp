@@ -46,6 +46,10 @@ int main(int argc, char** argv) {
     IOBuffer::CharStream charStream(&fileReader);
     TemplateRenderWizard::Stream tokenStream(&charStream);
 
+    if (config.isDumpTokens()) {
+        return 0;
+    }
+
     TemplateRenderWizard::Render* render;
     render = new TemplateRenderWizard::Render(&tokenStream, config.getTree());
 

@@ -25,9 +25,12 @@ namespace TemplateRenderWizard
 
         Tree::Tree* getTree();
 
+        bool isDumpTokens();
+
     private:
         bool is_help;
         bool is_version;
+        bool is_dump_tokens;
 
         std::map<std::string, std::string>* values;
 

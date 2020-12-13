@@ -10,6 +10,7 @@ namespace TemplateRenderWizard
         // defaults:
         this->is_help = false;
         this->is_version = false;
+        this->is_dump_tokens = false;
 
         this->templateFile = nullptr;
         this->valuesFile = nullptr;
@@ -42,6 +43,11 @@ namespace TemplateRenderWizard
             if (paramName == "--values") {
                 this->tree->scan(new std::string(argv[i+1]));
                 i++;
+                continue;
+            }
+
+            if (paramName == "--dump-tokens") {
+                this->is_dump_tokens = true;
                 continue;
             }
 
@@ -104,6 +110,7 @@ namespace TemplateRenderWizard
            "        --set [string array]   Set value for property.\n"
            "        --values [file]        Yaml-file with values for placeholders for template.\n"
            "    -o, --output [file]        Output template render, by default stdout.\n"
+           "        --dump-tokens          Dump tokens for debug.\n"
            "    -v, --version              Print version and exit.";
     }
 
@@ -115,5 +122,9 @@ namespace TemplateRenderWizard
     std::map<std::string, std::string>* Config::getValues()
     {
         return this->values;
+    }
+
+    bool Config::isDumpTokens() {
+        return this->is_dump_tokens;
     }
 }
