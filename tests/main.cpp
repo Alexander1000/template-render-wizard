@@ -93,33 +93,6 @@ CppUnitTest::TestCase* testTreeMergeWithEmpty_ValuesFile_Positive()
     return t;
 }
 
-CppUnitTest::TestCase* testRender_TemplateAndValues_Positive()
-{
-    CppUnitTest::TestCase* t = nullptr;
-    t = new CppUnitTest::TestCase("003-template-and-values-file");
-
-    t->printTitle();
-
-    TemplateRenderWizard::Tree::Tree tree;
-    tree.scan("./fixtures/003-values.yaml");
-
-    TemplateRenderWizard::Render* render;
-    render = new TemplateRenderWizard::Render("./fixtures/003-simple-text.txt", &tree);
-
-    IOBuffer::IOMemoryBuffer* buffer = render->toBuffer();
-
-    char* tBuffer = (char*) malloc(sizeof(char) * 1024);
-    memset(tBuffer, 0, sizeof(char) * 1024);
-    int tSize = buffer->read(tBuffer, 1024);
-
-    CppUnitTest::assertEquals(t, "Hello world!\nMy name is test-data!\n", tBuffer);
-
-    free(tBuffer);
-
-    t->finish();
-    return t;
-}
-
 CppUnitTest::TestCase* testRender_TemplateWithConditions_Positive()
 {
     CppUnitTest::TestCase* t = nullptr;
@@ -296,8 +269,6 @@ int main(int argc, char** argv) {
     testSuite.addTestCase(testParseToken_Template_Positive());
 
     testSuite.addTestCase(testTreeMergeWithEmpty_ValuesFile_Positive());
-
-    testSuite.addTestCase(testRender_TemplateAndValues_Positive());
 
     testSuite.addTestCase(testRender_TemplateWithConditions_Positive());
 
