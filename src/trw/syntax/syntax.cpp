@@ -1,7 +1,5 @@
 #include <trw.h>
 #include <io-buffer.h>
-#include <map>
-#include <string>
 
 namespace TemplateRenderWizard
 {
@@ -10,20 +8,7 @@ namespace TemplateRenderWizard
         IOBuffer::IOFileReader* fileReader;
         fileReader = new IOBuffer::IOFileReader(tokenFile);
         this->charStream = new IOBuffer::CharStream(fileReader);
-
-        this->tokenMap = new std::map<std::string, Token::Type>;
-        (*this->tokenMap)["plainText"] = Token::Type::PlainTextType;
-        (*this->tokenMap)["openTagValue"] = Token::Type::OpenTagValueType;
-        (*this->tokenMap)["closeTagValue"] = Token::Type::CloseTagValueType;
-        (*this->tokenMap)["plainValue"] = Token::Type::PlainValueType;
-        (*this->tokenMap)["openControlTag"] = Token::Type::OpenControlTagType;
-        (*this->tokenMap)["closeControlTag"] = Token::Type::CloseControlTagType;
-        (*this->tokenMap)["roundBracketOpen"] = Token::Type::RoundBracketOpenType;
-        (*this->tokenMap)["roundBracketClose"] = Token::Type::RoundBracketCloseType;
-        (*this->tokenMap)["exprValue"] = Token::Type::ExpressionValueType;
-        (*this->tokenMap)["mathOp"] = Token::Type::MathOperationType;
-        (*this->tokenMap)["compare"] = Token::Type::CompareType;
-        (*this->tokenMap)["keyword"] = Token::Type::KeywordType;
+        this->tokenMap = new Token::TokenMap;
     }
 
     Token::Type TokenFile::getNextTokenType()
@@ -63,10 +48,6 @@ namespace TemplateRenderWizard
     }
 
     Token::Type TokenFile::getTokenTypeByName(const char *tokenName) {
-        if (this->tokenMap->find(tokenName) != this->tokenMap->end()) {
-            return this->tokenMap->at(tokenName);
-        }
-
-        throw new UnknownToken;
+        return this->tokenMap->getType(tokenName);
     }
 }
