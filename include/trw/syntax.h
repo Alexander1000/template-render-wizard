@@ -28,12 +28,6 @@ namespace TemplateRenderWizard
             RuleMatchName,
         };
 
-        class Tree
-        {
-        public:
-            Tree();
-        };
-
         class RuleMatch
         {
         public:
@@ -50,17 +44,28 @@ namespace TemplateRenderWizard
         class Rule
         {
         public:
-            Rule();
+            Rule(const char*);
 
         private:
-            char* name;
-            std::list<RuleMatch*> matches;
+            const char* name;
+            std::list<RuleMatch*>* matches;
         };
 
         class SyntaxRuleElement
         {
         public:
             SyntaxRuleElement();
+        };
+
+        class Tree
+        {
+        public:
+            Tree();
+
+        private:
+            std::list<Rule*>* rules;
+
+            void initializeDefaults();
         };
     }
 }
