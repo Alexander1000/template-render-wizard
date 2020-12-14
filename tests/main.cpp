@@ -209,6 +209,21 @@ CppUnitTest::TestCase* testSyntax_Template_Positive()
 
     t->printTitle();
 
+    IOBuffer::IOFileReader* fileReader;
+    fileReader = new IOBuffer::IOFileReader("./fixtures/005-text-with-nested-conditions.tpl");
+    IOBuffer::CharStream* charStream;
+    charStream = new IOBuffer::CharStream(fileReader);
+    auto stream = new TemplateRenderWizard::Stream(charStream);
+
+    TemplateRenderWizard::Token::Token* token = nullptr;
+    auto tokens = new std::list<TemplateRenderWizard::Token::Token*>;
+
+    token = stream->getNextToken();
+    while (token != nullptr) {
+        tokens->push_back(token);
+        token = stream->getNextToken();
+    }
+
     t->finish();
     return t;
 }
