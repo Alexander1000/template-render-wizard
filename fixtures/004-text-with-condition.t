@@ -8,7 +8,7 @@ keyword
 exprValue
 mathOp
 exprValue
-mathOp
+mathOpHigh
 roundBracketOpen
 exprValue
 mathOp
@@ -18,7 +18,7 @@ compare
 exprValue
 mathOp
 exprValue
-mathOp
+mathOpHigh
 exprValue
 closeControlTag
 openTagValue
