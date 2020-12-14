@@ -22,7 +22,8 @@ namespace TemplateRenderWizard::Syntax
         }
 
         for (auto it = this->rules->begin(); it != this->rules->end(); it++) {
-            elements = this->run_rule(*it, elements);
+            Rule* rule = *it;
+            elements = this->run_rule(rule, elements);
         }
 
         return this->parse(elements);
@@ -51,6 +52,8 @@ namespace TemplateRenderWizard::Syntax
                             } else {
                                 success = false;
                             }
+                        } else {
+                            success = false;
                         }
                         break;
                     }
@@ -64,6 +67,8 @@ namespace TemplateRenderWizard::Syntax
                             } else {
                                 success = false;
                             }
+                        } else {
+                            success = false;
                         }
                         break;
                     }
