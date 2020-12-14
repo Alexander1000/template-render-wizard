@@ -78,7 +78,16 @@ namespace TemplateRenderWizard::Syntax
             }
 
             if (foundMatchRule) {
-                std::cout << "Found Match!!" << std::endl;
+                auto element = new SyntaxElement(ruleMatches);
+                element->setRule(rule);
+                filteredElements->push_back(element);
+
+                for (auto itRule = ruleMatches->begin(); itRule != ruleMatches->end(); itRule++) {
+                    // skip elements
+                    it++;
+                }
+            } else {
+                filteredElements->push_back(*it);
             }
         }
 

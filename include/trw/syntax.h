@@ -31,6 +31,7 @@ namespace TemplateRenderWizard
         enum SyntaxElementType {
             SyntaxType,
             TokenType,
+            TokenListType,
         };
 
         class RuleMatch
@@ -66,10 +67,13 @@ namespace TemplateRenderWizard
         public:
             SyntaxElement(TemplateRenderWizard::Token::Token*);
             SyntaxElement(SyntaxElement*);
+            SyntaxElement(std::list<SyntaxElement*>*);
             Rule* getRule();
             SyntaxElementType getType();
             TemplateRenderWizard::Token::Token* getToken();
             SyntaxElement* getElement();
+            std::list<SyntaxElement*>* getListElements();
+            void setRule(Rule*);
 
         private:
             Rule* rule;
@@ -77,6 +81,7 @@ namespace TemplateRenderWizard
             union {
                 TemplateRenderWizard::Token::Token* token;
                 SyntaxElement* syntaxElement;
+                std::list<SyntaxElement*>* elements;
             } data;
         };
 

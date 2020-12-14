@@ -1,4 +1,5 @@
 #include <trw.h>
+#include <list>
 
 namespace TemplateRenderWizard::Syntax
 {
@@ -10,6 +11,11 @@ namespace TemplateRenderWizard::Syntax
     SyntaxElement::SyntaxElement(SyntaxElement *syntaxElement) {
         this->data.syntaxElement = syntaxElement;
         this->type = SyntaxElementType::SyntaxType;
+    }
+
+    SyntaxElement::SyntaxElement(std::list<SyntaxElement*>* listElements) {
+        this->type = SyntaxElementType::TokenListType;
+        this->data.elements = listElements;
     }
 
     SyntaxElementType SyntaxElement::getType() {
@@ -26,5 +32,13 @@ namespace TemplateRenderWizard::Syntax
 
     Rule * SyntaxElement::getRule() {
         return this->rule;
+    }
+
+    void SyntaxElement::setRule(Rule *ruleElement) {
+        this->rule = ruleElement;
+    }
+
+    std::list<SyntaxElement*>* SyntaxElement::getListElements() {
+        return this->data.elements;
     }
 }
