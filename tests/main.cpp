@@ -224,6 +224,9 @@ CppUnitTest::TestCase* testSyntax_Template_Positive()
         token = stream->getNextToken();
     }
 
+    TemplateRenderWizard::Syntax::Tree tree;
+    tree.parse(tokens);
+
     t->finish();
     return t;
 }

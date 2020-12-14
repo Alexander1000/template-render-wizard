@@ -9,7 +9,7 @@ namespace TemplateRenderWizard::Syntax
         for (auto it = tokens->begin(); it != tokens->end(); it++) {
             syntaxElements->push_back(new SyntaxElement(*it));
         }
-        return nullptr;
+        return this->parse(syntaxElements);
     }
 
     SyntaxElement* Tree::parse(std::list<SyntaxElement*>* elements) {
