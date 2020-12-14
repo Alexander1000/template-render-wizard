@@ -18,6 +18,7 @@ namespace TemplateRenderWizard::Token
         RoundBracketOpenType,
         RoundBracketCloseType,
         CompareType,
+        MathOperationHighPriorityType,
         MathOperationType,
         ExpressionValueType,
         CommaType,
@@ -114,6 +115,13 @@ namespace TemplateRenderWizard::Token
     {
     public:
         Compare(int line, int column, IOBuffer::IOReader *reader);
+        Type getType() final;
+    };
+
+    class MathOperationHighPriority : public Token
+    {
+    public:
+        MathOperationHighPriority(int line, int column, IOBuffer::IOReader *reader);
         Type getType() final;
     };
 

@@ -39,13 +39,19 @@ namespace TemplateRenderWizard::Syntax
         rule4->addMatch(new RuleMatch(this->tokenMap->getType("roundBracketClose")));
         this->rules->push_back(rule4);
 
-        // s:expr [s:expr t:mathOp s:expr]
-        // @todo: * / - high priority and + - for low priority
+        // s:expr [s:expr t:mathOpHigh s:expr]
         auto rule5 = new Rule("expr");
         rule5->addMatch(new RuleMatch("expr"));
-        rule5->addMatch(new RuleMatch(this->tokenMap->getType("mathOp")));
+        rule5->addMatch(new RuleMatch(this->tokenMap->getType("mathOpHigh")));
         rule5->addMatch(new RuleMatch("expr"));
         this->rules->push_back(rule5);
+
+        // s:expr [s:expr t:mathOp s:expr]
+        auto rule6 = new Rule("expr");
+        rule6->addMatch(new RuleMatch("expr"));
+        rule6->addMatch(new RuleMatch(this->tokenMap->getType("mathOp")));
+        rule6->addMatch(new RuleMatch("expr"));
+        this->rules->push_back(rule6);
 
         // s:if_control [t:openControlTag t:keyword(if) s:expr t:closeControlTag]
         auto ruleIf1 = new Rule("if_control");
