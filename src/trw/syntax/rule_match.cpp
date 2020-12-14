@@ -6,12 +6,25 @@ namespace TemplateRenderWizard::Syntax
     {
         this->value.ruleName = ruleName;
         this->type = RuleMatchType::RuleMatchName;
+        this->tokenValue = nullptr;
     }
 
     RuleMatch::RuleMatch(TemplateRenderWizard::Token::Type tokenType)
     {
         this->value.tokenType = tokenType;
         this->type = RuleMatchType::RuleMatchTokenType;
+        this->tokenValue = nullptr;
+    }
+
+    RuleMatch::RuleMatch(TemplateRenderWizard::Token::Type tokenType, const char* value)
+    {
+        this->value.tokenType = tokenType;
+        this->type = RuleMatchType::RuleMatchTokenType;
+        this->tokenValue = value;
+    }
+
+    const char * RuleMatch::getValue() {
+        return this->tokenValue;
     }
 
     RuleMatchType RuleMatch::getType() {

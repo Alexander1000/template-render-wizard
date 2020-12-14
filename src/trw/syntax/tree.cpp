@@ -50,35 +50,30 @@ namespace TemplateRenderWizard::Syntax
         // s:if_control [t:openControlTag t:keyword(if) s:expr t:closeControlTag]
         auto ruleIf1 = new Rule("if_control");
         ruleIf1->addMatch(new RuleMatch(this->tokenMap->getType("openControlTag")));
-        // todo: add condition: "if"
-        ruleIf1->addMatch(new RuleMatch(this->tokenMap->getType("keyword")));
+        ruleIf1->addMatch(new RuleMatch(this->tokenMap->getType("keyword"), "if"));
         ruleIf1->addMatch(new RuleMatch(this->tokenMap->getType("closeControlTag")));
         this->rules->push_back(ruleIf1);
 
         // s:else_control [t:openControlTag t:keyword(else) t:closeControlTag]
         auto ruleElse = new Rule("else_control");
         ruleElse->addMatch(new RuleMatch(this->tokenMap->getType("openControlTag")));
-        // todo: add condition: "else"
-        ruleElse->addMatch(new RuleMatch(this->tokenMap->getType("keyword")));
+        ruleElse->addMatch(new RuleMatch(this->tokenMap->getType("keyword"), "else"));
         ruleElse->addMatch(new RuleMatch(this->tokenMap->getType("closeControlTag")));
         this->rules->push_back(ruleElse);
 
         // s:endif_control [t:openControlTag t:keyword(endif) t:closeControlTag]
         auto ruleEndif = new Rule("endif_control");
         ruleEndif->addMatch(new RuleMatch(this->tokenMap->getType("openControlTag")));
-        // todo: add condition: "endif"
-        ruleEndif->addMatch(new RuleMatch(this->tokenMap->getType("keyword")));
+        ruleEndif->addMatch(new RuleMatch(this->tokenMap->getType("keyword"), "endif"));
         ruleEndif->addMatch(new RuleMatch(this->tokenMap->getType("closeControlTag")));
         this->rules->push_back(ruleEndif);
 
         // s:for_control [t:openControlTag t:keyword(for) t:plainValue t:keyword(in) t:plainValue t:closeControlTag]
         auto ruleForControl1 = new Rule("for_control");
         ruleForControl1->addMatch(new RuleMatch(this->tokenMap->getType("openControlTag")));
-        // todo: add condition: "for"
-        ruleForControl1->addMatch(new RuleMatch(this->tokenMap->getType("keyword")));
+        ruleForControl1->addMatch(new RuleMatch(this->tokenMap->getType("keyword"), "for"));
         ruleForControl1->addMatch(new RuleMatch(this->tokenMap->getType("plainValue")));
-        // todo: add condition: "in"
-        ruleForControl1->addMatch(new RuleMatch(this->tokenMap->getType("keyword")));
+        ruleForControl1->addMatch(new RuleMatch(this->tokenMap->getType("keyword"), "in"));
         ruleForControl1->addMatch(new RuleMatch(this->tokenMap->getType("plainValue")));
         ruleForControl1->addMatch(new RuleMatch(this->tokenMap->getType("closeControlTag")));
         this->rules->push_back(ruleForControl1);
@@ -86,13 +81,11 @@ namespace TemplateRenderWizard::Syntax
         // s:for_control [t:openControlTag t:keyword(for) t:plainValue t:comma t:plainValue t:keyword(in) t:plainValue t:closeControlTag]
         auto ruleForControl2 = new Rule("for_control");
         ruleForControl2->addMatch(new RuleMatch(this->tokenMap->getType("openControlTag")));
-        // todo: add condition: "for"
-        ruleForControl2->addMatch(new RuleMatch(this->tokenMap->getType("keyword")));
+        ruleForControl2->addMatch(new RuleMatch(this->tokenMap->getType("keyword"), "for"));
         ruleForControl2->addMatch(new RuleMatch(this->tokenMap->getType("plainValue")));
         ruleForControl2->addMatch(new RuleMatch(this->tokenMap->getType("comma")));
         ruleForControl2->addMatch(new RuleMatch(this->tokenMap->getType("plainValue")));
-        // todo: add condition: "in"
-        ruleForControl2->addMatch(new RuleMatch(this->tokenMap->getType("keyword")));
+        ruleForControl2->addMatch(new RuleMatch(this->tokenMap->getType("keyword"), "in"));
         ruleForControl2->addMatch(new RuleMatch(this->tokenMap->getType("plainValue")));
         ruleForControl2->addMatch(new RuleMatch(this->tokenMap->getType("closeControlTag")));
         this->rules->push_back(ruleForControl2);
@@ -100,8 +93,7 @@ namespace TemplateRenderWizard::Syntax
         // s:endfor_control [t:openControlTag t:keyword(endfor) t:closeControlTag]
         auto ruleEndFor = new Rule("endfor_control");
         ruleEndFor->addMatch(new RuleMatch(this->tokenMap->getType("openControlTag")));
-        // todo: add condition: "endfor"
-        ruleEndFor->addMatch(new RuleMatch(this->tokenMap->getType("keyword")));
+        ruleEndFor->addMatch(new RuleMatch(this->tokenMap->getType("keyword"), "endfor"));
         ruleEndFor->addMatch(new RuleMatch(this->tokenMap->getType("closeControlTag")));
         this->rules->push_back(ruleEndFor);
 

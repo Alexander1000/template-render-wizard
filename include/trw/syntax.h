@@ -38,16 +38,19 @@ namespace TemplateRenderWizard
         {
         public:
             explicit RuleMatch(TemplateRenderWizard::Token::Type);
+            explicit RuleMatch(TemplateRenderWizard::Token::Type, const char*);
             explicit RuleMatch(const char*);
             RuleMatchType getType();
             TemplateRenderWizard::Token::Type getTokenType();
             const char* getRuleName();
+            const char* getValue();
         private:
             RuleMatchType type;
             union {
                 TemplateRenderWizard::Token::Type tokenType;
                 const char* ruleName;
             } value;
+            const char* tokenValue;
         };
 
         class Rule
