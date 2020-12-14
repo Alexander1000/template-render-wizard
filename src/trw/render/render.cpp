@@ -164,7 +164,7 @@ namespace TemplateRenderWizard
         for (auto it = lElement->begin(); it != lElement->end(); it++) {
             if ((*it)->getType() == SyntaxElementType::SyntaxTokenType) {
                 auto t = (Token::Token*) (*it)->getData();
-                if (t->getType() == TemplateRenderWizard::Token::Type::MathOperationType) {
+                if (t->getType() == TemplateRenderWizard::Token::Type::MathOperationHighPriorityType) {
                     INIT_CHAR_STRING(strMathOp, 4)
                     t->getReader()->read(strMathOp, 4);
                     if (strcmp(strMathOp, "*") == 0 || strcmp(strMathOp, "/") == 0) {
