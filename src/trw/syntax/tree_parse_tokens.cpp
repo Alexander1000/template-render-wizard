@@ -1,4 +1,5 @@
 #include <trw.h>
+#include <iostream>
 
 namespace TemplateRenderWizard::Syntax
 {
@@ -23,11 +24,64 @@ namespace TemplateRenderWizard::Syntax
         for (auto it = this->rules->begin(); it != this->rules->end(); it++) {
             elements = this->run_rule(*it, elements);
         }
-        return nullptr;
+
+        return this->parse(elements);
     }
 
     std::list<SyntaxElement*>* Tree::run_rule(Rule *rule, std::list<SyntaxElement*> *elements)
     {
-        return nullptr;
+        auto filteredElements = new std::list<SyntaxElement*>;
+
+        auto matches = rule->getMatches();
+
+        for (auto it = elements->begin(); it != elements->end(); it++) {
+            auto itCopy = it;
+            auto ruleMatches = new std::list<SyntaxElement*>;
+            bool foundMatchRule = true;
+
+            for (auto itMatch = matches->begin(); itMatch != matches->end(); itMatch++) {
+                bool success = true;
+
+                switch((*itMatch)->getType()) {
+                    case RuleMatchType::RuleMatchTokenType: {
+                        if ((*itCopy)->getType() == SyntaxElementType::TokenType) {
+                            auto token = (*itCopy)->getToken();
+                            if (token->getType() == (*itMatch)->getTokenType()) {
+                                ruleMatches->push_back(*itCopy);
+                            } else {
+                                success = false;
+                            }
+                        }
+                        break;
+                    }
+                    case RuleMatchType::RuleMatchName: {
+                        if ((*itCopy)->getType() == SyntaxElementType::SyntaxType) {
+                            auto ruleElement = (*itCopy)->getRule();
+                            if (ruleElement != nullptr) {
+                                if (strcmp(ruleElement->getName(), (*itMatch)->getRuleName()) == 0) {
+                                    ruleMatches->push_back(*itCopy);
+                                }
+                            } else {
+                                success = false;
+                            }
+                        }
+                        break;
+                    }
+                }
+
+                if (!success) {
+                    foundMatchRule = false;
+                    break;
+                }
+
+                itCopy++;
+            }
+
+            if (foundMatchRule) {
+                std::cout << "Found Match!!" << std::endl;
+            }
+        }
+
+        return filteredElements;
     }
 }

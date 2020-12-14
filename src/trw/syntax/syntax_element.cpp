@@ -11,4 +11,20 @@ namespace TemplateRenderWizard::Syntax
         this->data.syntaxElement = syntaxElement;
         this->type = SyntaxElementType::SyntaxType;
     }
+
+    SyntaxElementType SyntaxElement::getType() {
+        return this->type;
+    }
+
+    TemplateRenderWizard::Token::Token * SyntaxElement::getToken() {
+        return this->data.token;
+    }
+
+    SyntaxElement * SyntaxElement::getElement() {
+        return this->data.syntaxElement;
+    }
+
+    Rule * SyntaxElement::getRule() {
+        return this->rule;
+    }
 }

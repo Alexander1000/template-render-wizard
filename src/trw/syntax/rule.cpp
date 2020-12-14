@@ -12,4 +12,12 @@ namespace TemplateRenderWizard::Syntax
     void Rule::addMatch(RuleMatch *ruleMatch) {
         this->matches->push_back(ruleMatch);
     }
+
+    std::list<RuleMatch*>* Rule::getMatches() {
+        return this->matches;
+    }
+
+    const char * Rule::getName() {
+        return this->name;
+    }
 }

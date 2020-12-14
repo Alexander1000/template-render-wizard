@@ -38,12 +38,15 @@ namespace TemplateRenderWizard
         public:
             explicit RuleMatch(TemplateRenderWizard::Token::Type);
             explicit RuleMatch(const char*);
+            RuleMatchType getType();
+            TemplateRenderWizard::Token::Type getTokenType();
+            const char* getRuleName();
         private:
             RuleMatchType type;
             union {
                 TemplateRenderWizard::Token::Type tokenType;
                 const char* ruleName;
-            } value{};
+            } value;
         };
 
         class Rule
@@ -51,6 +54,8 @@ namespace TemplateRenderWizard
         public:
             Rule(const char*);
             void addMatch(RuleMatch*);
+            std::list<RuleMatch*>* getMatches();
+            const char* getName();
         private:
             const char* name;
             std::list<RuleMatch*>* matches;
@@ -61,6 +66,10 @@ namespace TemplateRenderWizard
         public:
             SyntaxElement(TemplateRenderWizard::Token::Token*);
             SyntaxElement(SyntaxElement*);
+            Rule* getRule();
+            SyntaxElementType getType();
+            TemplateRenderWizard::Token::Token* getToken();
+            SyntaxElement* getElement();
 
         private:
             Rule* rule;

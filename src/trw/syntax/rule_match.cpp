@@ -13,4 +13,16 @@ namespace TemplateRenderWizard::Syntax
         this->value.tokenType = tokenType;
         this->type = RuleMatchType::RuleMatchTokenType;
     }
+
+    RuleMatchType RuleMatch::getType() {
+        return this->type;
+    }
+
+    TemplateRenderWizard::Token::Type RuleMatch::getTokenType() {
+        return this->value.tokenType;
+    }
+
+    const char * RuleMatch::getRuleName() {
+        return this->value.ruleName;
+    }
 }
