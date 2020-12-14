@@ -97,7 +97,7 @@ namespace TemplateRenderWizard::Syntax
         ruleForControl2->addMatch(new RuleMatch(this->tokenMap->getType("closeControlTag")));
         this->rules->push_back(ruleForControl2);
 
-//        s:endfor_control [t:openControlTag t:keyword(endfor) t:closeControlTag]
+        // s:endfor_control [t:openControlTag t:keyword(endfor) t:closeControlTag]
         auto ruleEndFor = new Rule("endfor_control");
         ruleEndFor->addMatch(new RuleMatch(this->tokenMap->getType("openControlTag")));
         // todo: add condition: "endfor"
@@ -105,9 +105,28 @@ namespace TemplateRenderWizard::Syntax
         ruleEndFor->addMatch(new RuleMatch(this->tokenMap->getType("closeControlTag")));
         this->rules->push_back(ruleEndFor);
 
-//        s:if_stmt [s:if_control s:body s:endif_control]
-//        s:if_stmt [s:if_control s:body s:else_control s:body s:endif_control]
-//        s:for_stmt [s:for_control s:body s:endfor_control]
+        // s:if_stmt [s:if_control s:body s:endif_control]
+        auto ruleIfStmt1 = new Rule("if_stmt");
+        ruleIfStmt1->addMatch(new RuleMatch("if_control"));
+        ruleIfStmt1->addMatch(new RuleMatch("body"));
+        ruleIfStmt1->addMatch(new RuleMatch("endif_control"));
+        this->rules->push_back(ruleIfStmt1);
+
+        // s:if_stmt [s:if_control s:body s:else_control s:body s:endif_control]
+        auto ruleIfStmt2 = new Rule("if_stmt");
+        ruleIfStmt2->addMatch(new RuleMatch("if_control"));
+        ruleIfStmt2->addMatch(new RuleMatch("body"));
+        ruleIfStmt2->addMatch(new RuleMatch("else_control"));
+        ruleIfStmt2->addMatch(new RuleMatch("body"));
+        ruleIfStmt2->addMatch(new RuleMatch("endif_control"));
+        this->rules->push_back(ruleIfStmt2);
+
+        // s:for_stmt [s:for_control s:body s:endfor_control]
+        auto ruleForStmt = new Rule("for_stmt");
+        ruleForStmt->addMatch(new RuleMatch("for_control"));
+        ruleForStmt->addMatch(new RuleMatch("body"));
+        ruleForStmt->addMatch(new RuleMatch("endfor_control"));
+        this->rules->push_back(ruleForStmt);
 
         // s:body [t:plainText]
         auto ruleBody1 = new Rule("body");
