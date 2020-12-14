@@ -16,6 +16,7 @@ namespace TemplateRenderWizard::Token
         (*this->tokenMap)["mathOp"] = Type::MathOperationType;
         (*this->tokenMap)["compare"] = Type::CompareType;
         (*this->tokenMap)["keyword"] = Type::KeywordType;
+        (*this->tokenMap)["comma"] = Type::CommaType;
     }
 
     Type TokenMap::getType(const char *typeName) {
