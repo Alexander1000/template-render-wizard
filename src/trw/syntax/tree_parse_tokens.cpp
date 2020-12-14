@@ -63,6 +63,8 @@ namespace TemplateRenderWizard::Syntax
                             if (ruleElement != nullptr) {
                                 if (strcmp(ruleElement->getName(), (*itMatch)->getRuleName()) == 0) {
                                     ruleMatches->push_back(*itCopy);
+                                } else {
+                                    success = false;
                                 }
                             } else {
                                 success = false;
