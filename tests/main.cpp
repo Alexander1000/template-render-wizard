@@ -226,7 +226,7 @@ CppUnitTest::TestCase* testSyntax_Template_Positive()
     }
 
     TemplateRenderWizard::Syntax::Tree tree;
-    tree.parse(tokens);
+    auto syntax = tree.parse(tokens);
 
     t->finish();
     return t;

@@ -91,6 +91,7 @@ namespace TemplateRenderWizard::Syntax
                     // skip elements
                     it++;
                 }
+                it--;
             } else {
                 filteredElements->push_back(*it);
             }
