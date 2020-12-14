@@ -202,6 +202,17 @@ CppUnitTest::TestCase* testLexer_Template_Positive(char* templateName)
     return t;
 }
 
+CppUnitTest::TestCase* testSyntax_Template_Positive()
+{
+    CppUnitTest::TestCase* t = nullptr;
+    t = new CppUnitTest::TestCase("syntax-tree-test");
+
+    t->printTitle();
+
+    t->finish();
+    return t;
+}
+
 static int filter_tpl(const struct dirent* dir_ent)
 {
     if (!strcmp(dir_ent->d_name, ".") || !strcmp(dir_ent->d_name, "..")) {
@@ -273,6 +284,8 @@ int main(int argc, char** argv) {
     testSuite.addTestCase(testRender_TemplateWithConditions_Positive());
 
     scanTests(&testSuite);
+
+    testSuite.addTestCase(testSyntax_Template_Positive());
 
     testSuite.printTotal();
 
