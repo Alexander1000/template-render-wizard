@@ -85,7 +85,9 @@ namespace TemplateRenderWizard::Syntax
             if (foundMatchRule) {
                 auto element = new SyntaxElement(ruleMatches);
                 element->setRule(rule);
-                filteredElements->push_back(element);
+                auto rootElement = new SyntaxElement(element);
+                rootElement->setRule(rule);
+                filteredElements->push_back(rootElement);
 
                 for (auto itRule = ruleMatches->begin(); itRule != ruleMatches->end(); itRule++) {
                     // skip elements
