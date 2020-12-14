@@ -210,7 +210,8 @@ CppUnitTest::TestCase* testSyntax_Template_Positive()
     t->printTitle();
 
     IOBuffer::IOFileReader* fileReader;
-    fileReader = new IOBuffer::IOFileReader("./fixtures/005-text-with-nested-conditions.tpl");
+    // fileReader = new IOBuffer::IOFileReader("./fixtures/005-text-with-nested-conditions.tpl");
+    fileReader = new IOBuffer::IOFileReader("./fixtures/001-simple-text.txt");
     IOBuffer::CharStream* charStream;
     charStream = new IOBuffer::CharStream(fileReader);
     auto stream = new TemplateRenderWizard::Stream(charStream);

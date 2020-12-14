@@ -56,10 +56,31 @@ namespace TemplateRenderWizard::Syntax
 //        s:if_stmt [s:if_control s:body s:endif_control]
 //        s:if_stmt [s:if_control s:body s:else_control s:body s:endif_control]
 //        s:for_stmt [s:for_control s:body s:endfor_control]
-//        s:body [t:plainText]
-//        s:body [s:injectValue]
-//        s:body [s:if_stmt]
-//        s:body [s:for_stmt]
-//        s:body [s:body s:body]
+
+        // s:body [t:plainText]
+        auto ruleBody1 = new Rule("body");
+        ruleBody1->addMatch(new RuleMatch(this->tokenMap->getType("plainText")));
+        this->rules->push_back(ruleBody1);
+
+        // s:body [s:injectValue]
+        auto ruleBody2 = new Rule("body");
+        ruleBody2->addMatch(new RuleMatch("injectValue"));
+        this->rules->push_back(ruleBody2);
+
+        // s:body [s:if_stmt]
+        auto ruleBody3 = new Rule("body");
+        ruleBody3->addMatch(new RuleMatch("if_stmt"));
+        this->rules->push_back(ruleBody3);
+
+        // s:body [s:for_stmt]
+        auto ruleBody4 = new Rule("body");
+        ruleBody4->addMatch(new RuleMatch("for_stmt"));
+        this->rules->push_back(ruleBody4);
+
+        // s:body [s:body s:body]
+        auto ruleBody5 = new Rule("body");
+        ruleBody5->addMatch(new RuleMatch("body"));
+        ruleBody5->addMatch(new RuleMatch("body"));
+        this->rules->push_back(ruleBody5);
     }
 }
