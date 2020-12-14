@@ -53,13 +53,22 @@ namespace TemplateRenderWizard::Syntax
                         if ((*itCopy)->getType() == SyntaxElementType::TokenType) {
                             auto token = (*itCopy)->getToken();
                             if (token->getType() == (*itMatch)->getTokenType()) {
-                                ruleMatches->push_back(*itCopy);
-                            } else {
-                                success = false;
+                                auto tv = (*itMatch)->getValue();
+                                if (tv != nullptr) {
+                                    INIT_CHAR_STRING(strValue, 16);
+                                    RESET_TOKEN_READER(token);
+                                    token->getReader()->read(strValue, 15);
+                                    if (strcmp(tv, strValue) == 0) {
+                                        ruleMatches->push_back(*itCopy);
+                                        break;
+                                    }
+                                } else {
+                                    ruleMatches->push_back(*itCopy);
+                                    break;
+                                }
                             }
-                        } else {
-                            success = false;
                         }
+                        success = false;
                         break;
                     }
                     case RuleMatchType::RuleMatchName: {
@@ -68,15 +77,11 @@ namespace TemplateRenderWizard::Syntax
                             if (ruleElement != nullptr) {
                                 if (strcmp(ruleElement->getName(), (*itMatch)->getRuleName()) == 0) {
                                     ruleMatches->push_back(*itCopy);
-                                } else {
-                                    success = false;
+                                    break;
                                 }
-                            } else {
-                                success = false;
                             }
-                        } else {
-                            success = false;
                         }
+                        success = false;
                         break;
                     }
                 }
