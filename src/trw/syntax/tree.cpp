@@ -83,13 +83,13 @@ namespace TemplateRenderWizard::Syntax
         ruleForControl1->addMatch(new RuleMatch(this->tokenMap->getType("closeControlTag")));
         this->rules->push_back(ruleForControl1);
 
-        // s:for_control [t:openControlTag t:keyword(for) t:plainValue t:dot t:plainValue t:keyword(in) t:plainValue t:closeControlTag]
+        // s:for_control [t:openControlTag t:keyword(for) t:plainValue t:comma t:plainValue t:keyword(in) t:plainValue t:closeControlTag]
         auto ruleForControl2 = new Rule("for_control");
         ruleForControl2->addMatch(new RuleMatch(this->tokenMap->getType("openControlTag")));
         // todo: add condition: "for"
         ruleForControl2->addMatch(new RuleMatch(this->tokenMap->getType("keyword")));
         ruleForControl2->addMatch(new RuleMatch(this->tokenMap->getType("plainValue")));
-        ruleForControl2->addMatch(new RuleMatch(this->tokenMap->getType("dot")));
+        ruleForControl2->addMatch(new RuleMatch(this->tokenMap->getType("comma")));
         ruleForControl2->addMatch(new RuleMatch(this->tokenMap->getType("plainValue")));
         // todo: add condition: "in"
         ruleForControl2->addMatch(new RuleMatch(this->tokenMap->getType("keyword")));
