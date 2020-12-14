@@ -41,6 +41,11 @@ namespace TemplateRenderWizard::Syntax
             bool foundMatchRule = true;
 
             for (auto itMatch = matches->begin(); itMatch != matches->end(); itMatch++) {
+                if (itCopy == elements->end()) {
+                    foundMatchRule = false;
+                    break;
+                }
+
                 bool success = true;
 
                 switch((*itMatch)->getType()) {
