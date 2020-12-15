@@ -10,8 +10,21 @@ namespace TemplateRenderWizard
         }
 
         if (treeElement->getType() == Syntax::SyntaxElementType::TokenListType) {
-            // todo: call sub sequence renders
+            this->render_tree(buffer, treeElement->getRule(), treeElement->getListElements());
             return;
+        }
+
+        // simple token
+    }
+
+    void Render::render_tree(IOBuffer::IOBuffer *buffer, Syntax::Rule *rule, std::list<Syntax::SyntaxElement*>* elements)
+    {
+        if (strcmp(rule->getName(), "if_stmt") == 0) {
+            auto it = elements->begin();
+            auto syntaxElement = *it;
+            if (syntaxElement->getType() != Syntax::SyntaxType || strcmp(syntaxElement->getRule()->getName(), "if_control") != 0) {
+                throw new UnknownToken;
+            }
         }
     }
 }
