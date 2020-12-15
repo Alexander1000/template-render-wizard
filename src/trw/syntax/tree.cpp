@@ -53,12 +53,28 @@ namespace TemplateRenderWizard::Syntax
         rule6->addMatch(new RuleMatch("expr"));
         this->rules->push_back(rule6);
 
+        // s:cmpExpr [s:expr t:compare s:expr]
+        auto ruleCmpExpr1 = new Rule("cmpExpr");
+        ruleCmpExpr1->addMatch(new RuleMatch("expr"));
+        ruleCmpExpr1->addMatch(new RuleMatch(this->tokenMap->getType("compare")));
+        ruleCmpExpr1->addMatch(new RuleMatch("expr"));
+        this->rules->push_back(ruleCmpExpr1);
+
         // s:if_control [t:openControlTag t:keyword(if) s:expr t:closeControlTag]
         auto ruleIf1 = new Rule("if_control");
         ruleIf1->addMatch(new RuleMatch(this->tokenMap->getType("openControlTag")));
         ruleIf1->addMatch(new RuleMatch(this->tokenMap->getType("keyword"), "if"));
+        ruleIf1->addMatch(new RuleMatch("expr"));
         ruleIf1->addMatch(new RuleMatch(this->tokenMap->getType("closeControlTag")));
         this->rules->push_back(ruleIf1);
+
+        // s:if_control [t:openControlTag t:keyword(if) s:cmpExpr t:closeControlTag]
+        auto ruleIf2 = new Rule("if_control");
+        ruleIf2->addMatch(new RuleMatch(this->tokenMap->getType("openControlTag")));
+        ruleIf2->addMatch(new RuleMatch(this->tokenMap->getType("keyword"), "if"));
+        ruleIf2->addMatch(new RuleMatch("cmpExpr"));
+        ruleIf2->addMatch(new RuleMatch(this->tokenMap->getType("closeControlTag")));
+        this->rules->push_back(ruleIf2);
 
         // s:else_control [t:openControlTag t:keyword(else) t:closeControlTag]
         auto ruleElse = new Rule("else_control");

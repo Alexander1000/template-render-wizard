@@ -23,8 +23,29 @@ namespace TemplateRenderWizard
             auto it = elements->begin();
             auto syntaxElement = *it;
             if (syntaxElement->getType() != Syntax::SyntaxType || strcmp(syntaxElement->getRule()->getName(), "if_control") != 0) {
-                throw new UnknownToken;
+                throw new UnexpectedToken;
             }
+            auto ifElement = syntaxElement->getElement();
+            if (ifElement->getType() != Syntax::TokenListType || strcmp(ifElement->getRule()->getName(), "if_control") != 0) {
+                throw new UnexpectedToken;
+            }
+
+            auto itEl = ifElement->getListElements()->begin(); // open control tag
+            itEl++; // keyword
+            itEl++; // expr
+            auto expr = *it;
+            auto value = this->calc_expr_tree(expr);
         }
+    }
+
+    Value* Render::calc_expr_tree(Syntax::SyntaxElement *syntaxElement)
+    {
+        if (syntaxElement->getType() != Syntax::SyntaxType || strcmp(syntaxElement->getRule()->getName(), "expr") != 0) {
+            throw new UnexpectedToken;
+        }
+
+        auto syntax = syntaxElement->getElement();
+
+        return nullptr;
     }
 }
