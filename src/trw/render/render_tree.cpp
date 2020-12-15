@@ -28,6 +28,11 @@ namespace TemplateRenderWizard
                     this->render_tree(buffer, curElement->getElement());
                     continue;
                 }
+
+                if (curElement->getType() == Syntax::SyntaxElementType::TokenType) {
+                    this->render_tree_token(buffer, curElement->getToken());
+                    continue;
+                }
             }
         }
 
@@ -72,5 +77,18 @@ namespace TemplateRenderWizard
         auto syntax = syntaxElement->getElement();
 
         return nullptr;
+    }
+
+    void Render::render_tree_token(IOBuffer::IOBuffer *buffer, Token::Token *token)
+    {
+        switch (token->getType()) {
+            case Token::Type::PlainTextType: {
+                this->to_buffer_plain_text(buffer, token);
+                break;
+            }
+            default: {
+                throw new UnexpectedToken;
+            }
+        }
     }
 }
