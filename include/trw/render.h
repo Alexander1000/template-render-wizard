@@ -10,6 +10,7 @@
 #include <trw/value.h>
 #include <trw/expression.h>
 #include <stack>
+#include <trw/syntax.h>
 
 #define TRW_RENDER_MEMORY_BLOCK_SIZE 4096
 #define TRW_RENDER_BUFFER_SIZE 1024
@@ -43,6 +44,8 @@ namespace TemplateRenderWizard
         void to_buffer_value(IOBuffer::IOBuffer* buffer, Token::Token* token);
 
         void render_if_expression(IOBuffer::IOBuffer* buffer, bool result);
+
+        void render_tree(IOBuffer::IOBuffer* buffer, Syntax::SyntaxElement* treeElement);
 
     public:
         Render(const char*, TemplateRenderWizard::Tree::Tree*);
