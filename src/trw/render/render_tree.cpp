@@ -40,6 +40,19 @@ namespace TemplateRenderWizard
 
     Value* Render::calc_expr_tree(Syntax::SyntaxElement *syntaxElement)
     {
+        if (syntaxElement->getType() == Syntax::TokenType) {
+            return this->getValueFromToken(syntaxElement->getToken());
+        }
+
+        if (syntaxElement->getType() == Syntax::TokenListType) {
+            if (strcmp(syntaxElement->getRule()->getName(), "expr") != 0) {
+                throw new UnexpectedToken;
+            }
+
+            auto syntaxList = syntaxElement->getListElements();
+            auto it = syntaxList->begin();
+        }
+
         if (syntaxElement->getType() != Syntax::SyntaxType || strcmp(syntaxElement->getRule()->getName(), "expr") != 0) {
             throw new UnexpectedToken;
         }
