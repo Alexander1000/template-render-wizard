@@ -1,4 +1,5 @@
 #include <trw.h>
+#include <iostream>
 
 namespace TemplateRenderWizard
 {
@@ -19,6 +20,17 @@ namespace TemplateRenderWizard
 
     void Render::render_tree(IOBuffer::IOBuffer *buffer, Syntax::Rule *rule, std::list<Syntax::SyntaxElement*>* elements)
     {
+        if (strcmp(rule->getName(), "body") == 0) {
+            std::cout << std::endl;
+            for (auto it = elements->begin(); it != elements->end(); it++) {
+                auto curElement = *it;
+                if (curElement->getType() == Syntax::SyntaxElementType::SyntaxType) {
+                    this->render_tree(buffer, curElement->getElement());
+                    continue;
+                }
+            }
+        }
+
         if (strcmp(rule->getName(), "if_stmt") == 0) {
             auto it = elements->begin();
             auto syntaxElement = *it;
