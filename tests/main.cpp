@@ -197,6 +197,8 @@ CppUnitTest::TestCase* testRenderWithSyntaxTree_Template_Positive(char* template
     fileReader = new IOBuffer::IOFileReader(strFileExpected);
     fileReader->read(expected, 1024);
 
+    std::cout << "Given: " << tBuffer << std::endl;
+
     CppUnitTest::assertEquals(t, expected, tBuffer);
 
     t->finish();

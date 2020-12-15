@@ -21,7 +21,6 @@ namespace TemplateRenderWizard
     void Render::render_tree(IOBuffer::IOBuffer *buffer, Syntax::Rule *rule, std::list<Syntax::SyntaxElement*>* elements)
     {
         if (strcmp(rule->getName(), "body") == 0) {
-            std::cout << std::endl;
             for (auto it = elements->begin(); it != elements->end(); it++) {
                 auto curElement = *it;
                 if (curElement->getType() == Syntax::SyntaxElementType::SyntaxType) {
@@ -34,6 +33,21 @@ namespace TemplateRenderWizard
                     continue;
                 }
             }
+
+            return;
+        }
+
+        if (strcmp(rule->getName(), "injectValue") == 0) {
+            std::cout << std::endl;
+            auto it = elements->begin(); // t:openTagValue
+            it++; // t:plainValue
+            auto element = *it;
+            if (element->getType() != Syntax::SyntaxElementType::TokenType) {
+                throw new UnexpectedToken;
+            }
+            auto value = this->getValueFromToken(element->getToken());
+            this->to_buffer_value(buffer, value);
+            return;
         }
 
         if (strcmp(rule->getName(), "if_stmt") == 0) {
