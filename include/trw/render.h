@@ -49,6 +49,7 @@ namespace TemplateRenderWizard
         Render(std::string*, TemplateRenderWizard::Tree::Tree*);
         Render(TemplateRenderWizard::Stream*, TemplateRenderWizard::Tree::Tree*);
         IOBuffer::IOMemoryBuffer* toBuffer();
+        IOBuffer::IOMemoryBuffer* toBufferTree();
     };
 }
 
