@@ -100,6 +100,13 @@ namespace TemplateRenderWizard
                 throw new UnexpectedToken;
             }
 
+            if (firstElement->getType() == Syntax::SyntaxElementType::TokenType) {
+                it++;
+                auto exprValue = this->calc_expr_tree(*it);
+                it++;
+                return exprValue;
+            }
+
             lValue = this->calc_expr_tree(*it);
             it++;
             auto tokenOp = *it;
