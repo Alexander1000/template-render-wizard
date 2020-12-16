@@ -51,7 +51,12 @@ namespace TemplateRenderWizard
         }
 
         if (strcmp(rule->getName(), "if_stmt") == 0) {
-            auto it = elements->begin();
+            int count = 0;
+            for (auto it = elements->begin(); it != elements->end(); it++) {
+                count++;
+            }
+
+            auto it = elements->begin(); // if statement
             auto syntaxElement = *it;
             if (syntaxElement->getType() != Syntax::SyntaxType || strcmp(syntaxElement->getRule()->getName(), "if_control") != 0) {
                 throw new UnexpectedToken;
@@ -62,6 +67,31 @@ namespace TemplateRenderWizard
             }
 
             auto result = this->calc_if_control(ifElement);
+            if (result) {
+                it++; // body
+                auto bodyElement = *it;
+                if (bodyElement->getType() != Syntax::SyntaxElementType::SyntaxType) {
+                    throw new UnexpectedToken;
+                }
+                this->render_tree(buffer, bodyElement->getElement());
+                it++; // skip else/endif
+                if (count == 5) {
+                    it++; // skip else body
+                    it++; // skip endif
+                }
+            } else {
+                it++; // skip body
+                it++; // skip else/endif
+                if (count == 5) {
+                    it++; // <- else body
+                    auto bodyElement = *it;
+                    if (bodyElement->getType() != Syntax::SyntaxElementType::SyntaxType) {
+                        throw new UnexpectedToken;
+                    }
+                    this->render_tree(buffer, bodyElement->getElement());
+                    it++; // endif
+                }
+            }
         }
     }
 
