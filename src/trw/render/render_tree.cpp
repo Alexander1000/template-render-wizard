@@ -166,7 +166,19 @@ namespace TemplateRenderWizard
             return this->compare_value(lValue, rValue, tokenCmp->getToken());
         }
 
-        auto value = this->calc_expr_tree(expr);
-        return true;
+        if (strcmp(expr->getRule()->getName(), "expr") == 0) {
+            auto lValue = this->calc_expr_tree(expr);
+            if (lValue->getType() == ValueType::None) {
+                return false;
+            }
+            if (lValue->getType() == ValueType::Integer) {
+                return *lValue->getData<int*>() != 0;
+            }
+            if (lValue->getType() == ValueType::String) {
+                return strlen(lValue->getData<char*>()) > 0;
+            }
+        }
+
+        throw new UnexpectedToken;
     }
 }
