@@ -61,11 +61,7 @@ namespace TemplateRenderWizard
                 throw new UnexpectedToken;
             }
 
-            auto itEl = ifElement->getListElements()->begin(); // open control tag
-            itEl++; // keyword
-            itEl++; // expr
-            auto expr = *it;
-            auto value = this->calc_expr_tree(expr);
+            auto result = this->calc_if_control(ifElement);
         }
     }
 
@@ -81,16 +77,49 @@ namespace TemplateRenderWizard
             }
 
             auto syntaxList = syntaxElement->getListElements();
-            auto it = syntaxList->begin();
+
+            int count = 0;
+            for (auto it = syntaxList->begin(); it != syntaxList->end(); it++) {
+                count++;
+            }
+
+            auto it = syntaxList->begin(); // lValue
+            auto firstElement = *it;
+
+            Value *lValue;
+
+            if (count == 1) {
+                if (firstElement->getType() == Syntax::SyntaxElementType::SyntaxType) {
+                    lValue = this->calc_expr_tree(firstElement->getElement());
+                    return lValue;
+                }
+                if (firstElement->getType() == Syntax::SyntaxElementType::TokenType) {
+                    return this->getValueFromToken(firstElement->getToken());
+                }
+
+                throw new UnexpectedToken;
+            }
+
+            lValue = this->calc_expr_tree(*it);
+            it++;
+            auto tokenOp = *it;
+            it++;
+            auto rValue = this->calc_expr_tree(*it);
+
+            return this->calc_expr(
+                new Expression(
+                    new SyntaxElement(lValue),
+                    new SyntaxElement(rValue),
+                    tokenOp->getToken()
+                )
+            );
         }
 
         if (syntaxElement->getType() != Syntax::SyntaxType || strcmp(syntaxElement->getRule()->getName(), "expr") != 0) {
             throw new UnexpectedToken;
         }
 
-        auto syntax = syntaxElement->getElement();
-
-        return nullptr;
+        return this->calc_expr_tree(syntaxElement->getElement());
     }
 
     void Render::render_tree_token(IOBuffer::IOBuffer *buffer, Token::Token *token)
@@ -104,5 +133,33 @@ namespace TemplateRenderWizard
                 throw new UnexpectedToken;
             }
         }
+    }
+
+    bool Render::calc_if_control(Syntax::SyntaxElement *syntaxElement)
+    {
+        auto it = syntaxElement->getListElements()->begin(); // open control tag
+        it++; // keyword
+        it++; // expr
+        auto expr = *it;
+
+        if (strcmp(expr->getRule()->getName(), "cmpExpr") == 0) {
+            if (expr->getType() != Syntax::SyntaxElementType::SyntaxType) {
+                throw new UnexpectedToken;
+            }
+            auto cmpExprSyntaxElement = expr->getElement();
+            if (cmpExprSyntaxElement->getType() != Syntax::SyntaxElementType::TokenListType) {
+                throw new UnexpectedToken;
+            }
+            auto itEl = cmpExprSyntaxElement->getListElements()->begin(); // s:expr
+            auto lValue = this->calc_expr_tree(*itEl);
+            itEl++; // t:compare
+            auto tokenCmp = *itEl;
+            itEl++; // s:expr
+            auto rValue = this->calc_expr_tree(*itEl);
+            return this->compare_value(lValue, rValue, tokenCmp->getToken());
+        }
+
+        auto value = this->calc_expr_tree(expr);
+        return true;
     }
 }

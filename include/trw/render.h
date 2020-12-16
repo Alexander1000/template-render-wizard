@@ -49,6 +49,7 @@ namespace TemplateRenderWizard
         void render_tree(IOBuffer::IOBuffer* buffer, Syntax::Rule* rule, std::list<Syntax::SyntaxElement*>* elements);
         Value* calc_expr_tree(Syntax::SyntaxElement*);
         void render_tree_token(IOBuffer::IOBuffer* buffer, Token::Token* token);
+        bool calc_if_control(Syntax::SyntaxElement*);
 
     public:
         Render(const char*, TemplateRenderWizard::Tree::Tree*);
