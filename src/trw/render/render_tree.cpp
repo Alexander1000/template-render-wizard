@@ -106,6 +106,7 @@ namespace TemplateRenderWizard
             auto itForControl = forControl->getListElements()->begin(); // openControlTag
             itForControl++; // keyword (for)
             itForControl++; // plainValue
+            auto lValueElement = *itForControl;
             itForControl++; // comma vs keyword(in)
             auto tForControlToken = *itForControl;
             if (tForControlToken->getType() != Syntax::SyntaxElementType::TokenType) {
@@ -113,9 +114,11 @@ namespace TemplateRenderWizard
             }
             if (tForControlToken->getToken()->getType() == Token::Type::CommaType) {
                 itForControl++; // second plainValue
+                auto rValueElement = *itForControl;
                 itForControl++; // keyword (in)
             }
             itForControl++; // plainValue (source of data)
+            auto sourceElement = *itForControl;
             itForControl++; // closeControlTag
             it++; // body
             it++; // endfor_control
