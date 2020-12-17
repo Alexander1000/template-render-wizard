@@ -5,7 +5,8 @@ namespace TemplateRenderWizard
 {
     Value* Render::calc_expr(Expression *expr)
     {
-        if (expr->getToken()->getType() != Token::Type::MathOperationType) {
+        auto tokenType = expr->getToken()->getType();
+        if (tokenType != Token::Type::MathOperationType && tokenType != Token::Type::MathOperationHighPriorityType) {
             std::cout << "Line: " << expr->getToken()->getLine() << "; Column: " << expr->getToken()->getColumn() << std::endl;
             throw new UnexpectedToken;
         }

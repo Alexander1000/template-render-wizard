@@ -23,6 +23,8 @@ set(TRW_SHARED_SOURCES
     src/trw/tokens/math_operation.cpp
     src/trw/tokens/expression_value.cpp
     src/trw/tokens/token_map.cpp
+    src/trw/tokens/comma.cpp
+    src/trw/tokens/math_operation_high_priority.cpp
     src/trw/leaf_element.cpp
     src/trw/tree_parameters.cpp
     src/trw/render/construct.cpp
@@ -34,12 +36,19 @@ set(TRW_SHARED_SOURCES
     src/trw/render/to_buffer_plain_text.cpp
     src/trw/render/to_buffer_value.cpp
     src/trw/render/render_if_expression.cpp
+    src/trw/render/to_buffer_tree.cpp
+    src/trw/render/render_tree.cpp
     src/trw/value.cpp
     src/trw/value/cast_value_to_int.cpp
     src/trw/value/cast_value_to_bool.cpp
     src/trw/expression.cpp
     src/trw/utils/ctype_digits.cpp
     src/trw/syntax/syntax.cpp
+    src/trw/syntax/rule_match.cpp
+    src/trw/syntax/rule.cpp
+    src/trw/syntax/tree.cpp
+    src/trw/syntax/syntax_element.cpp
+    src/trw/syntax/tree_parse_tokens.cpp
 )
 
 set(TRW_SOURCES

@@ -18,8 +18,10 @@ namespace TemplateRenderWizard::Token
         RoundBracketOpenType,
         RoundBracketCloseType,
         CompareType,
+        MathOperationHighPriorityType,
         MathOperationType,
         ExpressionValueType,
+        CommaType,
     };
 
     class TokenMap
@@ -116,6 +118,13 @@ namespace TemplateRenderWizard::Token
         Type getType() final;
     };
 
+    class MathOperationHighPriority : public Token
+    {
+    public:
+        MathOperationHighPriority(int line, int column, IOBuffer::IOReader *reader);
+        Type getType() final;
+    };
+
     class MathOperation : public Token
     {
     public:
@@ -127,6 +136,13 @@ namespace TemplateRenderWizard::Token
     {
     public:
         ExpressionValue(int line, int column, IOBuffer::IOReader *reader);
+        Type getType() final;
+    };
+
+    class Comma : public Token
+    {
+    public:
+        Comma(int line, int column);
         Type getType() final;
     };
 }

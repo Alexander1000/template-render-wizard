@@ -235,7 +235,14 @@ namespace TemplateRenderWizard
                     return token;
                 }
 
-                if (*curSymbol == '+' || *curSymbol == '-' || *curSymbol == '*' || *curSymbol == '/' || *curSymbol == '%') {
+                if (*curSymbol == '*' || *curSymbol == '/') {
+                    ioWriter = new IOBuffer::IOMemoryBuffer(4);
+                    ioWriter->write(curSymbol, 1);
+                    token = new Token::MathOperationHighPriority(this->position->getLine(), this->position->getColumn(), ioWriter);
+                    return token;
+                }
+
+                if (*curSymbol == '+' || *curSymbol == '-' || *curSymbol == '%') {
                     ioWriter = new IOBuffer::IOMemoryBuffer(4);
                     ioWriter->write(curSymbol, 1);
                     token = new Token::MathOperation(this->position->getLine(), this->position->getColumn(), ioWriter);
