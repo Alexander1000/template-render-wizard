@@ -2,6 +2,7 @@
 #define H_TRW_VALUE
 
 #include <list>
+#include <map>
 
 namespace TemplateRenderWizard
 {
@@ -11,6 +12,7 @@ namespace TemplateRenderWizard
         Integer,
         Float,
         Array,
+        Object,
     };
 
     class Value
@@ -23,6 +25,7 @@ namespace TemplateRenderWizard
         void setData(char* data);
         void setData(float data);
         void setData(std::list<Value*>* data);
+        void setData(std::map<std::string,Value*>* data);
 
         template<typename T> T getData()
         {
@@ -37,6 +40,7 @@ namespace TemplateRenderWizard
             char* c_data;
             float* f_data;
             std::list<Value*>* a_data;
+            std::map<std::string, Value*>* o_data;
         } _data;
 
         int* getDataTyped(int* nothing);

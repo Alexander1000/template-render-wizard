@@ -39,6 +39,12 @@ namespace TemplateRenderWizard
         this->_data.a_data = data;
     }
 
+    void Value::setData(std::map<std::string, Value*>* data)
+    {
+        this->type = Object;
+        this->_data.o_data = data;
+    }
+
     int* Value::getDataTyped(int* nothing)
     {
         return this->_data.i_data;

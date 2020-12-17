@@ -42,7 +42,7 @@ namespace TemplateRenderWizard
                     for (auto it = leafArray->begin(); it != leafArray->end(); it++) {
                         auto leafElement = *it;
                     }
-
+                    v->setData(list);
                     return v;
                 }
 
