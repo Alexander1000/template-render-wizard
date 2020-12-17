@@ -68,7 +68,7 @@ int main(int argc, char** argv) {
         TemplateRenderWizard::Render* render;
         render = new TemplateRenderWizard::Render(&tokenStream, config.getTree());
 
-        output = render->toBuffer();
+        output = render->toBufferTree();
     }
 
     int nRead;

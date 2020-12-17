@@ -21,29 +21,18 @@ namespace TemplateRenderWizard
     {
         TemplateRenderWizard::Tree::Tree* tree;
         TemplateRenderWizard::Stream* stream;
-        std::stack<Token::Token*>* tokenStack;
 
-        void renderControlExpression(IOBuffer::IOBuffer*);
-        bool ifExpressionControlTag();
-        Value* get_value(std::list<Token::Token*>*);
         Value* getValueFromToken(Token::Token*);
         bool compare_value(Value*, Value*, Token::Token*);
         Value* calc_expr(Expression*);
 
-        std::list<SyntaxElement*>* filter_low_priority_operations(std::list<SyntaxElement*>*);
-
-        bool is_unprocessed_token_exist(std::list<SyntaxElement*>*);
-
         Token::Token* getNextToken();
-        void pushBackToken(Token::Token*);
 
         Value* get_value_from_syntax_element(SyntaxElement*);
 
         void to_buffer_plain_text(IOBuffer::IOBuffer* buffer, Token::Token* token);
         void to_buffer_value(IOBuffer::IOBuffer* buffer, Value* value);
         void to_buffer_value(IOBuffer::IOBuffer* buffer, Token::Token* token);
-
-        void render_if_expression(IOBuffer::IOBuffer* buffer, bool result);
 
         void render_tree(IOBuffer::IOBuffer* buffer, Syntax::SyntaxElement* treeElement);
         void render_tree(IOBuffer::IOBuffer* buffer, Syntax::Rule* rule, std::list<Syntax::SyntaxElement*>* elements);
@@ -55,7 +44,6 @@ namespace TemplateRenderWizard
         Render(const char*, TemplateRenderWizard::Tree::Tree*);
         Render(std::string*, TemplateRenderWizard::Tree::Tree*);
         Render(TemplateRenderWizard::Stream*, TemplateRenderWizard::Tree::Tree*);
-        IOBuffer::IOMemoryBuffer* toBuffer();
         IOBuffer::IOMemoryBuffer* toBufferTree();
     };
 }
