@@ -33,6 +33,8 @@ namespace TemplateRenderWizard
             return this->getDataTyped((T) nullptr);
         }
 
+        std::list<Value*>* getArray();
+
     private:
         ValueType type;
 

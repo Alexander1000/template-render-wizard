@@ -128,6 +128,14 @@ namespace TemplateRenderWizard
             auto sourceValue = this->getValueFromToken(sourceElement->getToken());
             itForControl++; // closeControlTag
             it++; // body
+            auto elBody = *it;
+            if (sourceValue->getType() == ValueType::Array) {
+                for (auto itArray = sourceValue->getArray()->begin(); itArray != sourceValue->getArray()->end(); itArray++) {
+                    auto curContextElement = *itArray;
+                    std::cout << std::endl;
+                    this->render_tree(buffer, elBody);
+                }
+            }
             it++; // endfor_control
         }
     }

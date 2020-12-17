@@ -61,6 +61,10 @@ namespace TemplateRenderWizard
         return this->_data.f_data;
     }
 
+    std::list<Value*>* Value::getArray() {
+        return this->_data.a_data;
+    }
+
     Value* cast_yaml_array_to_value(std::list<Tree::LeafElement*>* yamlList)
     {
         auto v = new Value();
