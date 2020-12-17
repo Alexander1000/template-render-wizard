@@ -38,7 +38,6 @@ namespace TemplateRenderWizard
         }
 
         if (strcmp(rule->getName(), "injectValue") == 0) {
-            std::cout << std::endl;
             auto it = elements->begin(); // t:openTagValue
             it++; // t:plainValue
             auto element = *it;
