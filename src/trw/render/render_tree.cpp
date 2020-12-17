@@ -92,6 +92,34 @@ namespace TemplateRenderWizard
                 }
             }
         }
+
+        if (strcmp(rule->getName(), "for_stmt") == 0) {
+            auto it = elements->begin(); // for_control
+            auto elForControl = *it;
+            if (elForControl->getType() != Syntax::SyntaxElementType::SyntaxType) {
+                throw new UnexpectedToken;
+            }
+            auto forControl = elForControl->getElement();
+            if (forControl->getType() != Syntax::SyntaxElementType::TokenListType) {
+                throw new UnexpectedToken;
+            }
+            auto itForControl = forControl->getListElements()->begin(); // openControlTag
+            itForControl++; // keyword (for)
+            itForControl++; // plainValue
+            itForControl++; // comma vs keyword(in)
+            auto tForControlToken = *itForControl;
+            if (tForControlToken->getType() != Syntax::SyntaxElementType::TokenType) {
+                throw new UnexpectedToken;
+            }
+            if (tForControlToken->getToken()->getType() == Token::Type::CommaType) {
+                itForControl++; // second plainValue
+                itForControl++; // keyword (in)
+            }
+            itForControl++; // plainValue (source of data)
+            itForControl++; // closeControlTag
+            it++; // body
+            it++; // endfor_control
+        }
     }
 
     Value* Render::calc_expr_tree(Syntax::SyntaxElement *syntaxElement)
