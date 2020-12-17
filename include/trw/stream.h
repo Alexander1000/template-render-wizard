@@ -13,6 +13,7 @@ namespace TemplateRenderWizard
         ValueMode,
         ControlMode,
         ControlModeExpression,
+        ControlModeForExpression,
     };
 
     class Stream

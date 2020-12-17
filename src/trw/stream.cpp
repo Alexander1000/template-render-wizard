@@ -1,7 +1,5 @@
-#include <trw/stream.h>
 #include <io-buffer.h>
-#include <trw/token.h>
-#include <trw/position.h>
+#include <trw.h>
 #include <stack>
 #include <iostream>
 
@@ -161,7 +159,14 @@ namespace TemplateRenderWizard
                         curSymbol = this->getNextChar();
                     }
 
-                    this->switchToMode(StreamMode::ControlModeExpression);
+                    INIT_CHAR_STRING(strKeyword, 16)
+                    ioWriter->read(strKeyword, 15);
+
+                    if (strcmp(strKeyword, "for") == 0) {
+                        this->switchToMode(StreamMode::ControlModeForExpression);
+                    } else {
+                        this->switchToMode(StreamMode::ControlModeExpression);
+                    }
                     token = new Token::Keyword(this->position->getLine(), this->position->getColumn(), ioWriter);
                     return token;
                 }
@@ -270,6 +275,73 @@ namespace TemplateRenderWizard
                 } while(curSymbol != nullptr && *curSymbol != 0x20);
 
                 token = new Token::ExpressionValue(this->position->getLine(), this->position->getColumn(), ioWriter);
+                return token;
+            }
+
+            case StreamMode::ControlModeForExpression: {
+                if (*curSymbol == 0x20) {
+                    // skip spaces
+                    do {
+                        curSymbol = this->getNextChar();
+                    } while(curSymbol != nullptr && *curSymbol == 0x20);
+                }
+
+                if (curSymbol == nullptr) {
+                    return nullptr;
+                }
+
+                if (*curSymbol == '%') {
+                    char* nextSymbol = this->getNextChar();
+                    if (nextSymbol == nullptr) {
+                        return nullptr;
+                    }
+                    if (*nextSymbol == '}') {
+                        this->switchToPreviousMode(); // <- switch on control mode
+                        this->switchToPreviousMode(); // <- switch on parent mode
+                        token = new Token::CloseControlTag(this->position->getLine(), this->position->getColumn());
+                        return token;
+                    }
+                    this->pushStackChar(nextSymbol);
+                }
+
+                if (*curSymbol == ',') {
+                    token = new Token::Comma(this->position->getLine(), this->position->getColumn());
+                    return token;
+                }
+
+                ioWriter = new IOBuffer::IOMemoryBuffer(64);
+                int tokenLength = 0;
+
+                do {
+                    if (*curSymbol == '%') {
+                        char* nextChar = this->getNextChar();
+                        if (*nextChar == '}') {
+                            this->pushStackChar(nextChar);
+                            this->pushStackChar(curSymbol);
+                            break;
+                        }
+                    }
+
+                    if (*curSymbol == ',') {
+                        this->pushStackChar(curSymbol);
+                        break;
+                    }
+
+                    ioWriter->write(curSymbol, 1);
+                    curSymbol = this->getNextChar();
+                    tokenLength++;
+                } while(curSymbol != nullptr && *curSymbol != 0x20);
+
+                if (tokenLength == 2) {
+                    INIT_CHAR_STRING(strKeyword, 3);
+                    ioWriter->read(strKeyword, 2);
+                    if (strcmp(strKeyword, "in") == 0) {
+                        token = new Token::Keyword(this->position->getLine(), this->position->getColumn(), ioWriter);
+                        return token;
+                    }
+                }
+
+                token = new Token::PlainValue(this->position->getLine(), this->position->getColumn(), ioWriter);
                 return token;
             }
         }
