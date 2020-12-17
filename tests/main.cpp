@@ -135,7 +135,11 @@ CppUnitTest::TestCase* testRenderWithSyntaxTree_Template_Positive(char* template
 CppUnitTest::TestCase* testLexer_Template_Positive(char* templateName)
 {
     CppUnitTest::TestCase* t = nullptr;
-    t = new CppUnitTest::TestCase(templateName);
+
+    INIT_CHAR_STRING(strTestCaseName, 1024);
+    sprintf(strTestCaseName, "[lexer] %s", templateName);
+
+    t = new CppUnitTest::TestCase(strTestCaseName);
 
     t->printTitle();
 
