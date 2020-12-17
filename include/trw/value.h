@@ -1,6 +1,8 @@
 #ifndef H_TRW_VALUE
 #define H_TRW_VALUE
 
+#include <list>
+
 namespace TemplateRenderWizard
 {
     enum ValueType {
@@ -8,6 +10,7 @@ namespace TemplateRenderWizard
         String,
         Integer,
         Float,
+        Array,
     };
 
     class Value
@@ -19,6 +22,7 @@ namespace TemplateRenderWizard
         void setData(int data);
         void setData(char* data);
         void setData(float data);
+        void setData(std::list<Value*>* data);
 
         template<typename T> T getData()
         {
@@ -32,6 +36,7 @@ namespace TemplateRenderWizard
             int* i_data;
             char* c_data;
             float* f_data;
+            std::list<Value*>* a_data;
         } _data;
 
         int* getDataTyped(int* nothing);

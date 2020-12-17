@@ -1,4 +1,5 @@
 #include <trw.h>
+#include <list>
 
 namespace TemplateRenderWizard
 {
@@ -30,6 +31,12 @@ namespace TemplateRenderWizard
         this->type = Float;
         this->_data.f_data = new float;
         *this->_data.f_data = data;
+    }
+
+    void Value::setData(std::list<Value*>* data)
+    {
+        this->type = Array;
+        this->_data.a_data = data;
     }
 
     int* Value::getDataTyped(int* nothing)
