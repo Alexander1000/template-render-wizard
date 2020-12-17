@@ -1,7 +1,7 @@
 #include <trw.h>
 #include <iostream>
-
-typedef std::list<TemplateRenderWizard::Tree::LeafElement*> LeafArray;
+#include <list>
+#include <map>
 
 namespace TemplateRenderWizard
 {
@@ -35,15 +35,11 @@ namespace TemplateRenderWizard
                 }
 
                 if (leafValue->getType() == Tree::LeafElementArray) {
-                    Value *v;
-                    v = new Value();
-                    auto list = new std::list<Value*>;
-                    auto leafArray = (LeafArray*) leafValue->getData();
-                    for (auto it = leafArray->begin(); it != leafArray->end(); it++) {
-                        auto leafElement = *it;
-                    }
-                    v->setData(list);
-                    return v;
+                    return cast_yaml_array_to_value((std::list<Tree::LeafElement*>*) leafValue->getData());
+                }
+
+                if (leafValue->getType() == Tree::LeafElementObject) {
+                    return cast_yaml_object_to_value((std::map<std::string, Tree::LeafElement*>*) leafValue->getData());
                 }
 
                 std::cout << "Unexpected leaf" << std::endl;

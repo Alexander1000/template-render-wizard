@@ -3,6 +3,7 @@
 
 #include <list>
 #include <map>
+#include <yaml-parser.h>
 
 namespace TemplateRenderWizard
 {
@@ -50,6 +51,8 @@ namespace TemplateRenderWizard
 
     int cast_value_to_int(Value*);
     bool cast_value_to_bool(Value*);
+    Value* cast_yaml_object_to_value(std::map<std::string, Tree::LeafElement*>*);
+    Value* cast_yaml_array_to_value(std::list<Tree::LeafElement*>*);
 }
 
 #endif
