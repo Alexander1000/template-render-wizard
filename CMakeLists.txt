@@ -35,7 +35,6 @@ set(TRW_SHARED_SOURCES
     src/trw/render/calc_expr.cpp
     src/trw/render/to_buffer_plain_text.cpp
     src/trw/render/to_buffer_value.cpp
-    src/trw/render/render_if_expression.cpp
     src/trw/render/to_buffer_tree.cpp
     src/trw/render/render_tree.cpp
     src/trw/value.cpp

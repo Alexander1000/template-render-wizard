@@ -13,7 +13,6 @@ namespace TemplateRenderWizard
         charStream = new IOBuffer::CharStream(fileReader);
         this->stream = new TemplateRenderWizard::Stream(charStream);
         this->tree = tree;
-        this->tokenStack = new std::stack<Token::Token*>;
     }
 
     Render::Render(const char* srcTemplateFile, TemplateRenderWizard::Tree::Tree* tree)
@@ -24,13 +23,11 @@ namespace TemplateRenderWizard
         charStream = new IOBuffer::CharStream(fileReader);
         this->stream = new TemplateRenderWizard::Stream(charStream);
         this->tree = tree;
-        this->tokenStack = new std::stack<Token::Token*>;
     }
 
     Render::Render(TemplateRenderWizard::Stream* stream, TemplateRenderWizard::Tree::Tree* tree)
     {
         this->stream = stream;
         this->tree = tree;
-        this->tokenStack = new std::stack<Token::Token*>;
     }
 }
