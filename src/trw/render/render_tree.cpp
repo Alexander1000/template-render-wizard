@@ -119,6 +119,13 @@ namespace TemplateRenderWizard
             }
             itForControl++; // plainValue (source of data)
             auto sourceElement = *itForControl;
+            if (sourceElement->getType() != Syntax::SyntaxElementType::TokenType) {
+                throw new UnexpectedToken;
+            }
+            if (sourceElement->getToken()->getType() != Token::Type::PlainValueType) {
+                throw new UnexpectedToken;
+            }
+            auto sourceValue = this->getValueFromToken(sourceElement->getToken());
             itForControl++; // closeControlTag
             it++; // body
             it++; // endfor_control
