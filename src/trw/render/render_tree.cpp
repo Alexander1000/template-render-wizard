@@ -106,7 +106,9 @@ namespace TemplateRenderWizard
             auto itForControl = forControl->getListElements()->begin(); // openControlTag
             itForControl++; // keyword (for)
             itForControl++; // plainValue
-            auto lValueElement = *itForControl;
+            Syntax::SyntaxElement* lValueElement = nullptr;
+            Syntax::SyntaxElement* rValueElement = nullptr;
+            lValueElement = *itForControl;
             itForControl++; // comma vs keyword(in)
             auto tForControlToken = *itForControl;
             if (tForControlToken->getType() != Syntax::SyntaxElementType::TokenType) {
@@ -114,7 +116,7 @@ namespace TemplateRenderWizard
             }
             if (tForControlToken->getToken()->getType() == Token::Type::CommaType) {
                 itForControl++; // second plainValue
-                auto rValueElement = *itForControl;
+                rValueElement = *itForControl;
                 itForControl++; // keyword (in)
             }
             itForControl++; // plainValue (source of data)
@@ -131,8 +133,18 @@ namespace TemplateRenderWizard
             auto elBody = *it;
             if (sourceValue->getType() == ValueType::Array) {
                 for (auto itArray = sourceValue->getArray()->begin(); itArray != sourceValue->getArray()->end(); itArray++) {
+                    auto ctxValue = new Value();
+                    auto ctxValueMap = new std::map<std::string, Value*>;
+                    ctxValue->setData(ctxValueMap);
+                    auto ctx = new Context();
+                    ctx->setValueContext(ctxValue);
                     auto curContextElement = *itArray;
+                    // ctxValueMap
+                    INIT_CHAR_STRING(strValue, 1024)
+                    lValueElement->getElement()->getToken()->getReader()->read(strValue, 1024);
+                    (*ctxValueMap)[strValue] = curContextElement;
                     this->render_tree(buffer, elBody);
+                    // free(ctx);
                 }
             }
             it++; // endfor_control
