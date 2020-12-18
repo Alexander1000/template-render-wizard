@@ -10,6 +10,12 @@ namespace TemplateRenderWizard
     public:
         Context();
 
+        void setValueContext(Value*);
+        Value* getValueContext();
+
+        void setValue(const char*, Value*);
+        Value* getValue(const char*);
+
     private:
         Value* value;
     };
