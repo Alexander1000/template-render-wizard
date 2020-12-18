@@ -3,28 +3,28 @@
 
 namespace TemplateRenderWizard
 {
-    void Render::render_tree(IOBuffer::IOBuffer *buffer, Syntax::SyntaxElement *treeElement)
+    void Render::render_tree(IOBuffer::IOBuffer *buffer, Syntax::SyntaxElement *treeElement, Context* context)
     {
         if (treeElement->getType() == Syntax::SyntaxElementType::SyntaxType) {
-            this->render_tree(buffer, treeElement->getElement());
+            this->render_tree(buffer, treeElement->getElement(), context);
             return;
         }
 
         if (treeElement->getType() == Syntax::SyntaxElementType::TokenListType) {
-            this->render_tree(buffer, treeElement->getRule(), treeElement->getListElements());
+            this->render_tree(buffer, treeElement->getRule(), treeElement->getListElements(), context);
             return;
         }
 
         // simple token
     }
 
-    void Render::render_tree(IOBuffer::IOBuffer *buffer, Syntax::Rule *rule, std::list<Syntax::SyntaxElement*>* elements)
+    void Render::render_tree(IOBuffer::IOBuffer *buffer, Syntax::Rule *rule, std::list<Syntax::SyntaxElement*>* elements, Context* context)
     {
         if (strcmp(rule->getName(), "body") == 0) {
             for (auto it = elements->begin(); it != elements->end(); it++) {
                 auto curElement = *it;
                 if (curElement->getType() == Syntax::SyntaxElementType::SyntaxType) {
-                    this->render_tree(buffer, curElement->getElement());
+                    this->render_tree(buffer, curElement->getElement(), context);
                     continue;
                 }
 
@@ -72,7 +72,7 @@ namespace TemplateRenderWizard
                 if (bodyElement->getType() != Syntax::SyntaxElementType::SyntaxType) {
                     throw new UnexpectedToken;
                 }
-                this->render_tree(buffer, bodyElement->getElement());
+                this->render_tree(buffer, bodyElement->getElement(), context);
                 it++; // skip else/endif
                 if (count == 5) {
                     it++; // skip else body
@@ -87,7 +87,7 @@ namespace TemplateRenderWizard
                     if (bodyElement->getType() != Syntax::SyntaxElementType::SyntaxType) {
                         throw new UnexpectedToken;
                     }
-                    this->render_tree(buffer, bodyElement->getElement());
+                    this->render_tree(buffer, bodyElement->getElement(), context);
                     it++; // endif
                 }
             }
@@ -142,7 +142,8 @@ namespace TemplateRenderWizard
                     INIT_CHAR_STRING(strValue, 1024)
                     lValueElement->getToken()->getReader()->read(strValue, 1024);
                     (*ctxValueMap)[strValue] = curContextElement;
-                    this->render_tree(buffer, elBody);
+                    // todo: merge parent context with newCtx
+                    this->render_tree(buffer, elBody, ctx);
                 }
             }
             it++; // endfor_control

@@ -35,8 +35,8 @@ namespace TemplateRenderWizard
         void to_buffer_value(IOBuffer::IOBuffer* buffer, Value* value);
         void to_buffer_value(IOBuffer::IOBuffer* buffer, Token::Token* token);
 
-        void render_tree(IOBuffer::IOBuffer* buffer, Syntax::SyntaxElement* treeElement);
-        void render_tree(IOBuffer::IOBuffer* buffer, Syntax::Rule* rule, std::list<Syntax::SyntaxElement*>* elements);
+        void render_tree(IOBuffer::IOBuffer* buffer, Syntax::SyntaxElement* treeElement, Context *context);
+        void render_tree(IOBuffer::IOBuffer* buffer, Syntax::Rule* rule, std::list<Syntax::SyntaxElement*>* elements, Context *context);
         Value* calc_expr_tree(Syntax::SyntaxElement*);
         void render_tree_token(IOBuffer::IOBuffer* buffer, Token::Token* token);
         bool calc_if_control(Syntax::SyntaxElement*);

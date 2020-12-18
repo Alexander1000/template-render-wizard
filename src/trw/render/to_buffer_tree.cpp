@@ -18,7 +18,7 @@ namespace TemplateRenderWizard
         TemplateRenderWizard::Syntax::Tree syntaxTree;
         auto syntax = syntaxTree.parse(tokens);
 
-        this->render_tree(buffer, syntax);
+        this->render_tree(buffer, syntax, nullptr);
 
         return buffer;
     }
