@@ -134,7 +134,17 @@ CppUnitTest::TestCase* testRenderWithSyntaxTree_Template_Positive(char* template
 
     IOBuffer::IOFileReader* fileReader;
     fileReader = new IOBuffer::IOFileReader(strFileExpected);
-    fileReader->read(expected, 1024);
+    nRead = 0;
+    offset = 0;
+    nBaseSize = 1024;
+    do {
+        nRead = fileReader->read(expected + offset, 1023);
+        if (nRead == 1023) {
+            nBaseSize += 1024;
+            expected = (char*) realloc(expected, nBaseSize);
+            offset += 1023;
+        }
+    } while (nRead == 1023);
 
     CppUnitTest::assertEquals(t, expected, tBuffer);
 
