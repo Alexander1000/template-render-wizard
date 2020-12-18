@@ -132,7 +132,6 @@ namespace TemplateRenderWizard
             if (sourceValue->getType() == ValueType::Array) {
                 for (auto itArray = sourceValue->getArray()->begin(); itArray != sourceValue->getArray()->end(); itArray++) {
                     auto curContextElement = *itArray;
-                    std::cout << std::endl;
                     this->render_tree(buffer, elBody);
                 }
             }
