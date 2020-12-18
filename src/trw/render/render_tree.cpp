@@ -44,7 +44,7 @@ namespace TemplateRenderWizard
             if (element->getType() != Syntax::SyntaxElementType::TokenType) {
                 throw new UnexpectedToken;
             }
-            auto value = this->getValueFromToken(element->getToken());
+            auto value = this->getValueFromToken(element->getToken(), nullptr);
             this->to_buffer_value(buffer, value);
             return;
         }
@@ -125,7 +125,7 @@ namespace TemplateRenderWizard
             if (sourceElement->getToken()->getType() != Token::Type::PlainValueType) {
                 throw new UnexpectedToken;
             }
-            auto sourceValue = this->getValueFromToken(sourceElement->getToken());
+            auto sourceValue = this->getValueFromToken(sourceElement->getToken(), nullptr);
             itForControl++; // closeControlTag
             it++; // body
             auto elBody = *it;
@@ -142,7 +142,7 @@ namespace TemplateRenderWizard
     Value* Render::calc_expr_tree(Syntax::SyntaxElement *syntaxElement)
     {
         if (syntaxElement->getType() == Syntax::TokenType) {
-            return this->getValueFromToken(syntaxElement->getToken());
+            return this->getValueFromToken(syntaxElement->getToken(), nullptr);
         }
 
         if (syntaxElement->getType() == Syntax::TokenListType) {
@@ -168,7 +168,7 @@ namespace TemplateRenderWizard
                     return lValue;
                 }
                 if (firstElement->getType() == Syntax::SyntaxElementType::TokenType) {
-                    return this->getValueFromToken(firstElement->getToken());
+                    return this->getValueFromToken(firstElement->getToken(), nullptr);
                 }
 
                 throw new UnexpectedToken;

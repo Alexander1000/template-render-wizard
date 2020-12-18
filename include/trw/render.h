@@ -11,6 +11,7 @@
 #include <trw/expression.h>
 #include <stack>
 #include <trw/syntax.h>
+#include <trw/context.h>
 
 #define TRW_RENDER_MEMORY_BLOCK_SIZE 4096
 #define TRW_RENDER_BUFFER_SIZE 1024
@@ -22,7 +23,7 @@ namespace TemplateRenderWizard
         TemplateRenderWizard::Tree::Tree* tree;
         TemplateRenderWizard::Stream* stream;
 
-        Value* getValueFromToken(Token::Token*);
+        Value* getValueFromToken(Token::Token*, Context*);
         bool compare_value(Value*, Value*, Token::Token*);
         Value* calc_expr(Expression*);
 
