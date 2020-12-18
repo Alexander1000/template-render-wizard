@@ -112,8 +112,18 @@ CppUnitTest::TestCase* testRenderWithSyntaxTree_Template_Positive(char* template
 
     IOBuffer::IOMemoryBuffer* buffer = render->toBufferTree();
 
-    INIT_CHAR_STRING(tBuffer, 1024);
-    buffer->read(tBuffer, 1024);
+    int nRead = 0;
+    int nBaseSize = 1024;
+    int offset = 0;
+    INIT_CHAR_STRING(tBuffer, nBaseSize);
+    do {
+        nRead = buffer->read(tBuffer + offset, 1023);
+        if (nRead == 1023) {
+            nBaseSize += 1024;
+            tBuffer = (char*) realloc(tBuffer, nBaseSize);
+            offset += 1023;
+        }
+    } while(nRead == 1023);
 
     INIT_CHAR_STRING(expected, 1024)
     INIT_CHAR_STRING(fileExpected, 1024)
