@@ -44,7 +44,7 @@ namespace TemplateRenderWizard
             if (element->getType() != Syntax::SyntaxElementType::TokenType) {
                 throw new UnexpectedToken;
             }
-            auto value = this->getValueFromToken(element->getToken(), nullptr);
+            auto value = this->getValueFromToken(element->getToken(), context);
             this->to_buffer_value(buffer, value);
             return;
         }
@@ -127,7 +127,7 @@ namespace TemplateRenderWizard
             if (sourceElement->getToken()->getType() != Token::Type::PlainValueType) {
                 throw new UnexpectedToken;
             }
-            auto sourceValue = this->getValueFromToken(sourceElement->getToken(), nullptr);
+            auto sourceValue = this->getValueFromToken(sourceElement->getToken(), context);
             itForControl++; // closeControlTag
             it++; // body
             auto elBody = *it;
@@ -140,7 +140,9 @@ namespace TemplateRenderWizard
                     ctx->setValueContext(ctxValue);
                     auto curContextElement = *itArray;
                     INIT_CHAR_STRING(strValue, 1024)
-                    lValueElement->getToken()->getReader()->read(strValue, 1024);
+                    auto lValueToken = lValueElement->getToken();
+                    RESET_TOKEN_READER(lValueToken);
+                    lValueToken->getReader()->read(strValue, 1024);
                     (*ctxValueMap)[strValue] = curContextElement;
                     // todo: merge parent context with newCtx
                     this->render_tree(buffer, elBody, ctx);
