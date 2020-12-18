@@ -11,6 +11,7 @@
 #include <trw/expression.h>
 #include <stack>
 #include <trw/syntax.h>
+#include <trw/context.h>
 
 #define TRW_RENDER_MEMORY_BLOCK_SIZE 4096
 #define TRW_RENDER_BUFFER_SIZE 1024
@@ -22,7 +23,7 @@ namespace TemplateRenderWizard
         TemplateRenderWizard::Tree::Tree* tree;
         TemplateRenderWizard::Stream* stream;
 
-        Value* getValueFromToken(Token::Token*);
+        Value* getValueFromToken(Token::Token*, Context*);
         bool compare_value(Value*, Value*, Token::Token*);
         Value* calc_expr(Expression*);
 
@@ -34,8 +35,8 @@ namespace TemplateRenderWizard
         void to_buffer_value(IOBuffer::IOBuffer* buffer, Value* value);
         void to_buffer_value(IOBuffer::IOBuffer* buffer, Token::Token* token);
 
-        void render_tree(IOBuffer::IOBuffer* buffer, Syntax::SyntaxElement* treeElement);
-        void render_tree(IOBuffer::IOBuffer* buffer, Syntax::Rule* rule, std::list<Syntax::SyntaxElement*>* elements);
+        void render_tree(IOBuffer::IOBuffer* buffer, Syntax::SyntaxElement* treeElement, Context *context);
+        void render_tree(IOBuffer::IOBuffer* buffer, Syntax::Rule* rule, std::list<Syntax::SyntaxElement*>* elements, Context *context);
         Value* calc_expr_tree(Syntax::SyntaxElement*);
         void render_tree_token(IOBuffer::IOBuffer* buffer, Token::Token* token);
         bool calc_if_control(Syntax::SyntaxElement*);

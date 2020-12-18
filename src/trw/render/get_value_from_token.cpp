@@ -5,7 +5,7 @@
 
 namespace TemplateRenderWizard
 {
-    Value* Render::getValueFromToken(Token::Token *token)
+    Value* Render::getValueFromToken(Token::Token *token, Context* context)
     {
         bool allow = false;
         if (token->getType() == TemplateRenderWizard::Token::Type::ExpressionValueType || token->getType() == TemplateRenderWizard::Token::Type::PlainValueType) {
@@ -21,6 +21,13 @@ namespace TemplateRenderWizard
         token->getReader()->read(tokenValue, 128);
 
         if (!ctype_digits(tokenValue)) {
+            if (context != nullptr) {
+                auto contextValue = context->getValue(tokenValue);
+                if (contextValue != nullptr) {
+                    return contextValue;
+                }
+            }
+
             auto leafValue = this->tree->get(tokenValue);
             if (leafValue != nullptr) {
                 if (leafValue->getType() == TemplateRenderWizard::Tree::LeafElementType::LeafElementText) {

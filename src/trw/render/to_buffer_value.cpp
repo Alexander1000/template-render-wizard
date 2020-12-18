@@ -5,7 +5,7 @@ namespace TemplateRenderWizard
 {
     void Render::to_buffer_value(IOBuffer::IOBuffer *buffer, Token::Token *token)
     {
-        this->to_buffer_value(buffer, this->getValueFromToken(token));
+        this->to_buffer_value(buffer, this->getValueFromToken(token, nullptr));
     }
 
     void Render::to_buffer_value(IOBuffer::IOBuffer *buffer, Value *value)

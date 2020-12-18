@@ -34,6 +34,7 @@ namespace TemplateRenderWizard
         }
 
         std::list<Value*>* getArray();
+        std::map<std::string, Value*>* getObject();
 
     private:
         ValueType type;

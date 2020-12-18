@@ -7,7 +7,7 @@ namespace TemplateRenderWizard
     {
         switch (element->getType()) {
             case SyntaxTokenType: {
-                return this->getValueFromToken((Token::Token*) element->getData());
+                return this->getValueFromToken((Token::Token*) element->getData(), nullptr);
             }
             case SyntaxValueType: {
                 return (Value*) element->getData();

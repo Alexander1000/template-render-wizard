@@ -14,5 +14,6 @@
 #include <trw/expression.h>
 #include <trw/utils.h>
 #include <trw/syntax.h>
+#include <trw/context.h>
 
 #endif

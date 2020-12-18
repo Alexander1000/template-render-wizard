@@ -3,28 +3,28 @@
 
 namespace TemplateRenderWizard
 {
-    void Render::render_tree(IOBuffer::IOBuffer *buffer, Syntax::SyntaxElement *treeElement)
+    void Render::render_tree(IOBuffer::IOBuffer *buffer, Syntax::SyntaxElement *treeElement, Context* context)
     {
         if (treeElement->getType() == Syntax::SyntaxElementType::SyntaxType) {
-            this->render_tree(buffer, treeElement->getElement());
+            this->render_tree(buffer, treeElement->getElement(), context);
             return;
         }
 
         if (treeElement->getType() == Syntax::SyntaxElementType::TokenListType) {
-            this->render_tree(buffer, treeElement->getRule(), treeElement->getListElements());
+            this->render_tree(buffer, treeElement->getRule(), treeElement->getListElements(), context);
             return;
         }
 
         // simple token
     }
 
-    void Render::render_tree(IOBuffer::IOBuffer *buffer, Syntax::Rule *rule, std::list<Syntax::SyntaxElement*>* elements)
+    void Render::render_tree(IOBuffer::IOBuffer *buffer, Syntax::Rule *rule, std::list<Syntax::SyntaxElement*>* elements, Context* context)
     {
         if (strcmp(rule->getName(), "body") == 0) {
             for (auto it = elements->begin(); it != elements->end(); it++) {
                 auto curElement = *it;
                 if (curElement->getType() == Syntax::SyntaxElementType::SyntaxType) {
-                    this->render_tree(buffer, curElement->getElement());
+                    this->render_tree(buffer, curElement->getElement(), context);
                     continue;
                 }
 
@@ -44,7 +44,7 @@ namespace TemplateRenderWizard
             if (element->getType() != Syntax::SyntaxElementType::TokenType) {
                 throw new UnexpectedToken;
             }
-            auto value = this->getValueFromToken(element->getToken());
+            auto value = this->getValueFromToken(element->getToken(), context);
             this->to_buffer_value(buffer, value);
             return;
         }
@@ -72,7 +72,7 @@ namespace TemplateRenderWizard
                 if (bodyElement->getType() != Syntax::SyntaxElementType::SyntaxType) {
                     throw new UnexpectedToken;
                 }
-                this->render_tree(buffer, bodyElement->getElement());
+                this->render_tree(buffer, bodyElement->getElement(), context);
                 it++; // skip else/endif
                 if (count == 5) {
                     it++; // skip else body
@@ -87,7 +87,7 @@ namespace TemplateRenderWizard
                     if (bodyElement->getType() != Syntax::SyntaxElementType::SyntaxType) {
                         throw new UnexpectedToken;
                     }
-                    this->render_tree(buffer, bodyElement->getElement());
+                    this->render_tree(buffer, bodyElement->getElement(), context);
                     it++; // endif
                 }
             }
@@ -106,7 +106,9 @@ namespace TemplateRenderWizard
             auto itForControl = forControl->getListElements()->begin(); // openControlTag
             itForControl++; // keyword (for)
             itForControl++; // plainValue
-            auto lValueElement = *itForControl;
+            Syntax::SyntaxElement* lValueElement = nullptr;
+            Syntax::SyntaxElement* rValueElement = nullptr;
+            lValueElement = *itForControl;
             itForControl++; // comma vs keyword(in)
             auto tForControlToken = *itForControl;
             if (tForControlToken->getType() != Syntax::SyntaxElementType::TokenType) {
@@ -114,7 +116,7 @@ namespace TemplateRenderWizard
             }
             if (tForControlToken->getToken()->getType() == Token::Type::CommaType) {
                 itForControl++; // second plainValue
-                auto rValueElement = *itForControl;
+                rValueElement = *itForControl;
                 itForControl++; // keyword (in)
             }
             itForControl++; // plainValue (source of data)
@@ -125,14 +127,25 @@ namespace TemplateRenderWizard
             if (sourceElement->getToken()->getType() != Token::Type::PlainValueType) {
                 throw new UnexpectedToken;
             }
-            auto sourceValue = this->getValueFromToken(sourceElement->getToken());
+            auto sourceValue = this->getValueFromToken(sourceElement->getToken(), context);
             itForControl++; // closeControlTag
             it++; // body
             auto elBody = *it;
             if (sourceValue->getType() == ValueType::Array) {
                 for (auto itArray = sourceValue->getArray()->begin(); itArray != sourceValue->getArray()->end(); itArray++) {
+                    auto ctxValue = new Value();
+                    auto ctxValueMap = new std::map<std::string, Value*>;
+                    ctxValue->setData(ctxValueMap);
+                    auto ctx = new Context();
+                    ctx->setValueContext(ctxValue);
                     auto curContextElement = *itArray;
-                    this->render_tree(buffer, elBody);
+                    INIT_CHAR_STRING(strValue, 1024)
+                    auto lValueToken = lValueElement->getToken();
+                    RESET_TOKEN_READER(lValueToken);
+                    lValueToken->getReader()->read(strValue, 1024);
+                    (*ctxValueMap)[strValue] = curContextElement;
+                    // todo: merge parent context with newCtx
+                    this->render_tree(buffer, elBody, ctx);
                 }
             }
             it++; // endfor_control
@@ -142,7 +155,7 @@ namespace TemplateRenderWizard
     Value* Render::calc_expr_tree(Syntax::SyntaxElement *syntaxElement)
     {
         if (syntaxElement->getType() == Syntax::TokenType) {
-            return this->getValueFromToken(syntaxElement->getToken());
+            return this->getValueFromToken(syntaxElement->getToken(), nullptr);
         }
 
         if (syntaxElement->getType() == Syntax::TokenListType) {
@@ -168,7 +181,7 @@ namespace TemplateRenderWizard
                     return lValue;
                 }
                 if (firstElement->getType() == Syntax::SyntaxElementType::TokenType) {
-                    return this->getValueFromToken(firstElement->getToken());
+                    return this->getValueFromToken(firstElement->getToken(), nullptr);
                 }
 
                 throw new UnexpectedToken;
