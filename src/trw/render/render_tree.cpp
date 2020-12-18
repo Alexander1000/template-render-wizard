@@ -139,12 +139,10 @@ namespace TemplateRenderWizard
                     auto ctx = new Context();
                     ctx->setValueContext(ctxValue);
                     auto curContextElement = *itArray;
-                    // ctxValueMap
                     INIT_CHAR_STRING(strValue, 1024)
-                    lValueElement->getElement()->getToken()->getReader()->read(strValue, 1024);
+                    lValueElement->getToken()->getReader()->read(strValue, 1024);
                     (*ctxValueMap)[strValue] = curContextElement;
                     this->render_tree(buffer, elBody);
-                    // free(ctx);
                 }
             }
             it++; // endfor_control
