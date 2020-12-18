@@ -92,6 +92,52 @@ namespace TemplateRenderWizard
                 }
             }
         }
+
+        if (strcmp(rule->getName(), "for_stmt") == 0) {
+            auto it = elements->begin(); // for_control
+            auto elForControl = *it;
+            if (elForControl->getType() != Syntax::SyntaxElementType::SyntaxType) {
+                throw new UnexpectedToken;
+            }
+            auto forControl = elForControl->getElement();
+            if (forControl->getType() != Syntax::SyntaxElementType::TokenListType) {
+                throw new UnexpectedToken;
+            }
+            auto itForControl = forControl->getListElements()->begin(); // openControlTag
+            itForControl++; // keyword (for)
+            itForControl++; // plainValue
+            auto lValueElement = *itForControl;
+            itForControl++; // comma vs keyword(in)
+            auto tForControlToken = *itForControl;
+            if (tForControlToken->getType() != Syntax::SyntaxElementType::TokenType) {
+                throw new UnexpectedToken;
+            }
+            if (tForControlToken->getToken()->getType() == Token::Type::CommaType) {
+                itForControl++; // second plainValue
+                auto rValueElement = *itForControl;
+                itForControl++; // keyword (in)
+            }
+            itForControl++; // plainValue (source of data)
+            auto sourceElement = *itForControl;
+            if (sourceElement->getType() != Syntax::SyntaxElementType::TokenType) {
+                throw new UnexpectedToken;
+            }
+            if (sourceElement->getToken()->getType() != Token::Type::PlainValueType) {
+                throw new UnexpectedToken;
+            }
+            auto sourceValue = this->getValueFromToken(sourceElement->getToken());
+            itForControl++; // closeControlTag
+            it++; // body
+            auto elBody = *it;
+            if (sourceValue->getType() == ValueType::Array) {
+                for (auto itArray = sourceValue->getArray()->begin(); itArray != sourceValue->getArray()->end(); itArray++) {
+                    auto curContextElement = *itArray;
+                    std::cout << std::endl;
+                    this->render_tree(buffer, elBody);
+                }
+            }
+            it++; // endfor_control
+        }
     }
 
     Value* Render::calc_expr_tree(Syntax::SyntaxElement *syntaxElement)

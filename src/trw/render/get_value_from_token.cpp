@@ -1,5 +1,7 @@
 #include <trw.h>
 #include <iostream>
+#include <list>
+#include <map>
 
 namespace TemplateRenderWizard
 {
@@ -21,19 +23,27 @@ namespace TemplateRenderWizard
         if (!ctype_digits(tokenValue)) {
             auto leafValue = this->tree->get(tokenValue);
             if (leafValue != nullptr) {
-                if (leafValue->getType() != TemplateRenderWizard::Tree::LeafElementType::LeafElementText) {
-                    std::cout << "Unexpected leaf" << std::endl;
-                    throw new UnexpectedToken;
+                if (leafValue->getType() == TemplateRenderWizard::Tree::LeafElementType::LeafElementText) {
+                    auto str = (std::string *) leafValue->getData();
+                    Value *v;
+                    v = new Value();
+                    int nSize = str->length() + 1;
+                    INIT_CHAR_STRING(newStr, nSize)
+                    memcpy(newStr, str->c_str(), (nSize - 1) * sizeof(char));
+                    v->setData(newStr);
+                    return v;
                 }
 
-                auto str = (std::string *) leafValue->getData();
-                Value *v;
-                v = new Value();
-                int nSize = str->length() + 1;
-                INIT_CHAR_STRING(newStr, nSize)
-                memcpy(newStr, str->c_str(), (nSize - 1) * sizeof(char));
-                v->setData(newStr);
-                return v;
+                if (leafValue->getType() == Tree::LeafElementArray) {
+                    return cast_yaml_array_to_value((std::list<Tree::LeafElement*>*) leafValue->getData());
+                }
+
+                if (leafValue->getType() == Tree::LeafElementObject) {
+                    return cast_yaml_object_to_value((std::map<std::string, Tree::LeafElement*>*) leafValue->getData());
+                }
+
+                std::cout << "Unexpected leaf" << std::endl;
+                throw new UnexpectedToken;
             }
 
             Value *v;
