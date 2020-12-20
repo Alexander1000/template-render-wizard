@@ -13,3 +13,4 @@ List elements:
         Current loop values ({{ k }}; {{ v }})
     {% endfor %}
 {% endfor %}
+After loops root based context values: ({{ key }}; {{ val }})

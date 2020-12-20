@@ -136,7 +136,7 @@ namespace TemplateRenderWizard
                     auto ctxValue = new Value();
                     auto ctxValueMap = new std::map<std::string, Value*>;
                     ctxValue->setData(ctxValueMap);
-                    auto ctx = new Context();
+                    auto ctx = new Context(context);
                     ctx->setValueContext(ctxValue);
                     auto curContextElement = *itArray;
                     INIT_CHAR_STRING(strValue, 1024)
@@ -144,7 +144,6 @@ namespace TemplateRenderWizard
                     RESET_TOKEN_READER(lValueToken);
                     lValueToken->getReader()->read(strValue, 1024);
                     (*ctxValueMap)[strValue] = curContextElement;
-                    // todo: merge parent context with newCtx
                     this->render_tree(buffer, elBody, ctx);
                 }
             }
@@ -153,7 +152,7 @@ namespace TemplateRenderWizard
                     auto ctxValue = new Value();
                     auto ctxValueMap = new std::map<std::string, Value*>;
                     ctxValue->setData(ctxValueMap);
-                    auto ctx = new Context();
+                    auto ctx = new Context(context);
                     ctx->setValueContext(ctxValue);
                     auto curContextElement = *itObject;
                     if (lValueElement != nullptr) {
@@ -176,7 +175,6 @@ namespace TemplateRenderWizard
                         rValueToken->getReader()->read(strValue, 1024);
                         (*ctxValueMap)[strValue] = curContextElement.second;
                     }
-                    // todo: merge parent context with newCtx
                     this->render_tree(buffer, elBody, ctx);
                 }
             }
