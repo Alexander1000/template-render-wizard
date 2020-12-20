@@ -1,0 +1,11 @@
+key: rootKey
+val: rootVal
+
+elements:
+  fish: 3.5%
+  meat: 27.5$
+  apple: 0.45$
+
+els:
+  one: aquapark
+  two: cinema
