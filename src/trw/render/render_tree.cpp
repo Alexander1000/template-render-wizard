@@ -148,6 +148,38 @@ namespace TemplateRenderWizard
                     this->render_tree(buffer, elBody, ctx);
                 }
             }
+            if (sourceValue->getType() == ValueType::Object) {
+                for (auto itObject = sourceValue->getObject()->begin(); itObject != sourceValue->getObject()->end(); itObject++) {
+                    auto ctxValue = new Value();
+                    auto ctxValueMap = new std::map<std::string, Value*>;
+                    ctxValue->setData(ctxValueMap);
+                    auto ctx = new Context();
+                    ctx->setValueContext(ctxValue);
+                    auto curContextElement = *itObject;
+                    if (lValueElement != nullptr) {
+                        INIT_CHAR_STRING(strValue, 1024)
+                        auto lValueToken = lValueElement->getToken();
+                        RESET_TOKEN_READER(lValueToken);
+                        lValueToken->getReader()->read(strValue, 1024);
+                        if (rValueElement != nullptr) {
+                            auto v = new Value();
+                            v->setData((char*) curContextElement.first.c_str());
+                            (*ctxValueMap)[strValue] = v;
+                        } else {
+                            (*ctxValueMap)[strValue] = curContextElement.second;
+                        }
+                    }
+                    if (rValueElement != nullptr) {
+                        INIT_CHAR_STRING(strValue, 1024)
+                        auto rValueToken = rValueElement->getToken();
+                        RESET_TOKEN_READER(rValueToken);
+                        rValueToken->getReader()->read(strValue, 1024);
+                        (*ctxValueMap)[strValue] = curContextElement.second;
+                    }
+                    // todo: merge parent context with newCtx
+                    this->render_tree(buffer, elBody, ctx);
+                }
+            }
             it++; // endfor_control
         }
     }
