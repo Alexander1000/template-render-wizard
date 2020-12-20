@@ -274,6 +274,15 @@ namespace TemplateRenderWizard
                     curSymbol = this->getNextChar();
                 } while(curSymbol != nullptr && *curSymbol != 0x20);
 
+                if (ioWriter->length() == 2 || ioWriter->length() == 3) {
+                    INIT_CHAR_STRING(strKeyword, 4);
+                    ioWriter->read(strKeyword, 3);
+                    if (strcmp(strKeyword, "and") == 0 || strcmp(strKeyword, "or") == 0) {
+                        token = new Token::Keyword(this->position->getLine(), this->position->getColumn(), ioWriter);
+                        return token;
+                    }
+                }
+
                 token = new Token::ExpressionValue(this->position->getLine(), this->position->getColumn(), ioWriter);
                 return token;
             }
