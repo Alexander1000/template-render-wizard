@@ -9,6 +9,7 @@ namespace TemplateRenderWizard
     {
     public:
         Context();
+        Context(Context*);
 
         void setValueContext(Value*);
         Value* getValueContext();
@@ -18,6 +19,7 @@ namespace TemplateRenderWizard
 
     private:
         Value* value;
+        Context* parent;
     };
 }
 

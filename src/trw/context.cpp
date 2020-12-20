@@ -5,6 +5,12 @@ namespace TemplateRenderWizard
     Context::Context()
     {
         this->value = nullptr;
+        this->parent = nullptr;
+    }
+
+    Context::Context(Context *ctxParent) {
+        this->value = nullptr;
+        this->parent = ctxParent;
     }
 
     void Context::setValueContext(Value *v) {
@@ -20,6 +26,9 @@ namespace TemplateRenderWizard
     Value * Context::getValue(const char* path)
     {
         if (this->value == nullptr) {
+            if (this->parent != nullptr) {
+                return this->parent->getValue(path);
+            }
             return nullptr;
         }
 
@@ -49,6 +58,9 @@ namespace TemplateRenderWizard
                         foundElement = relativeElement;
                     }
                 } else {
+                    if (this->parent != nullptr) {
+                        return this->parent->getValue(path);
+                    }
                     return nullptr;
                 }
 

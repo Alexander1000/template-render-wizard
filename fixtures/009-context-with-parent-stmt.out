@@ -1,0 +1,59 @@
+This is test with parent context pass
+Root based context values: (rootKey; rootVal)
+List elements:
+
+    First loop values (apple; 0.45$)
+    Loop:
+    
+        Nested loop values (apple; 0.45$)
+    
+        Nested loop values (fish; 3.5%)
+    
+        Nested loop values (meat; 27.5$)
+    
+    Loop with another data:
+    
+        Parent loop values (apple; 0.45$)
+        Current loop values (one; aquapark)
+    
+        Parent loop values (apple; 0.45$)
+        Current loop values (two; cinema)
+    
+
+    First loop values (fish; 3.5%)
+    Loop:
+    
+        Nested loop values (apple; 0.45$)
+    
+        Nested loop values (fish; 3.5%)
+    
+        Nested loop values (meat; 27.5$)
+    
+    Loop with another data:
+    
+        Parent loop values (fish; 3.5%)
+        Current loop values (one; aquapark)
+    
+        Parent loop values (fish; 3.5%)
+        Current loop values (two; cinema)
+    
+
+    First loop values (meat; 27.5$)
+    Loop:
+    
+        Nested loop values (apple; 0.45$)
+    
+        Nested loop values (fish; 3.5%)
+    
+        Nested loop values (meat; 27.5$)
+    
+    Loop with another data:
+    
+        Parent loop values (meat; 27.5$)
+        Current loop values (one; aquapark)
+    
+        Parent loop values (meat; 27.5$)
+        Current loop values (two; cinema)
+    
+
+After loops root based context values: (rootKey; rootVal)
