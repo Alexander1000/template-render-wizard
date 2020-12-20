@@ -1,0 +1,12 @@
+Example with reorder root element in context.
+Based value of key: "rootKey" and value of val: "rootValue"
+List elements:
+
+    - key: apple; val: 0.45$
+
+    - key: fish; val: 3.5%
+
+    - key: meat; val: 27.5$
+
+After loop this values get from root context:
+Based value of key: "rootKey" and value of val: "rootValue"
