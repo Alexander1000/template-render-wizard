@@ -132,6 +132,7 @@ namespace TemplateRenderWizard
             it++; // body
             auto elBody = *it;
             if (sourceValue->getType() == ValueType::Array) {
+                int currentNumber = 0;
                 for (auto itArray = sourceValue->getArray()->begin(); itArray != sourceValue->getArray()->end(); itArray++) {
                     auto ctxValue = new Value();
                     auto ctxValueMap = new std::map<std::string, Value*>;
@@ -139,12 +140,29 @@ namespace TemplateRenderWizard
                     auto ctx = new Context(context);
                     ctx->setValueContext(ctxValue);
                     auto curContextElement = *itArray;
-                    INIT_CHAR_STRING(strValue, 1024)
-                    auto lValueToken = lValueElement->getToken();
-                    RESET_TOKEN_READER(lValueToken);
-                    lValueToken->getReader()->read(strValue, 1024);
-                    (*ctxValueMap)[strValue] = curContextElement;
+                    if (lValueElement != nullptr) {
+                        INIT_CHAR_STRING(strValue, 1024)
+                        auto lValueToken = lValueElement->getToken();
+                        RESET_TOKEN_READER(lValueToken);
+                        lValueToken->getReader()->read(strValue, 1024);
+                        (*ctxValueMap)[strValue] = curContextElement;
+                        if (rValueElement != nullptr) {
+                            auto v = new Value();
+                            v->setData(currentNumber);
+                            (*ctxValueMap)[strValue] = v;
+                        } else {
+                            (*ctxValueMap)[strValue] = curContextElement;
+                        }
+                    }
+                    if (rValueElement != nullptr) {
+                        INIT_CHAR_STRING(strValue, 1024)
+                        auto rValueToken = rValueElement->getToken();
+                        RESET_TOKEN_READER(rValueToken);
+                        rValueToken->getReader()->read(strValue, 1024);
+                        (*ctxValueMap)[strValue] = curContextElement;
+                    }
                     this->render_tree(buffer, elBody, ctx);
+                    currentNumber++;
                 }
             }
             if (sourceValue->getType() == ValueType::Object) {
