@@ -53,12 +53,50 @@ namespace TemplateRenderWizard::Syntax
         rule6->addMatch(new RuleMatch("expr"));
         this->rules->push_back(rule6);
 
+        // s:cmpBool [t:keyword(and)]
+        auto ruleCmpBool1 = new Rule("cmpBool");
+        ruleCmpBool1->addMatch(new RuleMatch(this->tokenMap->getType("keyword"), "and"));
+        this->rules->push_back(ruleCmpBool1);
+
+        // s:cmpBool [t:keyword(or)]
+        auto ruleCmpBool2 = new Rule("cmpBool");
+        ruleCmpBool2->addMatch(new RuleMatch(this->tokenMap->getType("keyword"), "or"));
+        this->rules->push_back(ruleCmpBool2);
+
         // s:cmpExpr [s:expr t:compare s:expr]
         auto ruleCmpExpr1 = new Rule("cmpExpr");
         ruleCmpExpr1->addMatch(new RuleMatch("expr"));
         ruleCmpExpr1->addMatch(new RuleMatch(this->tokenMap->getType("compare")));
         ruleCmpExpr1->addMatch(new RuleMatch("expr"));
         this->rules->push_back(ruleCmpExpr1);
+
+        // s:boolExpr [s:expr s:cmpBool s:expr]
+        auto ruleBoolExpr1 = new Rule("boolExpr");
+        ruleBoolExpr1->addMatch(new RuleMatch("expr"));
+        ruleBoolExpr1->addMatch(new RuleMatch("cmpBool"));
+        ruleBoolExpr1->addMatch(new RuleMatch("expr"));
+        this->rules->push_back(ruleBoolExpr1);
+
+        // s:boolExpr [s:cmpExpr s:cmpBool s:cmpExpr]
+        auto ruleBoolExpr2 = new Rule("boolExpr");
+        ruleBoolExpr2->addMatch(new RuleMatch("cmpExpr"));
+        ruleBoolExpr2->addMatch(new RuleMatch("cmpBool"));
+        ruleBoolExpr2->addMatch(new RuleMatch("cmpExpr"));
+        this->rules->push_back(ruleBoolExpr2);
+
+        // s:boolExpr [s:expr s:cmpBool s:cmpExpr]
+        auto ruleBoolExpr3 = new Rule("boolExpr");
+        ruleBoolExpr3->addMatch(new RuleMatch("expr"));
+        ruleBoolExpr3->addMatch(new RuleMatch("cmpBool"));
+        ruleBoolExpr3->addMatch(new RuleMatch("cmpExpr"));
+        this->rules->push_back(ruleBoolExpr3);
+
+        // s:boolExpr [s:cmpExpr s:cmpBool s:expr]
+        auto ruleBoolExpr4 = new Rule("boolExpr");
+        ruleBoolExpr4->addMatch(new RuleMatch("cmpExpr"));
+        ruleBoolExpr4->addMatch(new RuleMatch("cmpBool"));
+        ruleBoolExpr4->addMatch(new RuleMatch("expr"));
+        this->rules->push_back(ruleBoolExpr4);
 
         // s:if_control [t:openControlTag t:keyword(if) s:expr t:closeControlTag]
         auto ruleIf1 = new Rule("if_control");
@@ -75,6 +113,14 @@ namespace TemplateRenderWizard::Syntax
         ruleIf2->addMatch(new RuleMatch("cmpExpr"));
         ruleIf2->addMatch(new RuleMatch(this->tokenMap->getType("closeControlTag")));
         this->rules->push_back(ruleIf2);
+
+        // s:if_control [t:openControlTag t:keyword(if) s:boolExpr t:closeControlTag]
+        auto ruleIf3 = new Rule("if_control");
+        ruleIf3->addMatch(new RuleMatch(this->tokenMap->getType("openControlTag")));
+        ruleIf3->addMatch(new RuleMatch(this->tokenMap->getType("keyword"), "if"));
+        ruleIf3->addMatch(new RuleMatch("boolExpr"));
+        ruleIf3->addMatch(new RuleMatch(this->tokenMap->getType("closeControlTag")));
+        this->rules->push_back(ruleIf3);
 
         // s:else_control [t:openControlTag t:keyword(else) t:closeControlTag]
         auto ruleElse = new Rule("else_control");
