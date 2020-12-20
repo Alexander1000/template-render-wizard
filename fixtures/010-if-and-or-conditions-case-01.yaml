@@ -1,0 +1,14 @@
+user:
+  money:
+    total: 1000
+  cart:
+    capacity: 100
+    used: 10
+
+items:
+  - name: apply
+    price: 5
+    size: 1
+  - name: notebook
+    price: 100
+    size: 5
