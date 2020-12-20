@@ -78,3 +78,11 @@ openControlTag
 keyword
 closeControlTag
 plainText
+openTagValue
+plainValue
+closeTagValue
+plainText
+openTagValue
+plainValue
+closeTagValue
+plainText
