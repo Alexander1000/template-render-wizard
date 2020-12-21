@@ -19,8 +19,18 @@ namespace TemplateRenderWizard
                 bool lValue = this->calc_bool_expr(*listElements, context);
                 listElements++; // and/or
                 auto boolExpr = *listElements;
+                auto boolOperatorToken = (*(boolExpr->getElement()->getListElements()->begin()))->getToken();
+                RESET_TOKEN_READER(boolOperatorToken);
+                INIT_CHAR_STRING(strBoolOperator, 4)
+                boolOperatorToken->getReader()->read(strBoolOperator, 3);
                 listElements++; // second expr
                 bool rValue = this->calc_bool_expr(*listElements, context);
+                if (strcmp(strBoolOperator, "and") == 0) {
+                    return lValue && rValue;
+                }
+                if (strcmp(strBoolOperator, "or") == 0) {
+                    return lValue || rValue;
+                }
             }
             if (strcmp(syntaxElement->getRule()->getName(), "cmpExpr") == 0) {
                 auto itEl = syntaxElement->getListElements()->begin(); // s:expr

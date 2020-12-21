@@ -26,6 +26,13 @@ namespace TemplateRenderWizard
             return v;
         }
 
+        if (strcmp(opValue, "-") == 0) {
+            Value* v;
+            v = new Value();
+            v->setData(cast_value_to_int(lValue) - cast_value_to_int(rValue));
+            return v;
+        }
+
         if (strcmp(opValue, "*") == 0) {
             Value* v;
             v = new Value();
