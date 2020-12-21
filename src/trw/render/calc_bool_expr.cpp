@@ -24,15 +24,15 @@ namespace TemplateRenderWizard
             }
             if (strcmp(syntaxElement->getRule()->getName(), "cmpExpr") == 0) {
                 auto itEl = syntaxElement->getListElements()->begin(); // s:expr
-                auto lValue = this->calc_expr_tree(*itEl);
+                auto lValue = this->calc_expr_tree(*itEl, context);
                 itEl++; // t:compare
                 auto tokenCmp = *itEl;
                 itEl++; // s:expr
-                auto rValue = this->calc_expr_tree(*itEl);
+                auto rValue = this->calc_expr_tree(*itEl, context);
                 return this->compare_value(lValue, rValue, tokenCmp->getToken());
             }
             if (strcmp(syntaxElement->getRule()->getName(), "expr") == 0) {
-                auto lValue = this->calc_expr_tree(syntaxElement);
+                auto lValue = this->calc_expr_tree(syntaxElement, context);
                 if (lValue->getType() == ValueType::None) {
                     return false;
                 }
