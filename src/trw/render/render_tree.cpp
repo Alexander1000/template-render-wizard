@@ -314,6 +314,10 @@ namespace TemplateRenderWizard
             }
         }
 
+        if (strcmp(expr->getRule()->getName(), "boolExpr") == 0) {
+            return this->calc_bool_expr(expr, nullptr);
+        }
+
         throw new UnexpectedToken;
     }
 }

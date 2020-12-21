@@ -38,6 +38,9 @@ namespace TemplateRenderWizard
             if (strcmp(cmpValue, ">=") == 0) {
                 return *lValue->getData<int*>() >= *rValue->getData<int*>();
             }
+            if (strcmp(cmpValue, ">") == 0) {
+                return *lValue->getData<int*>() > *rValue->getData<int*>();
+            }
         }
 
         std::cout << "Line: " << token->getLine() << "; Column: " << token->getColumn() << std::endl;

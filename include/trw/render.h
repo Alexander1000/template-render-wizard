@@ -40,6 +40,7 @@ namespace TemplateRenderWizard
         Value* calc_expr_tree(Syntax::SyntaxElement*);
         void render_tree_token(IOBuffer::IOBuffer* buffer, Token::Token* token);
         bool calc_if_control(Syntax::SyntaxElement*);
+        bool calc_bool_expr(Syntax::SyntaxElement*, Context*);
 
     public:
         Render(const char*, TemplateRenderWizard::Tree::Tree*);
