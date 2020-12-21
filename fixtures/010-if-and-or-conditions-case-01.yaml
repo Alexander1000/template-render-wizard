@@ -1,0 +1,26 @@
+user:
+  money:
+    total: 1000
+  cart:
+    capacity: 100
+    used: 10
+
+items:
+  - name: apply
+    price: 5
+    size: 1
+  - name: notebook
+    price: 100
+    size: 5
+  - name: car
+    price: 1200
+    size: 500
+  - name: aligator
+    price: 500
+    size: 120
+  - name: bread
+    price: 10
+    size: 90
+  - name: bread2
+    price: 10
+    size: 91

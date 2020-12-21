@@ -1,0 +1,53 @@
+User account balance: 1000
+User capacity: 100
+User used: 10
+Shop items:
+
+<item>
+    <id>0</id>
+    <title>apply</title>
+    <price>5</price>
+    <size>1</size>
+</item>
+Can buy it? - Yes
+
+<item>
+    <id>1</id>
+    <title>notebook</title>
+    <price>100</price>
+    <size>5</size>
+</item>
+Can buy it? - Yes
+
+<item>
+    <id>2</id>
+    <title>car</title>
+    <price>1200</price>
+    <size>500</size>
+</item>
+Can buy it? - No
+
+<item>
+    <id>3</id>
+    <title>aligator</title>
+    <price>500</price>
+    <size>120</size>
+</item>
+Can buy it? - No
+
+<item>
+    <id>4</id>
+    <title>bread</title>
+    <price>10</price>
+    <size>90</size>
+</item>
+Can buy it? - Yes
+
+<item>
+    <id>5</id>
+    <title>bread2</title>
+    <price>10</price>
+    <size>91</size>
+</item>
+Can buy it? - No
+

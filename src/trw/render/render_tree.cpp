@@ -65,7 +65,7 @@ namespace TemplateRenderWizard
                 throw new UnexpectedToken;
             }
 
-            auto result = this->calc_if_control(ifElement);
+            auto result = this->calc_if_control(ifElement, context);
             if (result) {
                 it++; // body
                 auto bodyElement = *it;
@@ -132,6 +132,7 @@ namespace TemplateRenderWizard
             it++; // body
             auto elBody = *it;
             if (sourceValue->getType() == ValueType::Array) {
+                int currentNumber = 0;
                 for (auto itArray = sourceValue->getArray()->begin(); itArray != sourceValue->getArray()->end(); itArray++) {
                     auto ctxValue = new Value();
                     auto ctxValueMap = new std::map<std::string, Value*>;
@@ -139,12 +140,29 @@ namespace TemplateRenderWizard
                     auto ctx = new Context(context);
                     ctx->setValueContext(ctxValue);
                     auto curContextElement = *itArray;
-                    INIT_CHAR_STRING(strValue, 1024)
-                    auto lValueToken = lValueElement->getToken();
-                    RESET_TOKEN_READER(lValueToken);
-                    lValueToken->getReader()->read(strValue, 1024);
-                    (*ctxValueMap)[strValue] = curContextElement;
+                    if (lValueElement != nullptr) {
+                        INIT_CHAR_STRING(strValue, 1024)
+                        auto lValueToken = lValueElement->getToken();
+                        RESET_TOKEN_READER(lValueToken);
+                        lValueToken->getReader()->read(strValue, 1024);
+                        (*ctxValueMap)[strValue] = curContextElement;
+                        if (rValueElement != nullptr) {
+                            auto v = new Value();
+                            v->setData(currentNumber);
+                            (*ctxValueMap)[strValue] = v;
+                        } else {
+                            (*ctxValueMap)[strValue] = curContextElement;
+                        }
+                    }
+                    if (rValueElement != nullptr) {
+                        INIT_CHAR_STRING(strValue, 1024)
+                        auto rValueToken = rValueElement->getToken();
+                        RESET_TOKEN_READER(rValueToken);
+                        rValueToken->getReader()->read(strValue, 1024);
+                        (*ctxValueMap)[strValue] = curContextElement;
+                    }
                     this->render_tree(buffer, elBody, ctx);
+                    currentNumber++;
                 }
             }
             if (sourceValue->getType() == ValueType::Object) {
@@ -182,10 +200,10 @@ namespace TemplateRenderWizard
         }
     }
 
-    Value* Render::calc_expr_tree(Syntax::SyntaxElement *syntaxElement)
+    Value* Render::calc_expr_tree(Syntax::SyntaxElement *syntaxElement, Context* context)
     {
         if (syntaxElement->getType() == Syntax::TokenType) {
-            return this->getValueFromToken(syntaxElement->getToken(), nullptr);
+            return this->getValueFromToken(syntaxElement->getToken(), context);
         }
 
         if (syntaxElement->getType() == Syntax::TokenListType) {
@@ -207,11 +225,11 @@ namespace TemplateRenderWizard
 
             if (count == 1) {
                 if (firstElement->getType() == Syntax::SyntaxElementType::SyntaxType) {
-                    lValue = this->calc_expr_tree(firstElement->getElement());
+                    lValue = this->calc_expr_tree(firstElement->getElement(), context);
                     return lValue;
                 }
                 if (firstElement->getType() == Syntax::SyntaxElementType::TokenType) {
-                    return this->getValueFromToken(firstElement->getToken(), nullptr);
+                    return this->getValueFromToken(firstElement->getToken(), context);
                 }
 
                 throw new UnexpectedToken;
@@ -219,16 +237,16 @@ namespace TemplateRenderWizard
 
             if (firstElement->getType() == Syntax::SyntaxElementType::TokenType) {
                 it++;
-                auto exprValue = this->calc_expr_tree(*it);
+                auto exprValue = this->calc_expr_tree(*it, context);
                 it++;
                 return exprValue;
             }
 
-            lValue = this->calc_expr_tree(*it);
+            lValue = this->calc_expr_tree(*it, context);
             it++;
             auto tokenOp = *it;
             it++;
-            auto rValue = this->calc_expr_tree(*it);
+            auto rValue = this->calc_expr_tree(*it, context);
 
             return this->calc_expr(
                 new Expression(
@@ -243,7 +261,7 @@ namespace TemplateRenderWizard
             throw new UnexpectedToken;
         }
 
-        return this->calc_expr_tree(syntaxElement->getElement());
+        return this->calc_expr_tree(syntaxElement->getElement(), context);
     }
 
     void Render::render_tree_token(IOBuffer::IOBuffer *buffer, Token::Token *token)
@@ -259,7 +277,7 @@ namespace TemplateRenderWizard
         }
     }
 
-    bool Render::calc_if_control(Syntax::SyntaxElement *syntaxElement)
+    bool Render::calc_if_control(Syntax::SyntaxElement *syntaxElement, Context* context)
     {
         auto it = syntaxElement->getListElements()->begin(); // open control tag
         it++; // keyword
@@ -275,16 +293,16 @@ namespace TemplateRenderWizard
                 throw new UnexpectedToken;
             }
             auto itEl = cmpExprSyntaxElement->getListElements()->begin(); // s:expr
-            auto lValue = this->calc_expr_tree(*itEl);
+            auto lValue = this->calc_expr_tree(*itEl, context);
             itEl++; // t:compare
             auto tokenCmp = *itEl;
             itEl++; // s:expr
-            auto rValue = this->calc_expr_tree(*itEl);
+            auto rValue = this->calc_expr_tree(*itEl, context);
             return this->compare_value(lValue, rValue, tokenCmp->getToken());
         }
 
         if (strcmp(expr->getRule()->getName(), "expr") == 0) {
-            auto lValue = this->calc_expr_tree(expr);
+            auto lValue = this->calc_expr_tree(expr, context);
             if (lValue->getType() == ValueType::None) {
                 return false;
             }
@@ -294,6 +312,10 @@ namespace TemplateRenderWizard
             if (lValue->getType() == ValueType::String) {
                 return strlen(lValue->getData<char*>()) > 0;
             }
+        }
+
+        if (strcmp(expr->getRule()->getName(), "boolExpr") == 0) {
+            return this->calc_bool_expr(expr, context);
         }
 
         throw new UnexpectedToken;
