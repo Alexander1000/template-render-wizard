@@ -12,3 +12,15 @@ items:
   - name: notebook
     price: 100
     size: 5
+  - name: car
+    price: 1200
+    size: 500
+  - name: aligator
+    price: 500
+    size: 120
+  - name: bread
+    price: 10
+    size: 90
+  - name: bread2
+    price: 10
+    size: 91
