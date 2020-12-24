@@ -1,6 +1,8 @@
 #ifndef H_TRW_UTILS_INCLUDE
 #define H_TRW_UTILS_INCLUDE
 
+#include <memory.h>
+
 #define RESET_TOKEN_READER(token) \
     do { \
         auto reader = (IOBuffer::IOMemoryBuffer*) token->getReader(); \
