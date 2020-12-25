@@ -1,0 +1,10 @@
+mergeable:
+  pull_requests:
+    label:
+      and:
+        - must_include:
+            regex: '^ci:success'
+            message: 'Please add the label (ci:success)'
+        - must_exclude:
+            regex: '^invalid'
+            message: 'Pull request marked not mergeable'
