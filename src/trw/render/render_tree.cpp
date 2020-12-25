@@ -198,6 +198,14 @@ namespace TemplateRenderWizard
             }
             it++; // endfor_control
         }
+
+        if (strcmp(rule->getName(), "expr_control") == 0) {
+            auto it = elements->begin(); // openControlTag
+            it++; // expression
+            auto value = this->calc_expr_tree(*it, context);
+            this->to_buffer_value(buffer, value);
+            it++; // closeControlTag
+        }
     }
 
     Value* Render::calc_expr_tree(Syntax::SyntaxElement *syntaxElement, Context* context)
