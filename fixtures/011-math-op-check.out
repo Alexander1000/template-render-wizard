@@ -1,0 +1,11 @@
+x = 8
+y = 13
+x + y = 21
+x - (x - y) * (x + y) + y = 126
+x and y = true
+x or y = true
+x > y = false
+x >= y = false
+x == y = false
+x <= y = true
+x < y = true

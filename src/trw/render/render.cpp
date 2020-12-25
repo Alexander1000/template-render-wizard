@@ -41,8 +41,14 @@ namespace TemplateRenderWizard
             if (strcmp(cmpValue, ">") == 0) {
                 return *lValue->getData<int*>() > *rValue->getData<int*>();
             }
+            if (strcmp(cmpValue, "<") == 0) {
+                return *lValue->getData<int*>() < *rValue->getData<int*>();
+            }
             if (strcmp(cmpValue, "<=") == 0) {
                 return *lValue->getData<int*>() <= *rValue->getData<int*>();
+            }
+            if (strcmp(cmpValue, "==") == 0) {
+                return *lValue->getData<int*>() == *rValue->getData<int*>();
             }
         }
 

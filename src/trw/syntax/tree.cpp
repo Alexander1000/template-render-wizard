@@ -98,6 +98,27 @@ namespace TemplateRenderWizard::Syntax
         ruleBoolExpr4->addMatch(new RuleMatch("expr"));
         this->rules->push_back(ruleBoolExpr4);
 
+        // s:expr_control [t:openControlTag s:expr t:closeControlTag]
+        auto ruleExprControl1 = new Rule("expr_control");
+        ruleExprControl1->addMatch(new RuleMatch(this->tokenMap->getType("openControlTag")));
+        ruleExprControl1->addMatch(new RuleMatch("expr"));
+        ruleExprControl1->addMatch(new RuleMatch(this->tokenMap->getType("closeControlTag")));
+        this->rules->push_back(ruleExprControl1);
+
+        // s:expr_control [t:openControlTag s:cmpExpr t:closeControlTag]
+        auto ruleExprControl2 = new Rule("expr_control");
+        ruleExprControl2->addMatch(new RuleMatch(this->tokenMap->getType("openControlTag")));
+        ruleExprControl2->addMatch(new RuleMatch("cmpExpr"));
+        ruleExprControl2->addMatch(new RuleMatch(this->tokenMap->getType("closeControlTag")));
+        this->rules->push_back(ruleExprControl2);
+
+        // s:expr_control [t:openControlTag s:boolExpr t:closeControlTag]
+        auto ruleExprControl3 = new Rule("expr_control");
+        ruleExprControl3->addMatch(new RuleMatch(this->tokenMap->getType("openControlTag")));
+        ruleExprControl3->addMatch(new RuleMatch("boolExpr"));
+        ruleExprControl3->addMatch(new RuleMatch(this->tokenMap->getType("closeControlTag")));
+        this->rules->push_back(ruleExprControl3);
+
         // s:if_control [t:openControlTag t:keyword(if) s:expr t:closeControlTag]
         auto ruleIf1 = new Rule("if_control");
         ruleIf1->addMatch(new RuleMatch(this->tokenMap->getType("openControlTag")));
@@ -198,20 +219,25 @@ namespace TemplateRenderWizard::Syntax
         ruleBody2->addMatch(new RuleMatch("injectValue"));
         this->rules->push_back(ruleBody2);
 
-        // s:body [s:if_stmt]
+        // s:body [s:expr_control]
         auto ruleBody3 = new Rule("body");
-        ruleBody3->addMatch(new RuleMatch("if_stmt"));
+        ruleBody3->addMatch(new RuleMatch("expr_control"));
         this->rules->push_back(ruleBody3);
 
-        // s:body [s:for_stmt]
+        // s:body [s:if_stmt]
         auto ruleBody4 = new Rule("body");
-        ruleBody4->addMatch(new RuleMatch("for_stmt"));
+        ruleBody4->addMatch(new RuleMatch("if_stmt"));
         this->rules->push_back(ruleBody4);
 
-        // s:body [s:body s:body]
+        // s:body [s:for_stmt]
         auto ruleBody5 = new Rule("body");
-        ruleBody5->addMatch(new RuleMatch("body"));
-        ruleBody5->addMatch(new RuleMatch("body"));
+        ruleBody5->addMatch(new RuleMatch("for_stmt"));
         this->rules->push_back(ruleBody5);
+
+        // s:body [s:body s:body]
+        auto ruleBody6 = new Rule("body");
+        ruleBody6->addMatch(new RuleMatch("body"));
+        ruleBody6->addMatch(new RuleMatch("body"));
+        this->rules->push_back(ruleBody6);
     }
 }

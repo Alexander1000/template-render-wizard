@@ -15,6 +15,16 @@ namespace TemplateRenderWizard
 
         this->position = new Position(0, 0);
         this->positionStack = new std::stack<Position*>;
+
+        this->keywords = new std::list<std::string>;
+        this->keywords->push_back("if");
+        this->keywords->push_back("else");
+        this->keywords->push_back("endif");
+        this->keywords->push_back("for");
+        this->keywords->push_back("endfor");
+        this->keywords->push_back("in");
+        this->keywords->push_back("and");
+        this->keywords->push_back("or");
     }
 
     Token::Token* Stream::getNextToken() {
@@ -45,7 +55,7 @@ namespace TemplateRenderWizard
 
                     if (*nextChar == '%') {
                         token = new Token::OpenControlTag(this->position->getLine(), this->position->getColumn());
-                        this->switchToMode(StreamMode::ControlMode);
+                        this->switchToMode(StreamMode::ControlModeExpression);
                         return token;
                     }
 
@@ -137,56 +147,6 @@ namespace TemplateRenderWizard
                 break;
             }
 
-            case StreamMode::ControlMode: {
-                if (*curSymbol == 0x20) {
-                    // skip spaces
-                    do {
-                        curSymbol = this->getNextChar();
-                    } while(curSymbol != nullptr && *curSymbol == 0x20);
-                }
-
-                if (curSymbol == nullptr) {
-                    return nullptr;
-                }
-
-                if (this->isWord(curSymbol)) {
-                    // expected keyword for control mode
-                    int lengthKeyword = 0;
-                    ioWriter = new IOBuffer::IOMemoryBuffer(16);
-                    while (curSymbol != nullptr && this->isWord(curSymbol)) {
-                        ioWriter->write(curSymbol, 1);
-                        lengthKeyword++;
-                        curSymbol = this->getNextChar();
-                    }
-
-                    INIT_CHAR_STRING(strKeyword, 16)
-                    ioWriter->read(strKeyword, 15);
-
-                    if (strcmp(strKeyword, "for") == 0) {
-                        this->switchToMode(StreamMode::ControlModeForExpression);
-                    } else {
-                        this->switchToMode(StreamMode::ControlModeExpression);
-                    }
-                    token = new Token::Keyword(this->position->getLine(), this->position->getColumn(), ioWriter);
-                    return token;
-                }
-
-                if (*curSymbol == '%') {
-                    char* nextSymbol = this->getNextChar();
-                    if (nextSymbol == nullptr) {
-                        return nullptr;
-                    }
-                    if (*nextSymbol == '}') {
-                        this->switchToPreviousMode();
-                        token = new Token::CloseControlTag(this->position->getLine(), this->position->getColumn());
-                        return token;
-                    }
-                    this->pushStackChar(nextSymbol);
-                }
-
-                break;
-            }
-
             case StreamMode::ControlModeExpression: {
                 if (*curSymbol == 0x20) {
                     // skip spaces
@@ -205,7 +165,6 @@ namespace TemplateRenderWizard
                         return nullptr;
                     }
                     if (*nextSymbol == '}') {
-                        this->switchToPreviousMode(); // <- switch on control mode
                         this->switchToPreviousMode(); // <- switch on parent mode
                         token = new Token::CloseControlTag(this->position->getLine(), this->position->getColumn());
                         return token;
@@ -274,10 +233,16 @@ namespace TemplateRenderWizard
                     curSymbol = this->getNextChar();
                 } while(curSymbol != nullptr && *curSymbol != 0x20);
 
-                if (ioWriter->length() == 2 || ioWriter->length() == 3) {
-                    INIT_CHAR_STRING(strKeyword, 4);
-                    ioWriter->read(strKeyword, 3);
-                    if (strcmp(strKeyword, "and") == 0 || strcmp(strKeyword, "or") == 0) {
+                if (ioWriter->length() >= 2 && ioWriter->length() <= 6) {
+                    INIT_CHAR_STRING(strKeyword, 7);
+                    ioWriter->read(strKeyword, 6);
+                    if (this->isKeyword(strKeyword)) {
+                        if (strcmp(strKeyword, "for") == 0) {
+                            this->switchToMode(StreamMode::ControlModeForExpression);
+                            token = new Token::Keyword(this->position->getLine(), this->position->getColumn(), ioWriter);
+                            return token;
+                        }
+
                         token = new Token::Keyword(this->position->getLine(), this->position->getColumn(), ioWriter);
                         return token;
                     }
@@ -400,5 +365,23 @@ namespace TemplateRenderWizard
 
     bool Stream::isWord(const char *symbol) {
         return (*symbol >= 'a' && *symbol <= 'z') || (*symbol >= 'A' && *symbol <= 'Z');
+    }
+
+    bool Stream::isKeyword(std::string* strKeyword) {
+        for (auto it = this->keywords->begin(); it != this->keywords->end(); it++) {
+            if (strcmp(it->c_str(), strKeyword->c_str()) == 0) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    bool Stream::isKeyword(const char* strKeyword) {
+        for (auto it = this->keywords->begin(); it != this->keywords->end(); it++) {
+            if (strcmp(it->c_str(), strKeyword) == 0) {
+                return true;
+            }
+        }
+        return false;
     }
 }
