@@ -5,6 +5,7 @@
 #include <trw/token.h>
 #include <stack>
 #include <trw/position.h>
+#include <list>
 
 namespace TemplateRenderWizard
 {
@@ -27,6 +28,7 @@ namespace TemplateRenderWizard
         std::stack<char*>* charStack;
         std::stack<Position*>* positionStack;
         std::stack<StreamMode>* modeStack;
+        std::list<std::string>* keywords;
 
         Position *position;
 
@@ -37,6 +39,9 @@ namespace TemplateRenderWizard
         void pushStackChar(char*);
 
         static bool isWord(const char* symbol);
+
+        bool isKeyword(std::string*);
+        bool isKeyword(const char*);
     };
 }
 
