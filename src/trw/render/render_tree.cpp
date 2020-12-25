@@ -202,8 +202,18 @@ namespace TemplateRenderWizard
         if (strcmp(rule->getName(), "expr_control") == 0) {
             auto it = elements->begin(); // openControlTag
             it++; // expression
-            auto value = this->calc_expr_tree(*it, context);
-            this->to_buffer_value(buffer, value);
+            auto element = *it;
+            if (strcmp(element->getRule()->getName(), "expr") == 0) {
+                auto value = this->calc_expr_tree(element, context);
+                this->to_buffer_value(buffer, value);
+            } else if (strcmp(element->getRule()->getName(), "cmpExpr") == 0 || strcmp(element->getRule()->getName(), "boolExpr") == 0) {
+                bool result = this->calc_bool_expr(element, context);
+                if (result) {
+                    buffer->write("true", 4);
+                } else {
+                    buffer->write("false", 5);
+                }
+            }
             it++; // closeControlTag
         }
     }
