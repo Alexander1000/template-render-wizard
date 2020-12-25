@@ -137,60 +137,7 @@ namespace TemplateRenderWizard
                 break;
             }
 
-            case StreamMode::ControlMode: {
-                if (*curSymbol == 0x20) {
-                    // skip spaces
-                    do {
-                        curSymbol = this->getNextChar();
-                    } while(curSymbol != nullptr && *curSymbol == 0x20);
-                }
-
-                if (curSymbol == nullptr) {
-                    return nullptr;
-                }
-
-                if (this->isWord(curSymbol)) {
-                    // expected keyword for control mode
-                    int lengthKeyword = 0;
-                    ioWriter = new IOBuffer::IOMemoryBuffer(16);
-                    while (curSymbol != nullptr && this->isWord(curSymbol)) {
-                        ioWriter->write(curSymbol, 1);
-                        lengthKeyword++;
-                        curSymbol = this->getNextChar();
-                    }
-
-                    INIT_CHAR_STRING(strKeyword, 16)
-                    ioWriter->read(strKeyword, 15);
-
-                    if (strcmp(strKeyword, "for") == 0) {
-                        this->switchToMode(StreamMode::ControlModeForExpression);
-                    } else if (strcmp(strKeyword, "if") == 0) {
-                        this->switchToMode(StreamMode::ControlModeExpression);
-                    } else {
-                        goto expr_mode;
-                    }
-                    token = new Token::Keyword(this->position->getLine(), this->position->getColumn(), ioWriter);
-                    return token;
-                }
-
-                if (*curSymbol == '%') {
-                    char* nextSymbol = this->getNextChar();
-                    if (nextSymbol == nullptr) {
-                        return nullptr;
-                    }
-                    if (*nextSymbol == '}') {
-                        this->switchToPreviousMode();
-                        token = new Token::CloseControlTag(this->position->getLine(), this->position->getColumn());
-                        return token;
-                    }
-                    this->pushStackChar(nextSymbol);
-                }
-
-                break;
-            }
-
             case StreamMode::ControlModeExpression: {
-                expr_mode:
                 if (*curSymbol == 0x20) {
                     // skip spaces
                     do {
@@ -208,7 +155,6 @@ namespace TemplateRenderWizard
                         return nullptr;
                     }
                     if (*nextSymbol == '}') {
-                        // this->switchToPreviousMode(); // <- switch on control mode
                         this->switchToPreviousMode(); // <- switch on parent mode
                         token = new Token::CloseControlTag(this->position->getLine(), this->position->getColumn());
                         return token;

@@ -11,7 +11,6 @@ namespace TemplateRenderWizard
     enum StreamMode{
         PlainText,
         ValueMode,
-        ControlMode,
         ControlModeExpression,
         ControlModeForExpression,
     };
