@@ -3,6 +3,7 @@
 #include <cpp-unit-test.h>
 #include <memory.h>
 #include <dirent.h>
+#include <sys/stat.h>
 
 void assertEquals(CppUnitTest::TestCase* t, TemplateRenderWizard::Token::Type expectedTokenType, TemplateRenderWizard::Token::Type actualTokenType) {
     t->increment();
@@ -16,6 +17,12 @@ void assertEquals(CppUnitTest::TestCase* t, TemplateRenderWizard::Tree::LeafElem
     if (expectedLeafType != actualLeafType) {
         throw new CppUnitTest::AssertEqualsException;
     }
+}
+
+inline bool file_exists(const std::string* name)
+{
+    struct stat buffer;
+    return (stat(name->c_str(), &buffer) == 0);
 }
 
 CppUnitTest::TestCase* testParseToken_Template_Positive() {
@@ -166,6 +173,8 @@ CppUnitTest::TestCase* testLexer_Template_Positive(char* templateName)
     INIT_CHAR_STRING(srcTemplateFile, 1024)
     sprintf(srcTemplateFile, "./fixtures/%s", templateName);
 
+    CppUnitTest::assertTrue(t, file_exists(new std::string(srcTemplateFile)));
+
     IOBuffer::IOFileReader* fileReader;
     fileReader = new IOBuffer::IOFileReader(srcTemplateFile);
     IOBuffer::CharStream* charStream;
@@ -177,6 +186,8 @@ CppUnitTest::TestCase* testLexer_Template_Positive(char* templateName)
     memcpy(strTokenFileName, templateName, sizeof(char) * (strlen(templateName) - 4));
     sprintf(strTokenFile, "./fixtures/%s.t", strTokenFileName);
     free(strTokenFileName);
+
+    CppUnitTest::assertTrue(t, file_exists(new std::string(strTokenFile)));
 
     auto tokenFile = new TemplateRenderWizard::TokenFile(strTokenFile);
     TemplateRenderWizard::Token::Type tokenType;
