@@ -9,9 +9,11 @@ namespace TemplateRenderWizard
         int pos = 0;
         for (int i = 0; i < strlen(str); i++) {
             if (str[i] == delimiter) {
-                INIT_CHAR_STRING(tStr, i - pos + 1)
-                memcpy(tStr, str + pos, i - pos);
-                list->push_back(tStr);
+                if (i > pos) {
+                    INIT_CHAR_STRING(tStr, i - pos + 1)
+                    memcpy(tStr, str + pos, i - pos);
+                    list->push_back(tStr);
+                }
                 pos = i + 1;
             }
         }

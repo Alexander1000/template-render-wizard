@@ -274,7 +274,17 @@ CppUnitTest::TestCase* testExplodeString_DataForExplode_Positive()
     t->printTitle();
 
     std::map<std::string, std::list<std::string>> dataSet = {
-        {"test.x", {"test", "x"}}
+        {"test.x", {"test", "x"}},
+        {"test", {"test"}},
+        {"x.test.y", {"x", "test", "y"}},
+        {".test", {"test"}},
+        {"test.", {"test"}},
+        {".test.x", {"test", "x"}},
+        {"test.x.", {"test", "x"}},
+        {"test..", {"test"}},
+        {"..test", {"test"}},
+        {"..test..", {"test"}},
+        {"x..test..y", {"x", "test", "y"}},
     };
 
     for (auto it = dataSet.begin(); it != dataSet.end(); it++) {
