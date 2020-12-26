@@ -27,8 +27,8 @@ jobs:
 
       # Runs a single command using the runners shell
       - name: Docker build
-        run: docker build -t trw-test .
+        run: docker build --no-cache -t trw-test .
 
       # Runs a set of commands using the runners shell
       - name: Run tests in docker
-        run: docker run --rm trw-test
+        run: docker run --rm trw-test ./template-render-wizard-test
