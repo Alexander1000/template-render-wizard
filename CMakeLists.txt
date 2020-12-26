@@ -88,12 +88,13 @@ project(template-render-wizard-test)
 set(CMAKE_BUILD_TYPE Debug)
 
 set(TRW_SOURCES_TEST
-    tests/main.cpp
+    tests/src/main.cpp
     ${TRW_SHARED_SOURCES}
 )
 
 include_directories(
     include
+    tests/include
     /usr/local/include
 )
 
@@ -101,7 +102,7 @@ find_library(CPP_UNIT_TEST libcpp-unit-test.a)
 message(STATUS "Found cpp-unit-test: ${CPP_UNIT_TEST}")
 
 add_executable(
-    ${PROJECT_NAME} tests/main.cpp
+    ${PROJECT_NAME} tests/src/main.cpp
     ${TRW_SOURCES_TEST}
 )
 

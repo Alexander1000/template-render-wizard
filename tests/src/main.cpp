@@ -1,3 +1,4 @@
+#include <tests.h>
 #include <trw.h>
 #include <io-buffer.h>
 #include <cpp-unit-test.h>
