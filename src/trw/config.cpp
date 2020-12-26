@@ -2,7 +2,6 @@
 #include <string>
 #include <map>
 #include <memory.h>
-#include <iostream>
 
 namespace TemplateRenderWizard
 {
@@ -18,8 +17,6 @@ namespace TemplateRenderWizard
         this->valuesFile = nullptr;
         this->outputFile = nullptr;
         this->unknownCommand = nullptr;
-
-        this->tree = new Tree::Tree();
 
         this->values = new std::map<std::string, std::string>;
 
@@ -44,7 +41,7 @@ namespace TemplateRenderWizard
             }
 
             if (paramName == "--values") {
-                this->tree->scan(new std::string(argv[i+1]));
+                this->valuesFile = new std::string(argv[i+1]);
                 i++;
                 continue;
             }
@@ -119,11 +116,6 @@ namespace TemplateRenderWizard
            "    -o, --output [file]        Output template render, by default stdout.\n"
            "        --dump-tokens          Dump tokens for debug.\n"
            "    -v, --version              Print version and exit.";
-    }
-
-    Tree::Tree* Config::getTree()
-    {
-        return this->tree;
     }
 
     std::map<std::string, std::string>* Config::getValues()
