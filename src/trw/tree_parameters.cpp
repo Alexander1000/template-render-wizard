@@ -130,6 +130,31 @@ namespace TemplateRenderWizard::Tree
 
     void Tree::setValue(const char *key, std::string *value)
     {
-        // @todo: make insert values
+        LeafElement* relativeElement = this->root;
+        LeafElement* foundElement = nullptr;
+
+        auto partKey = explode_string(key, '.');
+        for (auto it = partKey->begin(); it != partKey->end(); it++) {
+            const char* leafName = *it;
+            if (relativeElement->getType() == LeafElementType::LeafElementObject) {
+                auto tlObject = (LeafObject*) relativeElement->getData();
+                if (tlObject->find(leafName) != tlObject->end()) {
+                    relativeElement = tlObject->at(leafName);
+                    if (std::next(it) == partKey->end()) {
+                        foundElement = relativeElement;
+                        if (foundElement->getType() == LeafElementType::LeafElementText) {
+                            (*tlObject)[leafName] = new LeafElement(LeafElementType::LeafElementText, value);
+                        }
+                    }
+                } else {
+                    // not found -> make empty object
+                    if (std::next(it) != partKey->end()) {
+                        (*tlObject)[leafName] = new LeafElement(LeafElementType::LeafElementObject, new LeafObject);
+                    } else {
+                        (*tlObject)[leafName] = new LeafElement(LeafElementType::LeafElementText, value);
+                    }
+                }
+            }
+        }
     }
 }
