@@ -2,6 +2,7 @@
 #include <string>
 #include <map>
 #include <memory.h>
+#include <iostream>
 
 namespace TemplateRenderWizard
 {
@@ -11,10 +12,12 @@ namespace TemplateRenderWizard
         this->is_help = false;
         this->is_version = false;
         this->is_dump_tokens = false;
+        this->is_unknown_command = false;
 
         this->templateFile = nullptr;
         this->valuesFile = nullptr;
         this->outputFile = nullptr;
+        this->unknownCommand = nullptr;
 
         this->tree = new Tree::Tree();
 
@@ -73,6 +76,10 @@ namespace TemplateRenderWizard
 
             if (i == argc - 1) {
                 this->templateFile = new std::string(paramName);
+            } else {
+                this->is_unknown_command = true;
+                this->unknownCommand = new std::string(paramName);
+                break;
             }
         }
     }
@@ -126,5 +133,13 @@ namespace TemplateRenderWizard
 
     bool Config::isDumpTokens() {
         return this->is_dump_tokens;
+    }
+
+    bool Config::isUnknownCommand() {
+        return this->is_unknown_command;
+    }
+
+    std::string * Config::getUnknownCommand() {
+        return this->unknownCommand;
     }
 }
