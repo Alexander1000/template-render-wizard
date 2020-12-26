@@ -5,6 +5,7 @@
 #include <cpp-unit-test.h>
 #include <dirent.h>
 #include <sys/stat.h>
+#include <trw.h>
 
 namespace TrwTests
 {
@@ -16,6 +17,10 @@ namespace TrwTests
 
     int filter_tpl(const struct dirent* dir_ent);
     int filter_yaml(const struct dirent* dir_ent);
+
+    // asserts
+    void assertEquals(CppUnitTest::TestCase* t, TemplateRenderWizard::Token::Type expectedTokenType, TemplateRenderWizard::Token::Type actualTokenType);
+    void assertEquals(CppUnitTest::TestCase* t, TemplateRenderWizard::Tree::LeafElementType expectedLeafType, TemplateRenderWizard::Tree::LeafElementType actualLeafType);
 
     // render tests
     void scanTests(CppUnitTest::TestSuite* testSuite);

@@ -91,6 +91,7 @@ set(TRW_SOURCES_TEST
     tests/src/main.cpp
     ${TRW_SHARED_SOURCES}
     tests/src/helpers.cpp
+    tests/src/asserts.cpp
     tests/src/test-suites/render-tests.cpp
 )
 

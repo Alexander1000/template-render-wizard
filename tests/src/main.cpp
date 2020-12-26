@@ -4,20 +4,6 @@
 #include <cpp-unit-test.h>
 #include <memory.h>
 
-void assertEquals(CppUnitTest::TestCase* t, TemplateRenderWizard::Token::Type expectedTokenType, TemplateRenderWizard::Token::Type actualTokenType) {
-    t->increment();
-    if (expectedTokenType != actualTokenType) {
-        throw new CppUnitTest::AssertEqualsException;
-    }
-}
-
-void assertEquals(CppUnitTest::TestCase* t, TemplateRenderWizard::Tree::LeafElementType expectedLeafType, TemplateRenderWizard::Tree::LeafElementType actualLeafType) {
-    t->increment();
-    if (expectedLeafType != actualLeafType) {
-        throw new CppUnitTest::AssertEqualsException;
-    }
-}
-
 CppUnitTest::TestCase* testParseToken_Template_Positive() {
     CppUnitTest::TestCase* t = nullptr;
     t = new CppUnitTest::TestCase("001-simple-text");
