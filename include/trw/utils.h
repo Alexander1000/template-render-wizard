@@ -2,6 +2,7 @@
 #define H_TRW_UTILS_INCLUDE
 
 #include <memory.h>
+#include <list>
 
 #define RESET_TOKEN_READER(token) \
     do { \
@@ -18,6 +19,8 @@ namespace TemplateRenderWizard
     bool ctype_digits(const char*);
 
     bool is_digit(char str);
+
+    std::list<char*>* explode_string(const char* str, char delimiter);
 }
 
 #endif
