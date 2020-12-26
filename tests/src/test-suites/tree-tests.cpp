@@ -2,6 +2,7 @@
 #include <trw.h>
 #include <cpp-unit-test.h>
 #include <string>
+#include <iostream>
 
 namespace TrwTests
 {
@@ -29,6 +30,26 @@ namespace TrwTests
     {
         auto t = new CppUnitTest::TestCase("[tree] - override yaml values");
         t->printTitle();
+
+        TemplateRenderWizard::Tree::Tree tree;
+        tree.scan("./fixtures/003-tree-override-values.yaml");
+
+        tree.setValue("user.name", new std::string("Hell Knight"));
+        tree.setValue("place", new std::string("ship"));
+
+        auto render = new TemplateRenderWizard::Render("./fixtures/003-tree-override-values.tpl", &tree);
+
+        IOBuffer::IOMemoryBuffer* buffer = render->toBufferTree();
+
+        INIT_CHAR_STRING(tBuffer, 1024);
+        buffer->read(tBuffer, 1023);
+
+        CppUnitTest::assertEquals(
+            t,
+            "Hello Hell Knight!\n"
+            "Do you go to the ship today?\n",
+            tBuffer
+        );
 
         t->finish();
         return t;
