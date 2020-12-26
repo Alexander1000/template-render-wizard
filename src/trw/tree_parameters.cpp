@@ -1,4 +1,4 @@
-#include <trw/tree_parameters.h>
+#include <trw.h>
 #include <string>
 #include <io-buffer.h>
 #include <yaml-parser.h>
@@ -98,37 +98,22 @@ namespace TemplateRenderWizard::Tree
         LeafElement* foundElement = nullptr;
         LeafElement* relativeElement = this->root;
 
-        int nStart = 0, nStop = 0;
+        auto pathParts = explode_string(path, '.');
 
-        for (int i = 0; i < strlen(path); i++) {
-            if (path[i] == '.' || i == strlen(path) - 1) {
-                nStop = i;
-                if (i == strlen(path) - 1) {
-                    nStop++;
-                }
-                // get leaf name
-                char* leafName = (char*) malloc(sizeof(char) * (nStop - nStart + 1));
-                memset(leafName, 0, sizeof(char) * (nStop - nStart + 1));
-                memcpy(leafName, path + nStart, sizeof(char) * (nStop - nStart));
-                switch (relativeElement->getType()) {
-                    case LeafElementType::LeafElementObject: {
-                        LeafObject* tlObject = (LeafObject*) relativeElement->getData();
-                        if (tlObject->find(leafName) != tlObject->end()) {
-                            relativeElement = tlObject->at(leafName);
-                            if (i == strlen(path) - 1) {
-                                foundElement = relativeElement;
-                            }
-                        } else {
-                            // not found
-                            return nullptr;
-                        }
-                        break;
+        for (auto it = pathParts->begin(); it != pathParts->end(); it++) {
+            const char* leafName = *it;
+
+            if (relativeElement->getType() == LeafElementType::LeafElementObject) {
+                auto tlObject = (LeafObject*) relativeElement->getData();
+                if (tlObject->find(leafName) != tlObject->end()) {
+                    relativeElement = tlObject->at(leafName);
+                    if (std::next(it) == pathParts->end()) {
+                        foundElement = relativeElement;
                     }
+                } else {
+                    // not found
+                    return nullptr;
                 }
-                free(leafName);
-
-                // for next part
-                nStart = i + 1;
             }
         }
 
@@ -143,7 +128,8 @@ namespace TemplateRenderWizard::Tree
         }
     }
 
-    void Tree::setValue(const char *key, std::string *value) {
+    void Tree::setValue(const char *key, std::string *value)
+    {
 
     }
 }
