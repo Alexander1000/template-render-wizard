@@ -43,6 +43,7 @@ set(TRW_SHARED_SOURCES
     src/trw/value/cast_value_to_bool.cpp
     src/trw/expression.cpp
     src/trw/utils/ctype_digits.cpp
+    src/trw/utils/explode_string.cpp
     src/trw/syntax/syntax.cpp
     src/trw/syntax/rule_match.cpp
     src/trw/syntax/rule.cpp

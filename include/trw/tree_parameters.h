@@ -3,6 +3,7 @@
 
 #include <string>
 #include <yaml-parser.h>
+#include <map>
 
 namespace TemplateRenderWizard::Tree
 {
@@ -30,6 +31,8 @@ namespace TemplateRenderWizard::Tree
         void scan(std::string*);
         void scan(const char*);
         LeafElement* get(const char*);
+        void mergeValues(std::map<std::string, std::string>*);
+        void setValue(const char*, std::string*);
 
     private:
         LeafElement* root;

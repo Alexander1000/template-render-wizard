@@ -72,6 +72,10 @@ int main(int argc, char** argv) {
         tree.scan(valuesFile);
     }
 
+    if (config.getValues() != nullptr) {
+        tree.mergeValues(config.getValues());
+    }
+
     IOBuffer::IOFileReader fileReader(templateFile->c_str());
     IOBuffer::CharStream charStream(&fileReader);
     TemplateRenderWizard::Stream tokenStream(&charStream);
