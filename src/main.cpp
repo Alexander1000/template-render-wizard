@@ -32,6 +32,12 @@ void dump_tokens(IOBuffer::IOMemoryBuffer* buffer, TemplateRenderWizard::Stream*
 int main(int argc, char** argv) {
     TemplateRenderWizard::Config config(argc, argv);
 
+    if (config.isUnknownCommand()) {
+        std::cout << "Unknown command: " << config.getUnknownCommand()->c_str() << std::endl;
+        std::cout << config.getHelpText() << std::endl;
+        return 0;
+    }
+
     if (config.isHelp()) {
         std::cout << config.getHelpText() << std::endl;
         return 0;

@@ -26,17 +26,21 @@ namespace TemplateRenderWizard
         Tree::Tree* getTree();
 
         bool isDumpTokens();
+        bool isUnknownCommand();
+        std::string* getUnknownCommand();
 
     private:
         bool is_help;
         bool is_version;
         bool is_dump_tokens;
+        bool is_unknown_command;
 
         std::map<std::string, std::string>* values;
 
         std::string* templateFile;
         std::string* valuesFile;
         std::string* outputFile;
+        std::string* unknownCommand;
 
         Tree::Tree* tree;
     };
