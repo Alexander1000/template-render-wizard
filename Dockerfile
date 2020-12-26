@@ -8,6 +8,17 @@ RUN apt-get update \
         unzip \
         g++
 
+# install cpp-unit-test library
+RUN mkdir -p /tmp/cpp-utils \
+    && cd /tmp/cpp-utils \
+    && curl -LO "https://github.com/Alexander1000/cpp-unit-test/archive/master.zip" \
+    && unzip -a master.zip \
+    && rm -f master.zip \
+    && cd cpp-unit-test-master \
+    && cmake . \
+    && make \
+    && make install
+
 # install io-buffer library
 RUN mkdir -p /tmp/io-buffer \
     && cd /tmp/io-buffer \
@@ -26,17 +37,6 @@ RUN mkdir -p /tmp/yaml-parser \
     && unzip -a master.zip \
     && rm -f master.zip \
     && cd yaml-parser-master \
-    && cmake . \
-    && make \
-    && make install
-
-# install cpp-unit-test library
-RUN mkdir -p /tmp/cpp-utils \
-    && cd /tmp/cpp-utils \
-    && curl -LO "https://github.com/Alexander1000/cpp-unit-test/archive/master.zip" \
-    && unzip -a master.zip \
-    && rm -f master.zip \
-    && cd cpp-unit-test-master \
     && cmake . \
     && make \
     && make install
