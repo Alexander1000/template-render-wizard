@@ -290,6 +290,12 @@ CppUnitTest::TestCase* testExplodeString_DataForExplode_Positive()
     for (auto it = dataSet.begin(); it != dataSet.end(); it++) {
         auto list = TemplateRenderWizard::explode_string(it->first.c_str(), '.');
         CppUnitTest::assertEquals(t, (int) it->second.size(), (int) list->size());
+
+        auto iExpected = it->second.begin();
+        for (auto iKey = list->begin(); iKey != list->end(); iKey++) {
+            CppUnitTest::assertEquals(t, 0, strcmp(*iKey, iExpected->c_str()));
+            iExpected++;
+        }
     }
 
     t->finish();
