@@ -134,4 +134,12 @@ namespace TemplateRenderWizard::Tree
 
         return foundElement;
     }
+
+    void Tree::mergeValues(std::map<std::string, std::string>* values)
+    {
+        for (auto it = values->begin(); it != values->end(); it++) {
+            const char* key = it->first.c_str();
+            const char* value = it->second.c_str();
+        }
+    }
 }
