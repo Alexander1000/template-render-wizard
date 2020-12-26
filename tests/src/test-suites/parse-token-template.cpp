@@ -1,6 +1,7 @@
 #include <tests.h>
 #include <cpp-unit-test.h>
 #include <trw.h>
+#include <io-buffer.h>
 
 namespace TrwTests
 {

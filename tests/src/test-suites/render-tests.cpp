@@ -2,6 +2,7 @@
 #include <trw.h>
 #include <cpp-unit-test.h>
 #include <dirent.h>
+#include <io-buffer.h>
 
 namespace TrwTests
 {
