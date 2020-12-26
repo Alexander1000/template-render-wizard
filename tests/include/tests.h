@@ -22,6 +22,9 @@ namespace TrwTests
     void assertEquals(CppUnitTest::TestCase* t, TemplateRenderWizard::Token::Type expectedTokenType, TemplateRenderWizard::Token::Type actualTokenType);
     void assertEquals(CppUnitTest::TestCase* t, TemplateRenderWizard::Tree::LeafElementType expectedLeafType, TemplateRenderWizard::Tree::LeafElementType actualLeafType);
 
+    // test cases
+    CppUnitTest::TestCase* testParseToken_Template_Positive();
+
     // render tests
     void scanTests(CppUnitTest::TestSuite* testSuite);
     CppUnitTest::TestCase* testRenderWithSyntaxTree_Template_Positive(char* templateName, char* valuesFile);

@@ -93,6 +93,7 @@ set(TRW_SOURCES_TEST
     tests/src/helpers.cpp
     tests/src/asserts.cpp
     tests/src/test-suites/render-tests.cpp
+    tests/src/test-suites/parse-token-template.cpp
 )
 
 include_directories(
