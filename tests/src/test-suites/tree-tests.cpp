@@ -24,4 +24,13 @@ namespace TrwTests
         t->finish();
         return t;
     }
+
+    CppUnitTest::TestCase* testTree_OverrideYamlValues_Positive()
+    {
+        auto t = new CppUnitTest::TestCase("[tree] - override yaml values");
+        t->printTitle();
+
+        t->finish();
+        return t;
+    }
 }

@@ -12,6 +12,8 @@ int main(int argc, char** argv) {
 
     testSuite.addTestCase(TrwTests::testExplodeString_DataForExplode_Positive());
 
+    testSuite.addTestCase(TrwTests::testTree_OverrideYamlValues_Positive());
+
     testSuite.printTotal();
 
     return 0;
