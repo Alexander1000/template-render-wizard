@@ -15,12 +15,12 @@ namespace TrwTests
 
         TemplateRenderWizard::Tree::Tree tree;
         INIT_CHAR_STRING(fileWithValues, 1024)
-        sprintf(fileWithValues, "./fixtures/%s", valuesFile);
+        sprintf(fileWithValues, "./fixtures/render-tests/%s", valuesFile);
         tree.scan(fileWithValues);
 
         TemplateRenderWizard::Render* render;
         INIT_CHAR_STRING(fileWithTemplate, 1024)
-        sprintf(fileWithTemplate, "./fixtures/%s", templateName);
+        sprintf(fileWithTemplate, "./fixtures/render-tests/%s", templateName);
         render = new TemplateRenderWizard::Render(fileWithTemplate, &tree);
 
         IOBuffer::IOMemoryBuffer* buffer = render->toBufferTree();
@@ -43,7 +43,7 @@ namespace TrwTests
         memcpy(fileExpected, valuesFile, sizeof(char) * (strlen(valuesFile) - 5));
 
         INIT_CHAR_STRING(strFileExpected, 1024)
-        sprintf(strFileExpected, "./fixtures/%s.out", fileExpected);
+        sprintf(strFileExpected, "./fixtures/render-tests/%s.out", fileExpected);
 
         IOBuffer::IOFileReader* fileReader;
         fileReader = new IOBuffer::IOFileReader(strFileExpected);
@@ -77,7 +77,7 @@ namespace TrwTests
         t->printTitle();
 
         INIT_CHAR_STRING(srcTemplateFile, 1024)
-        sprintf(srcTemplateFile, "./fixtures/%s", templateName);
+        sprintf(srcTemplateFile, "./fixtures/render-tests/%s", templateName);
 
         CppUnitTest::assertTrue(t, file_exists(new std::string(srcTemplateFile)));
 
@@ -90,7 +90,7 @@ namespace TrwTests
         INIT_CHAR_STRING(strTokenFile, 1024)
         INIT_CHAR_STRING(strTokenFileName, 1024)
         memcpy(strTokenFileName, templateName, sizeof(char) * (strlen(templateName) - 4));
-        sprintf(strTokenFile, "./fixtures/%s.t", strTokenFileName);
+        sprintf(strTokenFile, "./fixtures/render-tests/%s.t", strTokenFileName);
         free(strTokenFileName);
 
         CppUnitTest::assertTrue(t, file_exists(new std::string(strTokenFile)));
@@ -116,8 +116,8 @@ namespace TrwTests
         struct dirent **namelist;
         struct dirent **yamlList;
 
-        int n = scandir("./fixtures", &namelist, *filter_tpl, alphasort);
-        int nValues = scandir("./fixtures", &yamlList, *filter_yaml, alphasort);
+        int n = scandir("./fixtures/render-tests", &namelist, *filter_tpl, alphasort);
+        int nValues = scandir("./fixtures/render-tests", &yamlList, *filter_yaml, alphasort);
 
         INIT_CHAR_STRING(strTplNum, 5);
         INIT_CHAR_STRING(strYamlNum, 5);

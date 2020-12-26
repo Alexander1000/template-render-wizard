@@ -26,6 +26,8 @@ namespace TrwTests
     CppUnitTest::TestCase* testParseToken_Template_Positive();
     CppUnitTest::TestCase* testExplodeString_DataForExplode_Positive();
     CppUnitTest::TestCase* testTreeMergeWithEmpty_ValuesFile_Positive();
+    CppUnitTest::TestCase* testTree_OverrideYamlValues_Positive();
+    CppUnitTest::TestCase* testTree_OnlySetValues_Positive();
 
     // render tests
     void scanTests(CppUnitTest::TestSuite* testSuite);
