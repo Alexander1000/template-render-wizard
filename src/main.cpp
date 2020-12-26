@@ -61,6 +61,17 @@ int main(int argc, char** argv) {
         return -1;
     }
 
+    TemplateRenderWizard::Tree::Tree tree;
+
+    std::string* valuesFile = config.getValuesFile();
+    if (valuesFile != nullptr) {
+        if (!file_exists(valuesFile)) {
+            std::cout << "Values file not exists" << std::endl;
+            return -1;
+        }
+        tree.scan(valuesFile);
+    }
+
     IOBuffer::IOFileReader fileReader(templateFile->c_str());
     IOBuffer::CharStream charStream(&fileReader);
     TemplateRenderWizard::Stream tokenStream(&charStream);
@@ -72,7 +83,7 @@ int main(int argc, char** argv) {
         dump_tokens(output, &tokenStream);
     } else {
         TemplateRenderWizard::Render* render;
-        render = new TemplateRenderWizard::Render(&tokenStream, config.getTree());
+        render = new TemplateRenderWizard::Render(&tokenStream, &tree);
 
         output = render->toBufferTree();
     }
