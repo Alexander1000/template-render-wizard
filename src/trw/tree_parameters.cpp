@@ -149,7 +149,8 @@ namespace TemplateRenderWizard::Tree
                 } else {
                     // not found -> make empty object
                     if (std::next(it) != partKey->end()) {
-                        (*tlObject)[leafName] = new LeafElement(LeafElementType::LeafElementObject, new LeafObject);
+                        relativeElement = new LeafElement(LeafElementType::LeafElementObject, new LeafObject);
+                        (*tlObject)[leafName] = relativeElement;
                     } else {
                         (*tlObject)[leafName] = new LeafElement(LeafElementType::LeafElementText, value);
                     }
