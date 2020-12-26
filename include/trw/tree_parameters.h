@@ -32,6 +32,7 @@ namespace TemplateRenderWizard::Tree
         void scan(const char*);
         LeafElement* get(const char*);
         void mergeValues(std::map<std::string, std::string>*);
+        void setValue(const char*, std::string*);
 
     private:
         LeafElement* root;

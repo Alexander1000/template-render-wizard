@@ -139,7 +139,11 @@ namespace TemplateRenderWizard::Tree
     {
         for (auto it = values->begin(); it != values->end(); it++) {
             const char* key = it->first.c_str();
-            const char* value = it->second.c_str();
+            this->setValue(key, &(it->second));
         }
+    }
+
+    void Tree::setValue(const char *key, std::string *value) {
+
     }
 }
