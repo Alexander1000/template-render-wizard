@@ -10,8 +10,8 @@
     } while(0);
 
 #define INIT_CHAR_STRING(str, length) \
-    char* str = new char[length];     \
-    memset(str, 0, length * sizeof(char));
+    char* str = new char[(length)];     \
+    memset(str, 0, (length) * sizeof(char));
 
 namespace TemplateRenderWizard
 {
