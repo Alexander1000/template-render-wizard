@@ -2,19 +2,61 @@
 
 Application for rendering from template files, providing with values in yaml-files or by pass key-value for template with argument `--set key=value`.
 
+## template language
+
+#### render value
+simple insert variable from yaml or argument passed
+```
+{{ variable_name }}
+```
+calculated value:
+```
+{% (variable_name + 5) * (variable_name - 5) %}
+```
+
+#### conditions
+simple conditions
+```
+{% if expr %}
+  ... < some code > ...
+{% endif %}
+```
+conditions with else block
+```
+{% if expr %}
+  ... < some code > ...
+{% else %}
+  ... <some code > ...
+{% endif %}
+```
+
+#### loops
+simple:
+```
+{% for item in items %}
+  ... <some code > ...
+{% endfor %}
+```
+loop with key-value:
+```
+{% for key, val in items %}
+  ... <some code > ...
+{% endfor %}
+```
+
 ### project dependencies
 Static libraries:
   - [io-buffer](https://github.com/Alexander1000/io-buffer)
   - [cpp-unit-test](https://github.com/Alexander1000/cpp-unit-test) (for tests)
   - [yaml-parser](https://github.com/Alexander1000/yaml-parser) (parse values files)
   
-### how it build?
+## how it build?
 ```shell
 cmake .
 make
 ```
 
-### examples
+## examples
 For example content of values file:
 ```yaml
 # data for tests (fixtures/003-values.yaml)
