@@ -1,6 +1,6 @@
 # template-render-wizard
 
-Application for rendering from template files, providing with values in yaml-files.
+Application for rendering from template files, providing with values in yaml-files or by pass key-value for template with argument `--set key=value`.
 
 ### project dependencies
 Static libraries:
