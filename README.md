@@ -29,6 +29,15 @@ conditions with else block
   ... <some code > ...
 {% endif %}
 ```
+#### expressions in if
+simple check exists variable:
+```
+{% if some_variable %}
+```
+complex calculated conditions:
+```
+{% if x > y and y * (x - 1) < 50 %}
+```
 
 #### loops
 simple:
