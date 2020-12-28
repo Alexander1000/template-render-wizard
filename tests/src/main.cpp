@@ -10,6 +10,7 @@ int main(int argc, char** argv) {
     testSuite.addTestCase(TrwTests::testExplodeString_DataForExplode_Positive());
     testSuite.addTestCase(TrwTests::testTree_OverrideYamlValues_Positive());
     testSuite.addTestCase(TrwTests::testTree_OnlySetValues_Positive());
+    testSuite.addTestCase(TrwTests::testChangeLogVersion_CurrentVersion_Positive());
 
     testSuite.printTotal();
 

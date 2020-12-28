@@ -28,6 +28,7 @@ namespace TrwTests
     CppUnitTest::TestCase* testTreeMergeWithEmpty_ValuesFile_Positive();
     CppUnitTest::TestCase* testTree_OverrideYamlValues_Positive();
     CppUnitTest::TestCase* testTree_OnlySetValues_Positive();
+    CppUnitTest::TestCase* testChangeLogVersion_CurrentVersion_Positive();
 
     // render tests
     void scanTests(CppUnitTest::TestSuite* testSuite);

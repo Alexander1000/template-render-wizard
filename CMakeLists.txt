@@ -96,6 +96,7 @@ set(TRW_SOURCES_TEST
     tests/src/test-suites/parse-token-template.cpp
     tests/src/test-suites/explode-string.cpp
     tests/src/test-suites/tree-tests.cpp
+    tests/src/test-suites/check-changelog-version.cpp
 )
 
 include_directories(

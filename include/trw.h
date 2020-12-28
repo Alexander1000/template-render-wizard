@@ -1,7 +1,7 @@
 #ifndef H_TRW_INCLUDED
 #define H_TRW_INCLUDED
 
-#define TRW_VERSION "0.0.1"
+#define TRW_VERSION "1.0.0"
 
 #include <trw/config.h>
 #include <trw/stream.h>
