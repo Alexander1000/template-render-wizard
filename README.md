@@ -13,6 +13,10 @@ calculated value:
 ```
 {% (variable_name + 5) * (variable_name - 5) %}
 ```
+extract value from object:
+```
+{{ user.name }}
+```
 
 #### conditions
 simple conditions
