@@ -2,6 +2,7 @@
 #include <cpp-unit-test.h>
 #include <trw.h>
 #include <io-buffer.h>
+#include <syntax-tree-lib.h>
 
 namespace TrwTests
 {
@@ -12,7 +13,7 @@ namespace TrwTests
 
         t->printTitle();
 
-        TemplateRenderWizard::Token::Token* token = nullptr;
+        SyntaxTree::Token::Token* token = nullptr;
         char* textBuffer = new char[1000];
 
         IOBuffer::IOFileReader fileReader("./fixtures/001-simple-text.txt");

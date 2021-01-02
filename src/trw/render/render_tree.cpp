@@ -111,7 +111,7 @@ namespace TemplateRenderWizard
             lValueElement = *itForControl;
             itForControl++; // comma vs keyword(in)
             auto tForControlToken = *itForControl;
-            if (tForControlToken->getType() != Syntax::SyntaxElementType::TokenType) {
+            if (tForControlToken->getType() != SyntaxTree::Syntax::SyntaxElementType::TokenType) {
                 throw new UnexpectedToken;
             }
             if (tForControlToken->getToken()->getType() == Token::Type::CommaType) {
