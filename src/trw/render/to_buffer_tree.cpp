@@ -16,7 +16,8 @@ namespace TemplateRenderWizard
             token = this->getNextToken();
         }
 
-        SyntaxTree::Syntax::Tree syntaxTree;
+        TemplateRenderWizard::Syntax::Tree syntaxTree;
+        syntaxTree.initializeDefaults();
         auto syntax = syntaxTree.parse(tokens);
 
         this->render_tree(buffer, syntax, nullptr);

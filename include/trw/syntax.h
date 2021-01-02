@@ -28,9 +28,7 @@ namespace TemplateRenderWizard
         {
         public:
             Tree();
-
-        protected:
-            void initializeDefaults();
+            void initializeDefaults() override;
         };
     }
 }
