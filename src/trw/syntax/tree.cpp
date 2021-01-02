@@ -1,243 +1,205 @@
 #include <trw.h>
 #include <list>
+#include <syntax-tree-lib.h>
 
 namespace TemplateRenderWizard::Syntax
 {
-    Tree::Tree() {
-        this->rules = new std::list<Rule*>;
+    Tree::Tree() : SyntaxTree::Syntax::Tree() {
         this->tokenMap = new TemplateRenderWizard::Token::TokenMap;
-        this->initializeDefaults();
     }
 
     void Tree::initializeDefaults()
     {
-        // do make syntax tree rules
+        // @syntax-tree: start-autogenerate
 
-        // s:injectValue [t:openTagValue t:plainValue t:closeTagValue]
-        auto rule1 = new Rule("injectValue");
-        rule1->addMatch(new RuleMatch(this->tokenMap->getType("openTagValue")));
-        rule1->addMatch(new RuleMatch(this->tokenMap->getType("plainValue")));
-        rule1->addMatch(new RuleMatch(this->tokenMap->getType("closeTagValue")));
-        this->rules->push_back(rule1);
+        auto rule00 = new SyntaxTree::Syntax::Rule("s:injectValue");
+        rule00->addMatch(new RuleMatch(this->tokenMap->getType("openTagValue")));
+        rule00->addMatch(new RuleMatch(this->tokenMap->getType("plainValue")));
+        rule00->addMatch(new RuleMatch(this->tokenMap->getType("closeTagValue")));
+        this->rules->push_back(rule00);
 
-        // s:expr [t:exprValue]
-        auto rule2 = new Rule("expr");
-        rule2->addMatch(new RuleMatch(this->tokenMap->getType("exprValue")));
-        this->rules->push_back(rule2);
+        auto rule01 = new SyntaxTree::Syntax::Rule("s:expr");
+        rule01->addMatch(new RuleMatch(this->tokenMap->getType("exprValue")));
+        this->rules->push_back(rule01);
 
-        // s:expr [t:roundBracketOpen s:expr t:roundBracketClose]
-        auto rule3 = new Rule("expr");
-        rule3->addMatch(new RuleMatch(this->tokenMap->getType("roundBracketOpen")));
-        rule3->addMatch(new RuleMatch("expr"));
-        rule3->addMatch(new RuleMatch(this->tokenMap->getType("roundBracketClose")));
-        this->rules->push_back(rule3);
+        auto rule02 = new SyntaxTree::Syntax::Rule("s:expr");
+        rule02->addMatch(new RuleMatch(this->tokenMap->getType("roundBracketOpen")));
+        rule02->addMatch(new RuleMatch("expr"));
+        rule02->addMatch(new RuleMatch(this->tokenMap->getType("roundBracketClose")));
+        this->rules->push_back(rule02);
 
-        // s:expr [t:roundBracketOpen s:expr t:roundBracketClose]
-        auto rule4 = new Rule("expr");
-        rule4->addMatch(new RuleMatch(this->tokenMap->getType("roundBracketOpen")));
-        rule4->addMatch(new RuleMatch("expr"));
-        rule4->addMatch(new RuleMatch(this->tokenMap->getType("roundBracketClose")));
-        this->rules->push_back(rule4);
+        auto rule03 = new SyntaxTree::Syntax::Rule("s:expr");
+        rule03->addMatch(new RuleMatch("expr"));
+        rule03->addMatch(new RuleMatch(this->tokenMap->getType("mathOpHigh")));
+        rule03->addMatch(new RuleMatch("expr"));
+        this->rules->push_back(rule03);
 
-        // s:expr [s:expr t:mathOpHigh s:expr]
-        auto rule5 = new Rule("expr");
-        rule5->addMatch(new RuleMatch("expr"));
-        rule5->addMatch(new RuleMatch(this->tokenMap->getType("mathOpHigh")));
-        rule5->addMatch(new RuleMatch("expr"));
-        this->rules->push_back(rule5);
+        auto rule04 = new SyntaxTree::Syntax::Rule("s:expr");
+        rule04->addMatch(new RuleMatch("expr"));
+        rule04->addMatch(new RuleMatch(this->tokenMap->getType("mathOp")));
+        rule04->addMatch(new RuleMatch("expr"));
+        this->rules->push_back(rule04);
 
-        // s:expr [s:expr t:mathOp s:expr]
-        auto rule6 = new Rule("expr");
-        rule6->addMatch(new RuleMatch("expr"));
-        rule6->addMatch(new RuleMatch(this->tokenMap->getType("mathOp")));
-        rule6->addMatch(new RuleMatch("expr"));
-        this->rules->push_back(rule6);
+        auto rule05 = new SyntaxTree::Syntax::Rule("s:cmpBool");
+        rule05->addMatch(new RuleMatch(this->tokenMap->getType("keyword"), "and"));
+        this->rules->push_back(rule05);
 
-        // s:cmpBool [t:keyword(and)]
-        auto ruleCmpBool1 = new Rule("cmpBool");
-        ruleCmpBool1->addMatch(new RuleMatch(this->tokenMap->getType("keyword"), "and"));
-        this->rules->push_back(ruleCmpBool1);
+        auto rule06 = new SyntaxTree::Syntax::Rule("s:cmpBool");
+        rule06->addMatch(new RuleMatch(this->tokenMap->getType("keyword"), "or"));
+        this->rules->push_back(rule06);
 
-        // s:cmpBool [t:keyword(or)]
-        auto ruleCmpBool2 = new Rule("cmpBool");
-        ruleCmpBool2->addMatch(new RuleMatch(this->tokenMap->getType("keyword"), "or"));
-        this->rules->push_back(ruleCmpBool2);
+        auto rule07 = new SyntaxTree::Syntax::Rule("s:cmpExpr");
+        rule07->addMatch(new RuleMatch("expr"));
+        rule07->addMatch(new RuleMatch(this->tokenMap->getType("compare")));
+        rule07->addMatch(new RuleMatch("expr"));
+        this->rules->push_back(rule07);
 
-        // s:cmpExpr [s:expr t:compare s:expr]
-        auto ruleCmpExpr1 = new Rule("cmpExpr");
-        ruleCmpExpr1->addMatch(new RuleMatch("expr"));
-        ruleCmpExpr1->addMatch(new RuleMatch(this->tokenMap->getType("compare")));
-        ruleCmpExpr1->addMatch(new RuleMatch("expr"));
-        this->rules->push_back(ruleCmpExpr1);
+        auto rule08 = new SyntaxTree::Syntax::Rule("s:boolExpr");
+        rule08->addMatch(new RuleMatch("expr"));
+        rule08->addMatch(new RuleMatch("cmpBool"));
+        rule08->addMatch(new RuleMatch("expr"));
+        this->rules->push_back(rule08);
 
-        // s:boolExpr [s:expr s:cmpBool s:expr]
-        auto ruleBoolExpr1 = new Rule("boolExpr");
-        ruleBoolExpr1->addMatch(new RuleMatch("expr"));
-        ruleBoolExpr1->addMatch(new RuleMatch("cmpBool"));
-        ruleBoolExpr1->addMatch(new RuleMatch("expr"));
-        this->rules->push_back(ruleBoolExpr1);
+        auto rule09 = new SyntaxTree::Syntax::Rule("s:boolExpr");
+        rule09->addMatch(new RuleMatch("cmpExpr"));
+        rule09->addMatch(new RuleMatch("cmpBool"));
+        rule09->addMatch(new RuleMatch("cmpExpr"));
+        this->rules->push_back(rule09);
 
-        // s:boolExpr [s:cmpExpr s:cmpBool s:cmpExpr]
-        auto ruleBoolExpr2 = new Rule("boolExpr");
-        ruleBoolExpr2->addMatch(new RuleMatch("cmpExpr"));
-        ruleBoolExpr2->addMatch(new RuleMatch("cmpBool"));
-        ruleBoolExpr2->addMatch(new RuleMatch("cmpExpr"));
-        this->rules->push_back(ruleBoolExpr2);
+        auto rule10 = new SyntaxTree::Syntax::Rule("s:boolExpr");
+        rule10->addMatch(new RuleMatch("expr"));
+        rule10->addMatch(new RuleMatch("cmpBool"));
+        rule10->addMatch(new RuleMatch("cmpExpr"));
+        this->rules->push_back(rule10);
 
-        // s:boolExpr [s:expr s:cmpBool s:cmpExpr]
-        auto ruleBoolExpr3 = new Rule("boolExpr");
-        ruleBoolExpr3->addMatch(new RuleMatch("expr"));
-        ruleBoolExpr3->addMatch(new RuleMatch("cmpBool"));
-        ruleBoolExpr3->addMatch(new RuleMatch("cmpExpr"));
-        this->rules->push_back(ruleBoolExpr3);
+        auto rule11 = new SyntaxTree::Syntax::Rule("s:boolExpr");
+        rule11->addMatch(new RuleMatch("cmpExpr"));
+        rule11->addMatch(new RuleMatch("cmpBool"));
+        rule11->addMatch(new RuleMatch("expr"));
+        this->rules->push_back(rule11);
 
-        // s:boolExpr [s:cmpExpr s:cmpBool s:expr]
-        auto ruleBoolExpr4 = new Rule("boolExpr");
-        ruleBoolExpr4->addMatch(new RuleMatch("cmpExpr"));
-        ruleBoolExpr4->addMatch(new RuleMatch("cmpBool"));
-        ruleBoolExpr4->addMatch(new RuleMatch("expr"));
-        this->rules->push_back(ruleBoolExpr4);
+        auto rule12 = new SyntaxTree::Syntax::Rule("s:expr_control");
+        rule12->addMatch(new RuleMatch(this->tokenMap->getType("openControlTag")));
+        rule12->addMatch(new RuleMatch("expr"));
+        rule12->addMatch(new RuleMatch(this->tokenMap->getType("closeControlTag")));
+        this->rules->push_back(rule12);
 
-        // s:expr_control [t:openControlTag s:expr t:closeControlTag]
-        auto ruleExprControl1 = new Rule("expr_control");
-        ruleExprControl1->addMatch(new RuleMatch(this->tokenMap->getType("openControlTag")));
-        ruleExprControl1->addMatch(new RuleMatch("expr"));
-        ruleExprControl1->addMatch(new RuleMatch(this->tokenMap->getType("closeControlTag")));
-        this->rules->push_back(ruleExprControl1);
+        auto rule13 = new SyntaxTree::Syntax::Rule("s:expr_control");
+        rule13->addMatch(new RuleMatch(this->tokenMap->getType("openControlTag")));
+        rule13->addMatch(new RuleMatch("cmpExpr"));
+        rule13->addMatch(new RuleMatch(this->tokenMap->getType("closeControlTag")));
+        this->rules->push_back(rule13);
 
-        // s:expr_control [t:openControlTag s:cmpExpr t:closeControlTag]
-        auto ruleExprControl2 = new Rule("expr_control");
-        ruleExprControl2->addMatch(new RuleMatch(this->tokenMap->getType("openControlTag")));
-        ruleExprControl2->addMatch(new RuleMatch("cmpExpr"));
-        ruleExprControl2->addMatch(new RuleMatch(this->tokenMap->getType("closeControlTag")));
-        this->rules->push_back(ruleExprControl2);
+        auto rule14 = new SyntaxTree::Syntax::Rule("s:expr_control");
+        rule14->addMatch(new RuleMatch(this->tokenMap->getType("openControlTag")));
+        rule14->addMatch(new RuleMatch("boolExpr"));
+        rule14->addMatch(new RuleMatch(this->tokenMap->getType("closeControlTag")));
+        this->rules->push_back(rule14);
 
-        // s:expr_control [t:openControlTag s:boolExpr t:closeControlTag]
-        auto ruleExprControl3 = new Rule("expr_control");
-        ruleExprControl3->addMatch(new RuleMatch(this->tokenMap->getType("openControlTag")));
-        ruleExprControl3->addMatch(new RuleMatch("boolExpr"));
-        ruleExprControl3->addMatch(new RuleMatch(this->tokenMap->getType("closeControlTag")));
-        this->rules->push_back(ruleExprControl3);
+        auto rule15 = new SyntaxTree::Syntax::Rule("s:if_control");
+        rule15->addMatch(new RuleMatch(this->tokenMap->getType("openControlTag")));
+        rule15->addMatch(new RuleMatch(this->tokenMap->getType("keyword"), "if"));
+        rule15->addMatch(new RuleMatch("expr"));
+        rule15->addMatch(new RuleMatch(this->tokenMap->getType("closeControlTag")));
+        this->rules->push_back(rule15);
 
-        // s:if_control [t:openControlTag t:keyword(if) s:expr t:closeControlTag]
-        auto ruleIf1 = new Rule("if_control");
-        ruleIf1->addMatch(new RuleMatch(this->tokenMap->getType("openControlTag")));
-        ruleIf1->addMatch(new RuleMatch(this->tokenMap->getType("keyword"), "if"));
-        ruleIf1->addMatch(new RuleMatch("expr"));
-        ruleIf1->addMatch(new RuleMatch(this->tokenMap->getType("closeControlTag")));
-        this->rules->push_back(ruleIf1);
+        auto rule16 = new SyntaxTree::Syntax::Rule("s:if_control");
+        rule16->addMatch(new RuleMatch(this->tokenMap->getType("openControlTag")));
+        rule16->addMatch(new RuleMatch(this->tokenMap->getType("keyword"), "if"));
+        rule16->addMatch(new RuleMatch("cmpExpr"));
+        rule16->addMatch(new RuleMatch(this->tokenMap->getType("closeControlTag")));
+        this->rules->push_back(rule16);
 
-        // s:if_control [t:openControlTag t:keyword(if) s:cmpExpr t:closeControlTag]
-        auto ruleIf2 = new Rule("if_control");
-        ruleIf2->addMatch(new RuleMatch(this->tokenMap->getType("openControlTag")));
-        ruleIf2->addMatch(new RuleMatch(this->tokenMap->getType("keyword"), "if"));
-        ruleIf2->addMatch(new RuleMatch("cmpExpr"));
-        ruleIf2->addMatch(new RuleMatch(this->tokenMap->getType("closeControlTag")));
-        this->rules->push_back(ruleIf2);
+        auto rule17 = new SyntaxTree::Syntax::Rule("s:if_control");
+        rule17->addMatch(new RuleMatch(this->tokenMap->getType("openControlTag")));
+        rule17->addMatch(new RuleMatch(this->tokenMap->getType("keyword"), "if"));
+        rule17->addMatch(new RuleMatch("boolExpr"));
+        rule17->addMatch(new RuleMatch(this->tokenMap->getType("closeControlTag")));
+        this->rules->push_back(rule17);
 
-        // s:if_control [t:openControlTag t:keyword(if) s:boolExpr t:closeControlTag]
-        auto ruleIf3 = new Rule("if_control");
-        ruleIf3->addMatch(new RuleMatch(this->tokenMap->getType("openControlTag")));
-        ruleIf3->addMatch(new RuleMatch(this->tokenMap->getType("keyword"), "if"));
-        ruleIf3->addMatch(new RuleMatch("boolExpr"));
-        ruleIf3->addMatch(new RuleMatch(this->tokenMap->getType("closeControlTag")));
-        this->rules->push_back(ruleIf3);
+        auto rule18 = new SyntaxTree::Syntax::Rule("s:else_control");
+        rule18->addMatch(new RuleMatch(this->tokenMap->getType("openControlTag")));
+        rule18->addMatch(new RuleMatch(this->tokenMap->getType("keyword"), "else"));
+        rule18->addMatch(new RuleMatch(this->tokenMap->getType("closeControlTag")));
+        this->rules->push_back(rule18);
 
-        // s:else_control [t:openControlTag t:keyword(else) t:closeControlTag]
-        auto ruleElse = new Rule("else_control");
-        ruleElse->addMatch(new RuleMatch(this->tokenMap->getType("openControlTag")));
-        ruleElse->addMatch(new RuleMatch(this->tokenMap->getType("keyword"), "else"));
-        ruleElse->addMatch(new RuleMatch(this->tokenMap->getType("closeControlTag")));
-        this->rules->push_back(ruleElse);
+        auto rule19 = new SyntaxTree::Syntax::Rule("s:endif_control");
+        rule19->addMatch(new RuleMatch(this->tokenMap->getType("openControlTag")));
+        rule19->addMatch(new RuleMatch(this->tokenMap->getType("keyword"), "endif"));
+        rule19->addMatch(new RuleMatch(this->tokenMap->getType("closeControlTag")));
+        this->rules->push_back(rule19);
 
-        // s:endif_control [t:openControlTag t:keyword(endif) t:closeControlTag]
-        auto ruleEndif = new Rule("endif_control");
-        ruleEndif->addMatch(new RuleMatch(this->tokenMap->getType("openControlTag")));
-        ruleEndif->addMatch(new RuleMatch(this->tokenMap->getType("keyword"), "endif"));
-        ruleEndif->addMatch(new RuleMatch(this->tokenMap->getType("closeControlTag")));
-        this->rules->push_back(ruleEndif);
+        auto rule20 = new SyntaxTree::Syntax::Rule("s:for_control");
+        rule20->addMatch(new RuleMatch(this->tokenMap->getType("openControlTag")));
+        rule20->addMatch(new RuleMatch(this->tokenMap->getType("keyword"), "for"));
+        rule20->addMatch(new RuleMatch(this->tokenMap->getType("plainValue")));
+        rule20->addMatch(new RuleMatch(this->tokenMap->getType("keyword"), "in"));
+        rule20->addMatch(new RuleMatch(this->tokenMap->getType("plainValue")));
+        rule20->addMatch(new RuleMatch(this->tokenMap->getType("closeControlTag")));
+        this->rules->push_back(rule20);
 
-        // s:for_control [t:openControlTag t:keyword(for) t:plainValue t:keyword(in) t:plainValue t:closeControlTag]
-        auto ruleForControl1 = new Rule("for_control");
-        ruleForControl1->addMatch(new RuleMatch(this->tokenMap->getType("openControlTag")));
-        ruleForControl1->addMatch(new RuleMatch(this->tokenMap->getType("keyword"), "for"));
-        ruleForControl1->addMatch(new RuleMatch(this->tokenMap->getType("plainValue")));
-        ruleForControl1->addMatch(new RuleMatch(this->tokenMap->getType("keyword"), "in"));
-        ruleForControl1->addMatch(new RuleMatch(this->tokenMap->getType("plainValue")));
-        ruleForControl1->addMatch(new RuleMatch(this->tokenMap->getType("closeControlTag")));
-        this->rules->push_back(ruleForControl1);
+        auto rule21 = new SyntaxTree::Syntax::Rule("s:for_control");
+        rule21->addMatch(new RuleMatch(this->tokenMap->getType("openControlTag")));
+        rule21->addMatch(new RuleMatch(this->tokenMap->getType("keyword"), "for"));
+        rule21->addMatch(new RuleMatch(this->tokenMap->getType("plainValue")));
+        rule21->addMatch(new RuleMatch(this->tokenMap->getType("comma")));
+        rule21->addMatch(new RuleMatch(this->tokenMap->getType("plainValue")));
+        rule21->addMatch(new RuleMatch(this->tokenMap->getType("keyword"), "in"));
+        rule21->addMatch(new RuleMatch(this->tokenMap->getType("plainValue")));
+        rule21->addMatch(new RuleMatch(this->tokenMap->getType("closeControlTag")));
+        this->rules->push_back(rule21);
 
-        // s:for_control [t:openControlTag t:keyword(for) t:plainValue t:comma t:plainValue t:keyword(in) t:plainValue t:closeControlTag]
-        auto ruleForControl2 = new Rule("for_control");
-        ruleForControl2->addMatch(new RuleMatch(this->tokenMap->getType("openControlTag")));
-        ruleForControl2->addMatch(new RuleMatch(this->tokenMap->getType("keyword"), "for"));
-        ruleForControl2->addMatch(new RuleMatch(this->tokenMap->getType("plainValue")));
-        ruleForControl2->addMatch(new RuleMatch(this->tokenMap->getType("comma")));
-        ruleForControl2->addMatch(new RuleMatch(this->tokenMap->getType("plainValue")));
-        ruleForControl2->addMatch(new RuleMatch(this->tokenMap->getType("keyword"), "in"));
-        ruleForControl2->addMatch(new RuleMatch(this->tokenMap->getType("plainValue")));
-        ruleForControl2->addMatch(new RuleMatch(this->tokenMap->getType("closeControlTag")));
-        this->rules->push_back(ruleForControl2);
+        auto rule22 = new SyntaxTree::Syntax::Rule("s:endfor_control");
+        rule22->addMatch(new RuleMatch(this->tokenMap->getType("openControlTag")));
+        rule22->addMatch(new RuleMatch(this->tokenMap->getType("keyword"), "endfor"));
+        rule22->addMatch(new RuleMatch(this->tokenMap->getType("closeControlTag")));
+        this->rules->push_back(rule22);
 
-        // s:endfor_control [t:openControlTag t:keyword(endfor) t:closeControlTag]
-        auto ruleEndFor = new Rule("endfor_control");
-        ruleEndFor->addMatch(new RuleMatch(this->tokenMap->getType("openControlTag")));
-        ruleEndFor->addMatch(new RuleMatch(this->tokenMap->getType("keyword"), "endfor"));
-        ruleEndFor->addMatch(new RuleMatch(this->tokenMap->getType("closeControlTag")));
-        this->rules->push_back(ruleEndFor);
+        auto rule23 = new SyntaxTree::Syntax::Rule("s:if_stmt");
+        rule23->addMatch(new RuleMatch("if_control"));
+        rule23->addMatch(new RuleMatch("body"));
+        rule23->addMatch(new RuleMatch("endif_control"));
+        this->rules->push_back(rule23);
 
-        // s:if_stmt [s:if_control s:body s:endif_control]
-        auto ruleIfStmt1 = new Rule("if_stmt");
-        ruleIfStmt1->addMatch(new RuleMatch("if_control"));
-        ruleIfStmt1->addMatch(new RuleMatch("body"));
-        ruleIfStmt1->addMatch(new RuleMatch("endif_control"));
-        this->rules->push_back(ruleIfStmt1);
+        auto rule24 = new SyntaxTree::Syntax::Rule("s:if_stmt");
+        rule24->addMatch(new RuleMatch("if_control"));
+        rule24->addMatch(new RuleMatch("body"));
+        rule24->addMatch(new RuleMatch("else_control"));
+        rule24->addMatch(new RuleMatch("body"));
+        rule24->addMatch(new RuleMatch("endif_control"));
+        this->rules->push_back(rule24);
 
-        // s:if_stmt [s:if_control s:body s:else_control s:body s:endif_control]
-        auto ruleIfStmt2 = new Rule("if_stmt");
-        ruleIfStmt2->addMatch(new RuleMatch("if_control"));
-        ruleIfStmt2->addMatch(new RuleMatch("body"));
-        ruleIfStmt2->addMatch(new RuleMatch("else_control"));
-        ruleIfStmt2->addMatch(new RuleMatch("body"));
-        ruleIfStmt2->addMatch(new RuleMatch("endif_control"));
-        this->rules->push_back(ruleIfStmt2);
+        auto rule25 = new SyntaxTree::Syntax::Rule("s:for_stmt");
+        rule25->addMatch(new RuleMatch("for_control"));
+        rule25->addMatch(new RuleMatch("body"));
+        rule25->addMatch(new RuleMatch("endfor_control"));
+        this->rules->push_back(rule25);
 
-        // s:for_stmt [s:for_control s:body s:endfor_control]
-        auto ruleForStmt = new Rule("for_stmt");
-        ruleForStmt->addMatch(new RuleMatch("for_control"));
-        ruleForStmt->addMatch(new RuleMatch("body"));
-        ruleForStmt->addMatch(new RuleMatch("endfor_control"));
-        this->rules->push_back(ruleForStmt);
+        auto rule26 = new SyntaxTree::Syntax::Rule("s:body");
+        rule26->addMatch(new RuleMatch(this->tokenMap->getType("plainText")));
+        this->rules->push_back(rule26);
 
-        // s:body [t:plainText]
-        auto ruleBody1 = new Rule("body");
-        ruleBody1->addMatch(new RuleMatch(this->tokenMap->getType("plainText")));
-        this->rules->push_back(ruleBody1);
+        auto rule27 = new SyntaxTree::Syntax::Rule("s:body");
+        rule27->addMatch(new RuleMatch("injectValue"));
+        this->rules->push_back(rule27);
 
-        // s:body [s:injectValue]
-        auto ruleBody2 = new Rule("body");
-        ruleBody2->addMatch(new RuleMatch("injectValue"));
-        this->rules->push_back(ruleBody2);
+        auto rule28 = new SyntaxTree::Syntax::Rule("s:body");
+        rule28->addMatch(new RuleMatch("expr_control"));
+        this->rules->push_back(rule28);
 
-        // s:body [s:expr_control]
-        auto ruleBody3 = new Rule("body");
-        ruleBody3->addMatch(new RuleMatch("expr_control"));
-        this->rules->push_back(ruleBody3);
+        auto rule29 = new SyntaxTree::Syntax::Rule("s:body");
+        rule29->addMatch(new RuleMatch("if_stmt"));
+        this->rules->push_back(rule29);
 
-        // s:body [s:if_stmt]
-        auto ruleBody4 = new Rule("body");
-        ruleBody4->addMatch(new RuleMatch("if_stmt"));
-        this->rules->push_back(ruleBody4);
+        auto rule30 = new SyntaxTree::Syntax::Rule("s:body");
+        rule30->addMatch(new RuleMatch("for_stmt"));
+        this->rules->push_back(rule30);
 
-        // s:body [s:for_stmt]
-        auto ruleBody5 = new Rule("body");
-        ruleBody5->addMatch(new RuleMatch("for_stmt"));
-        this->rules->push_back(ruleBody5);
+        auto rule31 = new SyntaxTree::Syntax::Rule("s:body");
+        rule31->addMatch(new RuleMatch("body"));
+        rule31->addMatch(new RuleMatch("body"));
+        this->rules->push_back(rule31);
 
-        // s:body [s:body s:body]
-        auto ruleBody6 = new Rule("body");
-        ruleBody6->addMatch(new RuleMatch("body"));
-        ruleBody6->addMatch(new RuleMatch("body"));
-        this->rules->push_back(ruleBody6);
+        // @syntax-tree: stop-autogenerate
     }
 }
