@@ -25,14 +25,10 @@ namespace TemplateRenderWizard::Token
         CommaType,
     };
 
-    class TokenMap
+    class TokenMap : public SyntaxTree::Token::TokenMap
     {
     public:
         TokenMap();
-        int getType(const char*);
-        const char* getName(int);
-    private:
-        std::map<std::string, int>* tokenMap;
     };
 
     class OpenTagValue : public SyntaxTree::Token::Token
