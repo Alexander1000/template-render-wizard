@@ -6,6 +6,7 @@
 #include <stack>
 #include <trw/position.h>
 #include <list>
+#include <syntax-tree-lib.h>
 
 namespace TemplateRenderWizard
 {
@@ -20,7 +21,7 @@ namespace TemplateRenderWizard
     {
     public:
         Stream(IOBuffer::CharStream* charStream);
-        Token::Token* getNextToken();
+        SyntaxTree::Token::Token* getNextToken();
 
     private:
         IOBuffer::CharStream* charStream;
