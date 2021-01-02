@@ -1,13 +1,14 @@
 #include <trw.h>
+#include <syntax-tree-lib.h>
 
 namespace TemplateRenderWizard::Token
 {
-    Comma::Comma(int line, int column) : Token(line, column, nullptr) {
+    Comma::Comma(int line, int column) : SyntaxTree::Token::Token(line, column, nullptr) {
         this->line = line;
         this->column = column;
     }
 
-    Type Comma::getType() {
+    int Comma::getType() {
         return Type::CommaType;
     }
 }

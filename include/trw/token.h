@@ -2,6 +2,7 @@
 #define H_TOKEN_INCLUDED
 
 #include <io-buffer.h>
+#include <syntax-tree-lib.h>
 #include <map>
 
 namespace TemplateRenderWizard::Token
@@ -28,122 +29,108 @@ namespace TemplateRenderWizard::Token
     {
     public:
         TokenMap();
-        Type getType(const char*);
-        const char* getName(Type);
+        int getType(const char*);
+        const char* getName(int);
     private:
-        std::map<std::string, Type>* tokenMap;
+        std::map<std::string, int>* tokenMap;
     };
 
-    class Token
-    {
-    public:
-        Token(int line, int column, IOBuffer::IOReader *reader);
-        int getLine();
-        int getColumn();
-        virtual Type getType() = 0;
-        IOBuffer::IOReader* getReader();
-    protected:
-        int line;
-        int column;
-        IOBuffer::IOReader *reader;
-    };
-
-    class OpenTagValue : public Token
+    class OpenTagValue : public SyntaxTree::Token::Token
     {
     public:
         OpenTagValue(int line, int column);
-        Type getType() final;
+        int getType() final;
     };
 
-    class CloseTagValue : public Token
+    class CloseTagValue : public SyntaxTree::Token::Token
     {
     public:
         CloseTagValue(int line, int column);
-        Type getType() final;
+        int getType() final;
     };
 
-    class OpenControlTag : public Token
+    class OpenControlTag : public SyntaxTree::Token::Token
     {
     public:
         OpenControlTag(int line, int column);
-        Type getType() final;
+        int getType() final;
     };
 
-    class CloseControlTag : public Token
+    class CloseControlTag : public SyntaxTree::Token::Token
     {
     public:
         CloseControlTag(int line, int column);
-        Type getType() final;
+        int getType() final;
     };
 
-    class PlainText : public Token
+    class PlainText : public SyntaxTree::Token::Token
     {
     public:
         PlainText(int line, int column, IOBuffer::IOReader *reader);
-        Type getType() final;
+        int getType() final;
     };
 
-    class PlainValue : public Token
+    class PlainValue : public SyntaxTree::Token::Token
     {
     public:
         PlainValue(int line, int column, IOBuffer::IOReader *reader);
-        Type getType() final;
+        int getType() final;
     };
 
-    class Keyword : public Token
+    class Keyword : public SyntaxTree::Token::Token
     {
     public:
         Keyword(int line, int column, IOBuffer::IOReader *reader);
-        Type getType() final;
+        int getType() final;
     };
 
-    class RoundBracketOpen : public Token
+    class RoundBracketOpen : public SyntaxTree::Token::Token
     {
     public:
         RoundBracketOpen(int line, int column);
-        Type getType() final;
+        int getType() final;
     };
 
-    class RoundBracketClose : public Token
+    class RoundBracketClose : public SyntaxTree::Token::Token
     {
     public:
         RoundBracketClose(int line, int column);
-        Type getType() final;
+        int getType() final;
     };
 
-    class Compare : public Token
+    class Compare : public SyntaxTree::Token::Token
     {
     public:
         Compare(int line, int column, IOBuffer::IOReader *reader);
-        Type getType() final;
+        int getType() final;
     };
 
-    class MathOperationHighPriority : public Token
+    class MathOperationHighPriority : public SyntaxTree::Token::Token
     {
     public:
         MathOperationHighPriority(int line, int column, IOBuffer::IOReader *reader);
-        Type getType() final;
+        int getType() final;
     };
 
-    class MathOperation : public Token
+    class MathOperation : public SyntaxTree::Token::Token
     {
     public:
         MathOperation(int line, int column, IOBuffer::IOReader *reader);
-        Type getType() final;
+        int getType() final;
     };
 
-    class ExpressionValue : public Token
+    class ExpressionValue : public SyntaxTree::Token::Token
     {
     public:
         ExpressionValue(int line, int column, IOBuffer::IOReader *reader);
-        Type getType() final;
+        int getType() final;
     };
 
-    class Comma : public Token
+    class Comma : public SyntaxTree::Token::Token
     {
     public:
         Comma(int line, int column);
-        Type getType() final;
+        int getType() final;
     };
 }
 

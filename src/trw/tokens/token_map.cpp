@@ -3,7 +3,7 @@
 namespace TemplateRenderWizard::Token
 {
     TokenMap::TokenMap() {
-        this->tokenMap = new std::map<std::string, Type>;
+        this->tokenMap = new std::map<std::string, int>;
         (*this->tokenMap)["plainText"] = Type::PlainTextType;
         (*this->tokenMap)["openTagValue"] = Type::OpenTagValueType;
         (*this->tokenMap)["closeTagValue"] = Type::CloseTagValueType;
@@ -20,7 +20,7 @@ namespace TemplateRenderWizard::Token
         (*this->tokenMap)["mathOpHigh"] = Type::MathOperationHighPriorityType;
     }
 
-    Type TokenMap::getType(const char *typeName) {
+    int TokenMap::getType(const char *typeName) {
         if (this->tokenMap->find(typeName) != this->tokenMap->end()) {
             return this->tokenMap->at(typeName);
         }
@@ -28,7 +28,7 @@ namespace TemplateRenderWizard::Token
         throw new UnknownToken;
     }
 
-    const char* TokenMap::getName(Type type) {
+    const char* TokenMap::getName(int type) {
         const char* tokenName = nullptr;
         for (auto it = this->tokenMap->begin(); it != this->tokenMap->end(); it++) {
             if (it->second == type) {

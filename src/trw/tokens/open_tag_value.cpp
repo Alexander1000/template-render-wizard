@@ -1,13 +1,14 @@
-#include <trw/token.h>
+#include <trw.h>
 #include <io-buffer.h>
+#include <syntax-tree-lib.h>
 
 namespace TemplateRenderWizard::Token
 {
-    OpenTagValue::OpenTagValue(int line, int column) : Token(line, column, nullptr)
+    OpenTagValue::OpenTagValue(int line, int column) : SyntaxTree::Token::Token(line, column, nullptr)
     {
     }
 
-    Type OpenTagValue::getType() {
+    int OpenTagValue::getType() {
         return Type::OpenTagValueType;
     }
 }

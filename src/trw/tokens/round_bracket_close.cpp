@@ -1,12 +1,13 @@
-#include <trw/token.h>
+#include <trw.h>
+#include <syntax-tree-lib.h>
 
 namespace TemplateRenderWizard::Token
 {
-    RoundBracketClose::RoundBracketClose(int line, int column) : Token(line, column, nullptr)
+    RoundBracketClose::RoundBracketClose(int line, int column) : SyntaxTree::Token::Token(line, column, nullptr)
     {
     }
 
-    Type RoundBracketClose::getType() {
+    int RoundBracketClose::getType() {
         return Type::RoundBracketCloseType;
     }
 }
