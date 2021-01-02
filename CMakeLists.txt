@@ -69,6 +69,9 @@ message(STATUS "Found io-buffer library: ${IO_BUFFER}")
 find_library(YAML_PARSER libyaml-parser.a)
 message(STATUS "Found yaml-parser library: ${YAML_PARSER}")
 
+find_library(SYNTAX_TREE_LIB libsyntax-tree-lib.a)
+message(STATUS "Found syntax-tree library: ${SYNTAX_TREE_LIB}")
+
 add_executable(
     ${PROJECT_NAME} src/main.cpp
     ${TRW_SOURCES}
@@ -77,6 +80,7 @@ add_executable(
 target_link_libraries(${PROJECT_NAME}
     ${IO_BUFFER}
     ${YAML_PARSER}
+    ${SYNTAX_TREE_LIB}
 )
 
 #############
@@ -117,4 +121,5 @@ target_link_libraries(${PROJECT_NAME}
     ${IO_BUFFER}
     ${YAML_PARSER}
     ${CPP_UNIT_TEST}
+    ${SYNTAX_TREE_LIB}
 )
