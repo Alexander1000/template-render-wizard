@@ -3,10 +3,11 @@
 #include <iostream>
 #include <list>
 #include <trw.h>
+#include <syntax-tree-lib.h>
 
 namespace TemplateRenderWizard
 {
-    bool Render::compare_value(Value *lValue, Value *rValue, Token::Token *token)
+    bool Render::compare_value(Value *lValue, Value *rValue, SyntaxTree::Token::Token *token)
     {
         RESET_TOKEN_READER(token);
         INIT_CHAR_STRING(cmpValue, 4)

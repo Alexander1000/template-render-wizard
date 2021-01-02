@@ -1,8 +1,9 @@
 #include <trw.h>
+#include <syntax-tree-lib.h>
 
 namespace TemplateRenderWizard
 {
-    Expression::Expression(SyntaxElement *lValue, SyntaxElement *rValue, Token::Token *token) {
+    Expression::Expression(SyntaxElement *lValue, SyntaxElement *rValue, SyntaxTree::Token::Token *token) {
         this->lValue = lValue;
         this->rValue = rValue;
         this->relation = token;
@@ -18,7 +19,7 @@ namespace TemplateRenderWizard
         this->data.expression = expr;
     }
 
-    SyntaxElement::SyntaxElement(Token::Token *token) {
+    SyntaxElement::SyntaxElement(SyntaxTree::Token::Token *token) {
         this->type = SyntaxTokenType;
         this->data.token = token;
     }
@@ -39,7 +40,7 @@ namespace TemplateRenderWizard
         return this->rValue;
     }
 
-    Token::Token* Expression::getToken() {
+    SyntaxTree::Token::Token* Expression::getToken() {
         return this->relation;
     }
 }

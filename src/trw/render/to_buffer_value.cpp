@@ -1,9 +1,10 @@
 #include <trw.h>
 #include <iostream>
+#include <syntax-tree-lib.h>
 
 namespace TemplateRenderWizard
 {
-    void Render::to_buffer_value(IOBuffer::IOBuffer *buffer, Token::Token *token)
+    void Render::to_buffer_value(IOBuffer::IOBuffer *buffer, SyntaxTree::Token::Token *token)
     {
         this->to_buffer_value(buffer, this->getValueFromToken(token, nullptr));
     }

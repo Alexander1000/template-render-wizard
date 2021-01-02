@@ -1,8 +1,9 @@
 #include <trw.h>
+#include <syntax-tree-lib.h>
 
 namespace TemplateRenderWizard
 {
-    Token::Token* Render::getNextToken()
+    SyntaxTree::Token::Token* Render::getNextToken()
     {
         return this->stream->getNextToken();
     }

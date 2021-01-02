@@ -1,8 +1,9 @@
 #include <trw.h>
+#include <syntax-tree-lib.h>
 
 namespace TemplateRenderWizard
 {
-    void Render::to_buffer_plain_text(IOBuffer::IOBuffer *buffer, Token::Token *token)
+    void Render::to_buffer_plain_text(IOBuffer::IOBuffer *buffer, SyntaxTree::Token::Token *token)
     {
         char* tBuffer = (char*) malloc(sizeof(char) * TRW_RENDER_BUFFER_SIZE);
         IOBuffer::IOReader* reader = token->getReader();

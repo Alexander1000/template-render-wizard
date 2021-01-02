@@ -1,5 +1,6 @@
 #include <trw.h>
 #include <iostream>
+#include <syntax-tree-lib.h>
 
 namespace TemplateRenderWizard
 {
@@ -282,7 +283,7 @@ namespace TemplateRenderWizard
         return this->calc_expr_tree(syntaxElement->getElement(), context);
     }
 
-    void Render::render_tree_token(IOBuffer::IOBuffer *buffer, Token::Token *token)
+    void Render::render_tree_token(IOBuffer::IOBuffer *buffer, SyntaxTree::Token::Token *token)
     {
         switch (token->getType()) {
             case Token::Type::PlainTextType: {

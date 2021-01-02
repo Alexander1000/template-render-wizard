@@ -2,10 +2,11 @@
 #include <iostream>
 #include <list>
 #include <map>
+#include <syntax-tree-lib.h>
 
 namespace TemplateRenderWizard
 {
-    Value* Render::getValueFromToken(Token::Token *token, Context* context)
+    Value* Render::getValueFromToken(SyntaxTree::Token::Token* token, Context* context)
     {
         bool allow = false;
         if (token->getType() == TemplateRenderWizard::Token::Type::ExpressionValueType || token->getType() == TemplateRenderWizard::Token::Type::PlainValueType) {

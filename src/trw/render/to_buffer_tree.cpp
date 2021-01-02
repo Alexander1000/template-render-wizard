@@ -1,5 +1,6 @@
 #include <trw.h>
 #include <list>
+#include <syntax-tree-lib.h>
 
 namespace TemplateRenderWizard
 {
@@ -7,7 +8,7 @@ namespace TemplateRenderWizard
     {
         auto buffer = new IOBuffer::IOMemoryBuffer(TRW_RENDER_MEMORY_BLOCK_SIZE);
 
-        auto tokens = new std::list<Token::Token*>;
+        auto tokens = new std::list<SyntaxTree::Token::Token*>;
         auto token = this->getNextToken();
 
         while (token != nullptr) {
