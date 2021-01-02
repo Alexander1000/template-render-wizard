@@ -44,8 +44,6 @@ set(TRW_SHARED_SOURCES
     src/trw/utils/ctype_digits.cpp
     src/trw/utils/explode_string.cpp
     src/trw/syntax/syntax.cpp
-    src/trw/syntax/rule_match.cpp
-    src/trw/syntax/rule.cpp
     src/trw/syntax/tree.cpp
     src/trw/syntax/syntax_element.cpp
     src/trw/syntax/tree_parse_tokens.cpp

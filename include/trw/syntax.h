@@ -12,8 +12,8 @@ namespace TemplateRenderWizard
     {
     public:
         TokenFile(const char* tokenFile);
-        TemplateRenderWizard::Token::Type getNextTokenType();
-        TemplateRenderWizard::Token::Type getTokenTypeByName(const char*);
+        int getNextTokenType();
+        int getTokenTypeByName(const char*);
 
     private:
         IOBuffer::CharStream* charStream;
