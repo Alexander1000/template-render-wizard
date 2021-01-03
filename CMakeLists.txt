@@ -24,6 +24,11 @@ set(TRW_SHARED_SOURCES
     src/trw/tokens/token_map.cpp
     src/trw/tokens/comma.cpp
     src/trw/tokens/math_operation_high_priority.cpp
+    src/trw/tokens/file_path.cpp
+    src/trw/tokens/double_dot.cpp
+    src/trw/tokens/open_brace.cpp
+    src/trw/tokens/close_brace.cpp
+    src/trw/tokens/include_with_key.cpp
     src/trw/leaf_element.cpp
     src/trw/tree_parameters.cpp
     src/trw/render/construct.cpp
