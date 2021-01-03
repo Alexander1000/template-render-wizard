@@ -3,6 +3,7 @@
 #include <cpp-unit-test.h>
 #include <dirent.h>
 #include <io-buffer.h>
+#include <syntax-tree-lib.h>
 
 namespace TrwTests
 {
@@ -96,8 +97,8 @@ namespace TrwTests
         CppUnitTest::assertTrue(t, file_exists(new std::string(strTokenFile)));
 
         auto tokenFile = new TemplateRenderWizard::TokenFile(strTokenFile);
-        TemplateRenderWizard::Token::Type tokenType;
-        TemplateRenderWizard::Token::Token* token;
+        int tokenType;
+        SyntaxTree::Token::Token* token;
 
         do {
             tokenType = tokenFile->getNextTokenType();

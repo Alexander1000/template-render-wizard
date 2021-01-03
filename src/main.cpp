@@ -9,6 +9,7 @@
 
 #include <trw.h>
 #include <io-buffer.h>
+#include <syntax-tree-lib.h>
 
 inline bool file_exists(const std::string* name)
 {
@@ -18,7 +19,7 @@ inline bool file_exists(const std::string* name)
 
 void dump_tokens(IOBuffer::IOMemoryBuffer* buffer, TemplateRenderWizard::Stream* tokenStream) {
     TemplateRenderWizard::Token::TokenMap tokenMap;
-    TemplateRenderWizard::Token::Token* token;
+    SyntaxTree::Token::Token* token;
 
     token = tokenStream->getNextToken();
     while (token != nullptr) {

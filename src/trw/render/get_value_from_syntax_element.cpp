@@ -1,5 +1,6 @@
 #include <trw.h>
 #include <iostream>
+#include <syntax-tree-lib.h>
 
 namespace TemplateRenderWizard
 {
@@ -7,7 +8,7 @@ namespace TemplateRenderWizard
     {
         switch (element->getType()) {
             case SyntaxTokenType: {
-                return this->getValueFromToken((Token::Token*) element->getData(), nullptr);
+                return this->getValueFromToken((SyntaxTree::Token::Token*) element->getData(), nullptr);
             }
             case SyntaxValueType: {
                 return (Value*) element->getData();

@@ -62,6 +62,7 @@ Static libraries:
   - [io-buffer](https://github.com/Alexander1000/io-buffer)
   - [cpp-unit-test](https://github.com/Alexander1000/cpp-unit-test) (for tests)
   - [yaml-parser](https://github.com/Alexander1000/yaml-parser) (parse values files)
+  - [syntax-tree](https://github.com/Alexander1000/syntax-tree) (syntax tree)
   
 ## how it build?
 ```shell

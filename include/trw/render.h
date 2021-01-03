@@ -12,6 +12,7 @@
 #include <stack>
 #include <trw/syntax.h>
 #include <trw/context.h>
+#include <syntax-tree-lib.h>
 
 #define TRW_RENDER_MEMORY_BLOCK_SIZE 4096
 #define TRW_RENDER_BUFFER_SIZE 1024
@@ -23,24 +24,24 @@ namespace TemplateRenderWizard
         TemplateRenderWizard::Tree::Tree* tree;
         TemplateRenderWizard::Stream* stream;
 
-        Value* getValueFromToken(Token::Token*, Context*);
-        bool compare_value(Value*, Value*, Token::Token*);
+        Value* getValueFromToken(SyntaxTree::Token::Token*, Context*);
+        bool compare_value(Value*, Value*, SyntaxTree::Token::Token*);
         Value* calc_expr(Expression*);
 
-        Token::Token* getNextToken();
+        SyntaxTree::Token::Token* getNextToken();
 
         Value* get_value_from_syntax_element(SyntaxElement*);
 
-        void to_buffer_plain_text(IOBuffer::IOBuffer* buffer, Token::Token* token);
+        void to_buffer_plain_text(IOBuffer::IOBuffer* buffer, SyntaxTree::Token::Token* token);
         void to_buffer_value(IOBuffer::IOBuffer* buffer, Value* value);
-        void to_buffer_value(IOBuffer::IOBuffer* buffer, Token::Token* token);
+        void to_buffer_value(IOBuffer::IOBuffer* buffer, SyntaxTree::Token::Token* token);
 
-        void render_tree(IOBuffer::IOBuffer* buffer, Syntax::SyntaxElement* treeElement, Context *context);
-        void render_tree(IOBuffer::IOBuffer* buffer, Syntax::Rule* rule, std::list<Syntax::SyntaxElement*>* elements, Context *context);
-        Value* calc_expr_tree(Syntax::SyntaxElement*, Context*);
-        void render_tree_token(IOBuffer::IOBuffer* buffer, Token::Token* token);
-        bool calc_if_control(Syntax::SyntaxElement*, Context*);
-        bool calc_bool_expr(Syntax::SyntaxElement*, Context*);
+        void render_tree(IOBuffer::IOBuffer* buffer, SyntaxTree::Syntax::SyntaxElement* treeElement, Context *context);
+        void render_tree(IOBuffer::IOBuffer* buffer, SyntaxTree::Syntax::Rule* rule, std::list<SyntaxTree::Syntax::SyntaxElement*>* elements, Context *context);
+        Value* calc_expr_tree(SyntaxTree::Syntax::SyntaxElement*, Context*);
+        void render_tree_token(IOBuffer::IOBuffer* buffer, SyntaxTree::Token::Token* token);
+        bool calc_if_control(SyntaxTree::Syntax::SyntaxElement*, Context*);
+        bool calc_bool_expr(SyntaxTree::Syntax::SyntaxElement*, Context*);
 
     public:
         Render(const char*, TemplateRenderWizard::Tree::Tree*);

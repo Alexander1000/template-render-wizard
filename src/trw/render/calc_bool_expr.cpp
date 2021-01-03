@@ -1,19 +1,20 @@
 #include <trw.h>
+#include <syntax-tree-lib.h>
 
 namespace TemplateRenderWizard
 {
-    bool Render::calc_bool_expr(Syntax::SyntaxElement* syntaxElement, Context* context)
+    bool Render::calc_bool_expr(SyntaxTree::Syntax::SyntaxElement* syntaxElement, Context* context)
     {
-        if (syntaxElement->getType() == Syntax::SyntaxElementType::TokenType) {
+        if (syntaxElement->getType() == SyntaxTree::Syntax::SyntaxElementType::TokenType) {
             auto value = this->getValueFromToken(syntaxElement->getToken(), context);
             return cast_value_to_bool(value);
         }
 
-        if (syntaxElement->getType() == Syntax::SyntaxElementType::SyntaxType) {
+        if (syntaxElement->getType() == SyntaxTree::Syntax::SyntaxElementType::SyntaxType) {
             return this->calc_bool_expr(syntaxElement->getElement(), context);
         }
 
-        if (syntaxElement->getType() == Syntax::SyntaxElementType::TokenListType) {
+        if (syntaxElement->getType() == SyntaxTree::Syntax::SyntaxElementType::TokenListType) {
             if (strcmp(syntaxElement->getRule()->getName(), "boolExpr") == 0) {
                 auto listElements = syntaxElement->getListElements()->begin(); // first expr
                 bool lValue = this->calc_bool_expr(*listElements, context);

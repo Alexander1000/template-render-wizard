@@ -9,7 +9,6 @@ set(TRW_SHARED_SOURCES
     src/trw/config.cpp
     src/trw/position.cpp
     src/trw/stream.cpp
-    src/trw/tokens/token.cpp
     src/trw/tokens/open_tag_value.cpp
     src/trw/tokens/plain_text.cpp
     src/trw/tokens/close_tag_value.cpp
@@ -45,11 +44,7 @@ set(TRW_SHARED_SOURCES
     src/trw/utils/ctype_digits.cpp
     src/trw/utils/explode_string.cpp
     src/trw/syntax/syntax.cpp
-    src/trw/syntax/rule_match.cpp
-    src/trw/syntax/rule.cpp
     src/trw/syntax/tree.cpp
-    src/trw/syntax/syntax_element.cpp
-    src/trw/syntax/tree_parse_tokens.cpp
     src/trw/context.cpp
 )
 
@@ -69,6 +64,9 @@ message(STATUS "Found io-buffer library: ${IO_BUFFER}")
 find_library(YAML_PARSER libyaml-parser.a)
 message(STATUS "Found yaml-parser library: ${YAML_PARSER}")
 
+find_library(SYNTAX_TREE_LIB libsyntax-tree-lib.a)
+message(STATUS "Found syntax-tree library: ${SYNTAX_TREE_LIB}")
+
 add_executable(
     ${PROJECT_NAME} src/main.cpp
     ${TRW_SOURCES}
@@ -77,6 +75,7 @@ add_executable(
 target_link_libraries(${PROJECT_NAME}
     ${IO_BUFFER}
     ${YAML_PARSER}
+    ${SYNTAX_TREE_LIB}
 )
 
 #############
@@ -117,4 +116,5 @@ target_link_libraries(${PROJECT_NAME}
     ${IO_BUFFER}
     ${YAML_PARSER}
     ${CPP_UNIT_TEST}
+    ${SYNTAX_TREE_LIB}
 )

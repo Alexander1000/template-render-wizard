@@ -11,7 +11,7 @@ namespace TemplateRenderWizard
         this->tokenMap = new Token::TokenMap;
     }
 
-    Token::Type TokenFile::getNextTokenType()
+    int TokenFile::getNextTokenType()
     {
         char* nextChar = this->charStream->getNext();
         if (nextChar == nullptr) {
@@ -47,7 +47,7 @@ namespace TemplateRenderWizard
         return symbol == nullptr || *symbol == ' ' || *symbol == 0x0A;
     }
 
-    Token::Type TokenFile::getTokenTypeByName(const char *tokenName) {
+    int TokenFile::getTokenTypeByName(const char *tokenName) {
         return this->tokenMap->getType(tokenName);
     }
 }

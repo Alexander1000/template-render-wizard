@@ -2,6 +2,7 @@
 #define H_TRW_EXPRESSION_INCLUDED
 
 #include <trw/token.h>
+#include <syntax-tree-lib.h>
 
 namespace TemplateRenderWizard
 {
@@ -16,7 +17,7 @@ namespace TemplateRenderWizard
     class SyntaxElement
     {
     public:
-        SyntaxElement(Token::Token*);
+        SyntaxElement(SyntaxTree::Token::Token*);
         SyntaxElement(Value*);
         SyntaxElement(Expression*);
 
@@ -26,7 +27,7 @@ namespace TemplateRenderWizard
         SyntaxElementType type;
 
         union {
-            Token::Token* token;
+            SyntaxTree::Token::Token* token;
             Value* value;
             Expression* expression;
         } data;
@@ -35,15 +36,15 @@ namespace TemplateRenderWizard
     class Expression
     {
     public:
-        Expression(SyntaxElement*, SyntaxElement*, Token::Token*);
+        Expression(SyntaxElement*, SyntaxElement*, SyntaxTree::Token::Token*);
         SyntaxElement* getLValue();
         SyntaxElement* getRValue();
-        Token::Token* getToken();
+        SyntaxTree::Token::Token* getToken();
 
     private:
         SyntaxElement* lValue;
         SyntaxElement* rValue;
-        Token::Token* relation;
+        SyntaxTree::Token::Token* relation;
     };
 }
 

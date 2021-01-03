@@ -1,12 +1,13 @@
-#include <trw/token.h>
+#include <trw.h>
+#include <syntax-tree-lib.h>
 
 namespace TemplateRenderWizard::Token
 {
-    CloseControlTag::CloseControlTag(int line, int column) : Token(line, column, nullptr)
+    CloseControlTag::CloseControlTag(int line, int column) : SyntaxTree::Token::Token(line, column, nullptr)
     {
     }
 
-    Type CloseControlTag::getType() {
+    int CloseControlTag::getType() {
         return Type::CloseControlTagType;
     }
 }

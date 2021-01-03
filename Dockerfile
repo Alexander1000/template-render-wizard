@@ -30,6 +30,17 @@ RUN mkdir -p /tmp/io-buffer \
     && make \
     && make install
 
+# install syntax-tree library
+RUN mkdir -p /tmp/syntax-tree \
+    && cd /tmp/syntax-tree \
+    && curl -LO "https://github.com/Alexander1000/syntax-tree/archive/master.zip" \
+    && unzip -a master.zip \
+    && rm -f master.zip \
+    && cd syntax-tree-master \
+    && cmake . \
+    && make \
+    && make install
+
 # install yaml-parser library
 RUN mkdir -p /tmp/yaml-parser \
     && cd /tmp/yaml-parser \

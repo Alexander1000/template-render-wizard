@@ -1,12 +1,13 @@
-#include <trw/token.h>
+#include <trw.h>
 #include <io-buffer.h>
+#include <syntax-tree-lib.h>
 
 namespace TemplateRenderWizard::Token
 {
-    Compare::Compare(int line, int column, IOBuffer::IOReader *reader) : Token(line, column, reader) {
+    Compare::Compare(int line, int column, IOBuffer::IOReader *reader) : SyntaxTree::Token::Token(line, column, reader) {
     }
 
-    Type Compare::getType() {
+    int Compare::getType() {
         return Type::CompareType;
     }
 }

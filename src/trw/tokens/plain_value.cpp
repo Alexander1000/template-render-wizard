@@ -1,12 +1,13 @@
-#include <trw/token.h>
+#include <trw.h>
 #include <io-buffer.h>
+#include <syntax-tree-lib.h>
 
 namespace TemplateRenderWizard::Token
 {
-    PlainValue::PlainValue(int line, int column, IOBuffer::IOReader *reader) : Token(line, column, reader) {
+    PlainValue::PlainValue(int line, int column, IOBuffer::IOReader *reader) : SyntaxTree::Token::Token(line, column, reader) {
     }
 
-    Type PlainValue::getType() {
+    int PlainValue::getType() {
         return Type::PlainValueType;
     }
 }

@@ -2,6 +2,7 @@
 #include <trw.h>
 #include <stack>
 #include <iostream>
+#include <syntax-tree-lib.h>
 
 namespace TemplateRenderWizard
 {
@@ -27,13 +28,14 @@ namespace TemplateRenderWizard
         this->keywords->push_back("or");
     }
 
-    Token::Token* Stream::getNextToken() {
+    SyntaxTree::Token::Token* Stream::getNextToken()
+    {
         char* curSymbol = this->getNextChar();
         if (curSymbol == nullptr) {
             return nullptr;
         }
 
-        Token::Token* token = nullptr;
+        SyntaxTree::Token::Token* token = nullptr;
         IOBuffer::IOMemoryBuffer* ioWriter = nullptr;
 
         switch (this->mode) {
