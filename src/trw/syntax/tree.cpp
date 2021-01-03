@@ -10,6 +10,7 @@ namespace TemplateRenderWizard::Syntax
 
     void Tree::initializeDefaults()
     {
+        // build command: syntax-tree -s syntax.s -i src/trw/syntax/tree.cpp
         // @syntax-tree: start-autogenerate
 
         auto rule00 = new SyntaxTree::Syntax::Rule("injectValue");

@@ -1,6 +1,7 @@
 # syntax tree
 # t - token
 # s - syntax rule
+# build: syntax-tree -s syntax.s -i src/trw/syntax/tree.cpp
 
 injectValue [t:openTagValue t:plainValue t:closeTagValue]
 expr [t:exprValue]
