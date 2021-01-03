@@ -23,6 +23,11 @@ namespace TemplateRenderWizard::Token
         MathOperationType,
         ExpressionValueType,
         CommaType,
+        FilePathType,
+        DoubleDotType,
+        OpenBraceType,
+        CloseBraceType,
+        IncludeWithKeyType,
     };
 
     class TokenMap : public SyntaxTree::Token::TokenMap

@@ -20,6 +20,11 @@ namespace TemplateRenderWizard::Token
             {"keyword",           Type::KeywordType},
             {"comma",             Type::CommaType},
             {"mathOpHigh",        Type::MathOperationHighPriorityType},
+            {"filePath",          Type::FilePathType},
+            {"doubleDot",         Type::DoubleDotType},
+            {"openBrace",         Type::OpenBraceType},
+            {"closeBrace",        Type::CloseBraceType},
+            {"includeWithKey",    Type::IncludeWithKeyType},
         };
     }
 }
