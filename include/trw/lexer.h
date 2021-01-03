@@ -15,6 +15,7 @@ namespace TemplateRenderWizard::Lexer
         ValueMode,
         ControlModeExpression,
         ControlModeForExpression,
+        ControlModeIncludeExpression,
     };
 
     class Lexer
@@ -32,6 +33,8 @@ namespace TemplateRenderWizard::Lexer
         std::list<std::string>* keywords;
 
         Position *position;
+
+        SyntaxTree::Token::Token* getNextTokenIncludeMode();
 
         void switchToMode(StreamMode);
         void switchToPreviousMode();

@@ -247,6 +247,12 @@ namespace TemplateRenderWizard::Lexer
                             return token;
                         }
 
+                        if (strcmp(strKeyword, "include") == 0) {
+                            this->switchToMode(StreamMode::ControlModeIncludeExpression);
+                            token = new Token::Keyword(this->position->getLine(), this->position->getColumn(), ioWriter);
+                            return token;
+                        }
+
                         token = new Token::Keyword(this->position->getLine(), this->position->getColumn(), ioWriter);
                         return token;
                     }
@@ -321,6 +327,10 @@ namespace TemplateRenderWizard::Lexer
 
                 token = new Token::PlainValue(this->position->getLine(), this->position->getColumn(), ioWriter);
                 return token;
+            }
+
+            case StreamMode::ControlModeIncludeExpression: {
+                return this->getNextTokenIncludeMode();
             }
         }
 
