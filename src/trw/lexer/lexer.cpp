@@ -330,6 +330,7 @@ namespace TemplateRenderWizard::Lexer
             }
 
             case StreamMode::ControlModeIncludeExpression: {
+                this->pushStackChar(curSymbol);
                 return this->getNextTokenIncludeMode();
             }
         }
