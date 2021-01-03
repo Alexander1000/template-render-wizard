@@ -176,86 +176,86 @@ namespace TemplateRenderWizard::Syntax
         rule25->addMatch(new SyntaxTree::Syntax::RuleMatch("endfor_control"));
         this->rules->push_back(rule25);
 
-        auto rule26 = new SyntaxTree::Syntax::Rule("include_with_value_stmt");
+        auto rule26 = new SyntaxTree::Syntax::Rule("include_with_pair");
+        rule26->addMatch(new SyntaxTree::Syntax::RuleMatch(this->tokenMap->getType("includeWithKey")));
+        rule26->addMatch(new SyntaxTree::Syntax::RuleMatch(this->tokenMap->getType("doubleDot")));
         rule26->addMatch(new SyntaxTree::Syntax::RuleMatch("expr"));
         this->rules->push_back(rule26);
 
-        auto rule27 = new SyntaxTree::Syntax::Rule("include_with_value_stmt");
+        auto rule27 = new SyntaxTree::Syntax::Rule("include_with_pair");
+        rule27->addMatch(new SyntaxTree::Syntax::RuleMatch(this->tokenMap->getType("includeWithKey")));
+        rule27->addMatch(new SyntaxTree::Syntax::RuleMatch(this->tokenMap->getType("doubleDot")));
         rule27->addMatch(new SyntaxTree::Syntax::RuleMatch("cmpExpr"));
         this->rules->push_back(rule27);
 
-        auto rule28 = new SyntaxTree::Syntax::Rule("include_with_value_stmt");
+        auto rule28 = new SyntaxTree::Syntax::Rule("include_with_pair");
+        rule28->addMatch(new SyntaxTree::Syntax::RuleMatch(this->tokenMap->getType("includeWithKey")));
+        rule28->addMatch(new SyntaxTree::Syntax::RuleMatch(this->tokenMap->getType("doubleDot")));
         rule28->addMatch(new SyntaxTree::Syntax::RuleMatch("boolExpr"));
         this->rules->push_back(rule28);
 
-        auto rule29 = new SyntaxTree::Syntax::Rule("include_with_pair");
-        rule29->addMatch(new SyntaxTree::Syntax::RuleMatch(this->tokenMap->getType("includeWithKey")));
-        rule29->addMatch(new SyntaxTree::Syntax::RuleMatch(this->tokenMap->getType("doubleDot")));
-        rule29->addMatch(new SyntaxTree::Syntax::RuleMatch("include_with_value_stmt"));
+        auto rule29 = new SyntaxTree::Syntax::Rule("include_with_stmt");
+        rule29->addMatch(new SyntaxTree::Syntax::RuleMatch("include_with_pair"));
+        rule29->addMatch(new SyntaxTree::Syntax::RuleMatch(this->tokenMap->getType("comma")));
+        rule29->addMatch(new SyntaxTree::Syntax::RuleMatch("include_with_pair"));
         this->rules->push_back(rule29);
 
         auto rule30 = new SyntaxTree::Syntax::Rule("include_with_stmt");
         rule30->addMatch(new SyntaxTree::Syntax::RuleMatch("include_with_pair"));
-        rule30->addMatch(new SyntaxTree::Syntax::RuleMatch(this->tokenMap->getType("comma")));
-        rule30->addMatch(new SyntaxTree::Syntax::RuleMatch("include_with_pair"));
         this->rules->push_back(rule30);
 
         auto rule31 = new SyntaxTree::Syntax::Rule("include_with_stmt");
-        rule31->addMatch(new SyntaxTree::Syntax::RuleMatch("include_with_pair"));
+        rule31->addMatch(new SyntaxTree::Syntax::RuleMatch("include_with_stmt"));
+        rule31->addMatch(new SyntaxTree::Syntax::RuleMatch(this->tokenMap->getType("comma")));
+        rule31->addMatch(new SyntaxTree::Syntax::RuleMatch("include_with_stmt"));
         this->rules->push_back(rule31);
 
-        auto rule32 = new SyntaxTree::Syntax::Rule("include_with_stmt");
-        rule32->addMatch(new SyntaxTree::Syntax::RuleMatch("include_with_stmt"));
-        rule32->addMatch(new SyntaxTree::Syntax::RuleMatch(this->tokenMap->getType("comma")));
-        rule32->addMatch(new SyntaxTree::Syntax::RuleMatch("include_with_stmt"));
+        auto rule32 = new SyntaxTree::Syntax::Rule("include_stmt");
+        rule32->addMatch(new SyntaxTree::Syntax::RuleMatch(this->tokenMap->getType("openControlTag")));
+        rule32->addMatch(new SyntaxTree::Syntax::RuleMatch(this->tokenMap->getType("keyword"), "include"));
+        rule32->addMatch(new SyntaxTree::Syntax::RuleMatch(this->tokenMap->getType("filePath")));
+        rule32->addMatch(new SyntaxTree::Syntax::RuleMatch(this->tokenMap->getType("closeControlTag")));
         this->rules->push_back(rule32);
 
         auto rule33 = new SyntaxTree::Syntax::Rule("include_stmt");
         rule33->addMatch(new SyntaxTree::Syntax::RuleMatch(this->tokenMap->getType("openControlTag")));
         rule33->addMatch(new SyntaxTree::Syntax::RuleMatch(this->tokenMap->getType("keyword"), "include"));
         rule33->addMatch(new SyntaxTree::Syntax::RuleMatch(this->tokenMap->getType("filePath")));
+        rule33->addMatch(new SyntaxTree::Syntax::RuleMatch(this->tokenMap->getType("keyword"), "with"));
+        rule33->addMatch(new SyntaxTree::Syntax::RuleMatch(this->tokenMap->getType("openBrace")));
+        rule33->addMatch(new SyntaxTree::Syntax::RuleMatch("include_with_stmt"));
+        rule33->addMatch(new SyntaxTree::Syntax::RuleMatch(this->tokenMap->getType("closeBrace")));
         rule33->addMatch(new SyntaxTree::Syntax::RuleMatch(this->tokenMap->getType("closeControlTag")));
         this->rules->push_back(rule33);
 
-        auto rule34 = new SyntaxTree::Syntax::Rule("include_stmt");
-        rule34->addMatch(new SyntaxTree::Syntax::RuleMatch(this->tokenMap->getType("openControlTag")));
-        rule34->addMatch(new SyntaxTree::Syntax::RuleMatch(this->tokenMap->getType("keyword"), "include"));
-        rule34->addMatch(new SyntaxTree::Syntax::RuleMatch(this->tokenMap->getType("filePath")));
-        rule34->addMatch(new SyntaxTree::Syntax::RuleMatch(this->tokenMap->getType("keyword"), "with"));
-        rule34->addMatch(new SyntaxTree::Syntax::RuleMatch(this->tokenMap->getType("openBrace")));
-        rule34->addMatch(new SyntaxTree::Syntax::RuleMatch("include_with_stmt"));
-        rule34->addMatch(new SyntaxTree::Syntax::RuleMatch(this->tokenMap->getType("closeBrace")));
-        rule34->addMatch(new SyntaxTree::Syntax::RuleMatch(this->tokenMap->getType("closeControlTag")));
+        auto rule34 = new SyntaxTree::Syntax::Rule("body");
+        rule34->addMatch(new SyntaxTree::Syntax::RuleMatch(this->tokenMap->getType("plainText")));
         this->rules->push_back(rule34);
 
         auto rule35 = new SyntaxTree::Syntax::Rule("body");
-        rule35->addMatch(new SyntaxTree::Syntax::RuleMatch(this->tokenMap->getType("plainText")));
+        rule35->addMatch(new SyntaxTree::Syntax::RuleMatch("injectValue"));
         this->rules->push_back(rule35);
 
         auto rule36 = new SyntaxTree::Syntax::Rule("body");
-        rule36->addMatch(new SyntaxTree::Syntax::RuleMatch("injectValue"));
+        rule36->addMatch(new SyntaxTree::Syntax::RuleMatch("expr_control"));
         this->rules->push_back(rule36);
 
         auto rule37 = new SyntaxTree::Syntax::Rule("body");
-        rule37->addMatch(new SyntaxTree::Syntax::RuleMatch("expr_control"));
+        rule37->addMatch(new SyntaxTree::Syntax::RuleMatch("if_stmt"));
         this->rules->push_back(rule37);
 
         auto rule38 = new SyntaxTree::Syntax::Rule("body");
-        rule38->addMatch(new SyntaxTree::Syntax::RuleMatch("if_stmt"));
+        rule38->addMatch(new SyntaxTree::Syntax::RuleMatch("for_stmt"));
         this->rules->push_back(rule38);
 
         auto rule39 = new SyntaxTree::Syntax::Rule("body");
-        rule39->addMatch(new SyntaxTree::Syntax::RuleMatch("for_stmt"));
+        rule39->addMatch(new SyntaxTree::Syntax::RuleMatch("include_stmt"));
         this->rules->push_back(rule39);
 
         auto rule40 = new SyntaxTree::Syntax::Rule("body");
-        rule40->addMatch(new SyntaxTree::Syntax::RuleMatch("include_stmt"));
+        rule40->addMatch(new SyntaxTree::Syntax::RuleMatch("body"));
+        rule40->addMatch(new SyntaxTree::Syntax::RuleMatch("body"));
         this->rules->push_back(rule40);
-
-        auto rule41 = new SyntaxTree::Syntax::Rule("body");
-        rule41->addMatch(new SyntaxTree::Syntax::RuleMatch("body"));
-        rule41->addMatch(new SyntaxTree::Syntax::RuleMatch("body"));
-        this->rules->push_back(rule41);
 
         // @syntax-tree: stop-autogenerate
     }
