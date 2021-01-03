@@ -17,15 +17,18 @@ namespace TemplateRenderWizard
         this->position = new Position(0, 0);
         this->positionStack = new std::stack<Position*>;
 
-        this->keywords = new std::list<std::string>;
-        this->keywords->push_back("if");
-        this->keywords->push_back("else");
-        this->keywords->push_back("endif");
-        this->keywords->push_back("for");
-        this->keywords->push_back("endfor");
-        this->keywords->push_back("in");
-        this->keywords->push_back("and");
-        this->keywords->push_back("or");
+        this->keywords = new std::list<std::string>{
+            "if",
+            "else",
+            "endif",
+            "for",
+            "endfor",
+            "in",
+            "and",
+            "or",
+            "include",
+            "with",
+        };
     }
 
     SyntaxTree::Token::Token* Stream::getNextToken()
@@ -235,9 +238,9 @@ namespace TemplateRenderWizard
                     curSymbol = this->getNextChar();
                 } while(curSymbol != nullptr && *curSymbol != 0x20);
 
-                if (ioWriter->length() >= 2 && ioWriter->length() <= 6) {
-                    INIT_CHAR_STRING(strKeyword, 7);
-                    ioWriter->read(strKeyword, 6);
+                if (ioWriter->length() >= 2 && ioWriter->length() <= 7) {
+                    INIT_CHAR_STRING(strKeyword, 8);
+                    ioWriter->read(strKeyword, 7);
                     if (this->isKeyword(strKeyword)) {
                         if (strcmp(strKeyword, "for") == 0) {
                             this->switchToMode(StreamMode::ControlModeForExpression);
