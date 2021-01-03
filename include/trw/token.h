@@ -133,6 +133,41 @@ namespace TemplateRenderWizard::Token
         Comma(int line, int column);
         int getType() final;
     };
+
+    class FilePath : public SyntaxTree::Token::Token
+    {
+    public:
+        FilePath(int line, int column, IOBuffer::IOReader *reader);
+        int getType() final;
+    };
+
+    class DoubleDot : public SyntaxTree::Token::Token
+    {
+    public:
+        DoubleDot(int line, int column);
+        int getType() final;
+    };
+
+    class OpenBrace : public SyntaxTree::Token::Token
+    {
+    public:
+        OpenBrace(int line, int column);
+        int getType() final;
+    };
+
+    class CloseBrace : public SyntaxTree::Token::Token
+    {
+    public:
+        CloseBrace(int line, int column);
+        int getType() final;
+    };
+
+    class IncludeWithKey : public SyntaxTree::Token::Token
+    {
+    public:
+        IncludeWithKey(int line, int column, IOBuffer::IOReader *reader);
+        int getType() final;
+    };
 }
 
 #endif
