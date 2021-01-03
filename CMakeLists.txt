@@ -8,7 +8,7 @@ project(template-render-wizard)
 set(TRW_SHARED_SOURCES
     src/trw/config.cpp
     src/trw/position.cpp
-    src/trw/stream.cpp
+        src/trw/lexer/lexer.cpp
     src/trw/tokens/open_tag_value.cpp
     src/trw/tokens/plain_text.cpp
     src/trw/tokens/close_tag_value.cpp

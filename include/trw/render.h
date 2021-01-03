@@ -2,7 +2,7 @@
 #define H_TRW_RENDER_INCLUDED
 
 #include <string>
-#include <trw/stream.h>
+#include <trw/lexer.h>
 #include <trw/tree_parameters.h>
 #include <io-buffer.h>
 #include <list>
