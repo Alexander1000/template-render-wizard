@@ -18,7 +18,7 @@ namespace TrwTests
 
         IOBuffer::IOFileReader fileReader("./fixtures/001-simple-text.txt");
         IOBuffer::CharStream charStream(&fileReader);
-        TemplateRenderWizard::Stream tokenStream(&charStream);
+        TemplateRenderWizard::Lexer::Lexer tokenStream(&charStream);
 
         token = tokenStream.getNextToken();
 

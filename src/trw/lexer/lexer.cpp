@@ -1,12 +1,11 @@
 #include <io-buffer.h>
 #include <trw.h>
 #include <stack>
-#include <iostream>
 #include <syntax-tree-lib.h>
 
-namespace TemplateRenderWizard
+namespace TemplateRenderWizard::Lexer
 {
-    Stream::Stream(IOBuffer::CharStream *charStream)
+    Lexer::Lexer(IOBuffer::CharStream *charStream)
     {
         this->charStream = charStream;
         this->mode = StreamMode::PlainText;
@@ -31,7 +30,7 @@ namespace TemplateRenderWizard
         };
     }
 
-    SyntaxTree::Token::Token* Stream::getNextToken()
+    SyntaxTree::Token::Token* Lexer::getNextToken()
     {
         char* curSymbol = this->getNextChar();
         if (curSymbol == nullptr) {
@@ -328,21 +327,21 @@ namespace TemplateRenderWizard
         return token;
     }
 
-    void Stream::switchToMode(StreamMode newMode) {
+    void Lexer::switchToMode(StreamMode newMode) {
         this->modeStack->push(this->mode);
         this->mode = newMode;
     }
 
-    void Stream::switchToPreviousMode() {
+    void Lexer::switchToPreviousMode() {
         this->mode = this->modeStack->top();
         this->modeStack->pop();
     }
 
-    bool Stream::isWord(const char *symbol) {
+    bool Lexer::isWord(const char *symbol) {
         return (*symbol >= 'a' && *symbol <= 'z') || (*symbol >= 'A' && *symbol <= 'Z');
     }
 
-    bool Stream::isKeyword(std::string* strKeyword) {
+    bool Lexer::isKeyword(std::string* strKeyword) {
         for (auto it = this->keywords->begin(); it != this->keywords->end(); it++) {
             if (strcmp(it->c_str(), strKeyword->c_str()) == 0) {
                 return true;
@@ -351,7 +350,7 @@ namespace TemplateRenderWizard
         return false;
     }
 
-    bool Stream::isKeyword(const char* strKeyword) {
+    bool Lexer::isKeyword(const char* strKeyword) {
         for (auto it = this->keywords->begin(); it != this->keywords->end(); it++) {
             if (strcmp(it->c_str(), strKeyword) == 0) {
                 return true;

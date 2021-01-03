@@ -11,7 +11,7 @@ namespace TemplateRenderWizard
         fileReader = new IOBuffer::IOFileReader(srcTemplateFile->c_str());
         IOBuffer::CharStream* charStream;
         charStream = new IOBuffer::CharStream(fileReader);
-        this->stream = new TemplateRenderWizard::Stream(charStream);
+        this->stream = new TemplateRenderWizard::Lexer::Lexer(charStream);
         this->tree = tree;
     }
 
@@ -21,11 +21,11 @@ namespace TemplateRenderWizard
         fileReader = new IOBuffer::IOFileReader(srcTemplateFile);
         IOBuffer::CharStream* charStream;
         charStream = new IOBuffer::CharStream(fileReader);
-        this->stream = new TemplateRenderWizard::Stream(charStream);
+        this->stream = new TemplateRenderWizard::Lexer::Lexer(charStream);
         this->tree = tree;
     }
 
-    Render::Render(TemplateRenderWizard::Stream* stream, TemplateRenderWizard::Tree::Tree* tree)
+    Render::Render(TemplateRenderWizard::Lexer::Lexer* stream, TemplateRenderWizard::Tree::Tree* tree)
     {
         this->stream = stream;
         this->tree = tree;

@@ -1,8 +1,8 @@
 #include <trw.h>
 
-namespace TemplateRenderWizard
+namespace TemplateRenderWizard::Lexer
 {
-    char* Stream::getNextChar()
+    char* Lexer::getNextChar()
     {
         if (!this->charStack->empty()) {
             char* symbol = this->charStack->top();
@@ -26,7 +26,7 @@ namespace TemplateRenderWizard
         return nextChar;
     }
 
-    void Stream::pushStackChar(char* curChar) {
+    void Lexer::pushStackChar(char* curChar) {
         this->charStack->push(curChar);
         auto p = new Position(this->position->getLine(), this->position->getColumn());
         this->positionStack->push(p);

@@ -17,7 +17,7 @@ inline bool file_exists(const std::string* name)
     return (stat(name->c_str(), &buffer) == 0);
 }
 
-void dump_tokens(IOBuffer::IOMemoryBuffer* buffer, TemplateRenderWizard::Stream* tokenStream) {
+void dump_tokens(IOBuffer::IOMemoryBuffer* buffer, TemplateRenderWizard::Lexer::Lexer* tokenStream) {
     TemplateRenderWizard::Token::TokenMap tokenMap;
     SyntaxTree::Token::Token* token;
 
@@ -79,7 +79,7 @@ int main(int argc, char** argv) {
 
     IOBuffer::IOFileReader fileReader(templateFile->c_str());
     IOBuffer::CharStream charStream(&fileReader);
-    TemplateRenderWizard::Stream tokenStream(&charStream);
+    TemplateRenderWizard::Lexer::Lexer tokenStream(&charStream);
 
     IOBuffer::IOMemoryBuffer* output;
 

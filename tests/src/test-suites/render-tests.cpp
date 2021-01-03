@@ -86,7 +86,7 @@ namespace TrwTests
         fileReader = new IOBuffer::IOFileReader(srcTemplateFile);
         IOBuffer::CharStream* charStream;
         charStream = new IOBuffer::CharStream(fileReader);
-        auto stream = new TemplateRenderWizard::Stream(charStream);
+        auto stream = new TemplateRenderWizard::Lexer::Lexer(charStream);
 
         INIT_CHAR_STRING(strTokenFile, 1024)
         INIT_CHAR_STRING(strTokenFileName, 1024)

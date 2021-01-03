@@ -8,7 +8,7 @@
 #include <list>
 #include <syntax-tree-lib.h>
 
-namespace TemplateRenderWizard
+namespace TemplateRenderWizard::Lexer
 {
     enum StreamMode{
         PlainText,
@@ -17,10 +17,10 @@ namespace TemplateRenderWizard
         ControlModeForExpression,
     };
 
-    class Stream
+    class Lexer
     {
     public:
-        Stream(IOBuffer::CharStream* charStream);
+        Lexer(IOBuffer::CharStream* charStream);
         SyntaxTree::Token::Token* getNextToken();
 
     private:

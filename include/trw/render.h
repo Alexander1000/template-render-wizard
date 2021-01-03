@@ -22,7 +22,7 @@ namespace TemplateRenderWizard
     class Render
     {
         TemplateRenderWizard::Tree::Tree* tree;
-        TemplateRenderWizard::Stream* stream;
+        TemplateRenderWizard::Lexer::Lexer* stream;
 
         Value* getValueFromToken(SyntaxTree::Token::Token*, Context*);
         bool compare_value(Value*, Value*, SyntaxTree::Token::Token*);
@@ -46,7 +46,7 @@ namespace TemplateRenderWizard
     public:
         Render(const char*, TemplateRenderWizard::Tree::Tree*);
         Render(std::string*, TemplateRenderWizard::Tree::Tree*);
-        Render(TemplateRenderWizard::Stream*, TemplateRenderWizard::Tree::Tree*);
+        Render(TemplateRenderWizard::Lexer::Lexer*, TemplateRenderWizard::Tree::Tree*);
         IOBuffer::IOMemoryBuffer* toBufferTree();
     };
 }
