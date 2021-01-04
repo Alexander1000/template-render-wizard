@@ -9,3 +9,4 @@ x >= y = false
 x == y = false
 x <= y = true
 x < y = true
+5 + 2 * (7 + 3) = 25
