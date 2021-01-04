@@ -10,14 +10,16 @@ namespace TemplateRenderWizard
             int size = syntaxElement->getListElements()->size();
             if (size == 1) {
                 auto firstElement = *it;
-                std::cout << std::endl;
                 if (firstElement->getType() == SyntaxTree::Syntax::SyntaxElementType::TokenType) {
                     return this->getValueFromToken(firstElement->getToken(), context);
                 }
                 throw new UnexpectedToken;
             }
 
-            throw new UnexpectedToken;
+            it++;
+            Value* v = this->calc_expr_tree(*it, context);
+            it++;
+            return v;
         }
 
         throw new UnexpectedToken;
