@@ -40,8 +40,7 @@ namespace TemplateRenderWizard
                 ioBuffer = r->toBufferTree(context);
             }
 
-            // todo: merge buffers
-            ((IOBuffer::IOMemoryBuffer*) buffer)->append(ioBuffer);
+            merge_buffers(buffer, ioBuffer, 4096);
 
             it++; // close control tag
             free(dirName);
