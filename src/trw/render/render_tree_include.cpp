@@ -26,25 +26,34 @@ namespace TemplateRenderWizard
             INIT_CHAR_STRING(strFilePath, 64);
             tFilePath->getReader()->read(strFilePath, 63);
 
-            auto dirName = dirname((char*) this->tplFile);
-            INIT_CHAR_STRING(strFileNearTpl, 1024);
-            sprintf(strFileNearTpl, "%s/%s", dirName, strFilePath);
-
             IOBuffer::IOMemoryBuffer* ioBuffer = nullptr;
 
-            if (file_exists(strFileNearTpl)) {
-                auto r = new Render(strFileNearTpl, this->tree);
-                ioBuffer = r->toBufferTree(context);
-            } else if (file_exists(strFilePath)) {
+            if (this->tplFile != nullptr) {
+                // check nearest template file
+                auto dirName = dirname((char*) this->tplFile);
+                INIT_CHAR_STRING(strFileNearTpl, 1024);
+                sprintf(strFileNearTpl, "%s/%s", dirName, strFilePath);
+
+                if (file_exists(strFileNearTpl)) {
+                    auto r = new Render(strFileNearTpl, this->tree);
+                    ioBuffer = r->toBufferTree(context);
+                    delete r;
+                }
+
+                free(dirName);
+                free(strFileNearTpl);
+            }
+
+            if (ioBuffer == nullptr && file_exists(strFilePath)) {
                 auto r = new Render(strFilePath, this->tree);
                 ioBuffer = r->toBufferTree(context);
             }
 
-            merge_buffers(buffer, ioBuffer, 4096);
+            if (ioBuffer != nullptr) {
+                merge_buffers(buffer, ioBuffer, 4096);
+            }
 
             it++; // close control tag
-            free(dirName);
-            free(strFileNearTpl);
         }
     }
 }
