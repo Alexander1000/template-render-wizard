@@ -1,0 +1,11 @@
+users:
+  - name: Alexander1000
+    age: 30
+  - name: Maxim
+    age: 15
+  - name: Andrey
+    age: 17
+
+place:
+  one: aquapark
+  two: cinema
