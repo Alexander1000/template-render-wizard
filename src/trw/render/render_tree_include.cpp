@@ -1,4 +1,7 @@
 #include <trw.h>
+#include <io-buffer.h>
+#include <syntax-tree-lib.h>
+#include <cstring>
 
 namespace TemplateRenderWizard
 {
@@ -8,6 +11,8 @@ namespace TemplateRenderWizard
         std::list<SyntaxTree::Syntax::SyntaxElement*> *elements,
         Context *context
     ) {
-        // do something
+        if (strcmp(rule->getName(), "include_stmt") == 0) {
+            // do something
+        }
     }
 }

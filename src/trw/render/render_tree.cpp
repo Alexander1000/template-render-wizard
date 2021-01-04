@@ -216,6 +216,10 @@ namespace TemplateRenderWizard
             }
             it++; // closeControlTag
         }
+
+        if (strcmp(rule->getName(), "include_stmt") == 0) {
+            this->render_tree_include(buffer, rule, elements, context);
+        }
     }
 
     Value* Render::calc_expr_tree(SyntaxTree::Syntax::SyntaxElement *syntaxElement, Context* context)
