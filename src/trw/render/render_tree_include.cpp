@@ -40,7 +40,6 @@ namespace TemplateRenderWizard
                     delete r;
                 }
 
-                free(dirName);
                 free(strFileNearTpl);
             }
 
