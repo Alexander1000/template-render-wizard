@@ -21,6 +21,9 @@ namespace TemplateRenderWizard
     bool is_digit(char str);
 
     std::list<char*>* explode_string(const char* str, char delimiter);
+
+    bool file_exists(const std::string* name);
+    bool file_exists(const char* name);
 }
 
 #endif

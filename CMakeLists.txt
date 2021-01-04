@@ -51,6 +51,7 @@ set(TRW_SHARED_SOURCES
     src/trw/expression.cpp
     src/trw/utils/ctype_digits.cpp
     src/trw/utils/explode_string.cpp
+    src/trw/utils/file_exists.cpp
     src/trw/syntax/syntax.cpp
     src/trw/syntax/tree.cpp
     src/trw/context.cpp

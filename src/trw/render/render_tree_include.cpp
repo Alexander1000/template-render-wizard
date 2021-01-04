@@ -24,6 +24,15 @@ namespace TemplateRenderWizard
             RESET_TOKEN_READER(tFilePath);
             INIT_CHAR_STRING(strFilePath, 64);
             tFilePath->getReader()->read(strFilePath, 63);
+
+            if (file_exists(strFilePath)) {
+                // todo: check files exists
+                // todo: check files in depend main template-file
+                // todo: check tpl directory
+                auto r = new Render(strFilePath, this->tree);
+                auto nestedBuffer = r->toBufferTree();
+                // todo: merge buffers
+            }
             it++; // close control tag
         }
     }
