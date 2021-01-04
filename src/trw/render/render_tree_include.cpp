@@ -2,6 +2,7 @@
 #include <io-buffer.h>
 #include <syntax-tree-lib.h>
 #include <cstring>
+#include <libgen.h>
 
 namespace TemplateRenderWizard
 {
@@ -25,15 +26,25 @@ namespace TemplateRenderWizard
             INIT_CHAR_STRING(strFilePath, 64);
             tFilePath->getReader()->read(strFilePath, 63);
 
-            if (file_exists(strFilePath)) {
-                // todo: check files exists
-                // todo: check files in depend main template-file
-                // todo: check tpl directory
+            auto dirName = dirname((char*) this->tplFile);
+            INIT_CHAR_STRING(strFileNearTpl, 1024);
+            sprintf(strFileNearTpl, "%s/%s", dirName, strFilePath);
+
+            IOBuffer::IOMemoryBuffer* ioBuffer = nullptr;
+
+            if (file_exists(strFileNearTpl)) {
+                auto r = new Render(strFileNearTpl, this->tree);
+                ioBuffer = r->toBufferTree(context);
+            } else if (file_exists(strFilePath)) {
                 auto r = new Render(strFilePath, this->tree);
-                auto nestedBuffer = r->toBufferTree(context);
-                // todo: merge buffers
+                ioBuffer = r->toBufferTree(context);
             }
+
+            // todo: merge buffers
+
             it++; // close control tag
+            free(dirName);
+            free(strFileNearTpl);
         }
     }
 }
