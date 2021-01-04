@@ -46,7 +46,7 @@ namespace TemplateRenderWizard::Syntax
         this->rules->push_back(rule05);
 
         auto rule06 = new SyntaxTree::Syntax::Rule("expr");
-        rule06->addMatch(new SyntaxTree::Syntax::RuleMatch("exprLog"));
+        rule06->addMatch(new SyntaxTree::Syntax::RuleMatch("exprLow"));
         this->rules->push_back(rule06);
 
         auto rule07 = new SyntaxTree::Syntax::Rule("cmpBool");
