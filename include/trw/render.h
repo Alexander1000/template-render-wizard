@@ -23,6 +23,7 @@ namespace TemplateRenderWizard
     {
         TemplateRenderWizard::Tree::Tree* tree;
         TemplateRenderWizard::Lexer::Lexer* stream;
+        const char* tplFile;
 
         Value* getValueFromToken(SyntaxTree::Token::Token*, Context*);
         bool compare_value(Value*, Value*, SyntaxTree::Token::Token*);
