@@ -38,6 +38,8 @@ namespace TemplateRenderWizard
 
         void render_tree(IOBuffer::IOBuffer* buffer, SyntaxTree::Syntax::SyntaxElement* treeElement, Context *context);
         void render_tree(IOBuffer::IOBuffer* buffer, SyntaxTree::Syntax::Rule* rule, std::list<SyntaxTree::Syntax::SyntaxElement*>* elements, Context *context);
+        void render_tree_include(IOBuffer::IOBuffer* buffer, SyntaxTree::Syntax::Rule* rule, std::list<SyntaxTree::Syntax::SyntaxElement*>* elements, Context *context);
+
         Value* calc_expr_tree(SyntaxTree::Syntax::SyntaxElement*, Context*);
         void render_tree_token(IOBuffer::IOBuffer* buffer, SyntaxTree::Token::Token* token);
         bool calc_if_control(SyntaxTree::Syntax::SyntaxElement*, Context*);
