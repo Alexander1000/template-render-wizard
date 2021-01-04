@@ -38,7 +38,7 @@ namespace TrwTests
 
         auto render = new TemplateRenderWizard::Render("./fixtures/003-tree-override-values.tpl", &tree);
 
-        IOBuffer::IOMemoryBuffer* buffer = render->toBufferTree();
+        IOBuffer::IOMemoryBuffer* buffer = render->toBufferTree(nullptr);
 
         INIT_CHAR_STRING(tBuffer, 1024);
         buffer->read(tBuffer, 1023);
@@ -66,7 +66,7 @@ namespace TrwTests
 
         auto render = new TemplateRenderWizard::Render("./fixtures/003-tree-override-values.tpl", &tree);
 
-        IOBuffer::IOMemoryBuffer* buffer = render->toBufferTree();
+        IOBuffer::IOMemoryBuffer* buffer = render->toBufferTree(nullptr);
 
         INIT_CHAR_STRING(tBuffer, 1024);
         buffer->read(tBuffer, 1023);

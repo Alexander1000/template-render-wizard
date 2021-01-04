@@ -30,7 +30,7 @@ namespace TemplateRenderWizard
                 // todo: check files in depend main template-file
                 // todo: check tpl directory
                 auto r = new Render(strFilePath, this->tree);
-                auto nestedBuffer = r->toBufferTree();
+                auto nestedBuffer = r->toBufferTree(context);
                 // todo: merge buffers
             }
             it++; // close control tag

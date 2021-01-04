@@ -24,7 +24,7 @@ namespace TrwTests
         sprintf(fileWithTemplate, "./fixtures/render-tests/%s", templateName);
         render = new TemplateRenderWizard::Render(fileWithTemplate, &tree);
 
-        IOBuffer::IOMemoryBuffer* buffer = render->toBufferTree();
+        IOBuffer::IOMemoryBuffer* buffer = render->toBufferTree(nullptr);
 
         int nRead = 0;
         int nBaseSize = 1024;

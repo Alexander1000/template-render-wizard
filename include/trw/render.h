@@ -50,7 +50,7 @@ namespace TemplateRenderWizard
         Render(const char*, TemplateRenderWizard::Tree::Tree*);
         Render(std::string*, TemplateRenderWizard::Tree::Tree*);
         Render(TemplateRenderWizard::Lexer::Lexer*, TemplateRenderWizard::Tree::Tree*);
-        IOBuffer::IOMemoryBuffer* toBufferTree();
+        IOBuffer::IOMemoryBuffer* toBufferTree(Context *context);
     };
 }
 

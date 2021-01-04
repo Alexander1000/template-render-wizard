@@ -90,7 +90,7 @@ int main(int argc, char** argv) {
         TemplateRenderWizard::Render* render;
         render = new TemplateRenderWizard::Render(&tokenStream, &tree);
 
-        output = render->toBufferTree();
+        output = render->toBufferTree(nullptr);
     }
 
     int nRead;
