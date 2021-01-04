@@ -283,6 +283,10 @@ namespace TemplateRenderWizard
             );
         }
 
+        if (strcmp(syntaxElement->getRule()->getName(), "term") == 0) {
+            return this->calc_expr_tree_term(syntaxElement, context);
+        }
+
         if (syntaxElement->getType() != SyntaxTree::Syntax::SyntaxType || strcmp(syntaxElement->getRule()->getName(), "expr") != 0) {
             throw new UnexpectedToken;
         }
