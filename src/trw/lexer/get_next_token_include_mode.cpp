@@ -37,6 +37,7 @@ namespace TemplateRenderWizard::Lexer
         bool quoted = false;
         if (*curSymbol == '"') {
             quoted = true;
+            curSymbol = this->getNextChar();
         }
         bool escape = false;
 
