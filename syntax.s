@@ -4,12 +4,12 @@
 # build: syntax-tree -s syntax.s -i src/trw/syntax/tree.cpp
 
 injectValue [t:openTagValue t:plainValue t:closeTagValue]
-expr [t:exprValue]
-expr [t:roundBracketOpen s:expr t:roundBracketClose]
-exprHigh [s:expr t:mathOpHigh s:expr]
-exprLow [s:expr t:mathOp s:expr]
-expr [s:exprHigh]
-expr [s:exprLow]
+expr [s:expr t:mathOp s:term]
+expr [s:term]
+term [s:term t:mathOpHigh s:factor]
+term [s:factor]
+factor [t:exprValue]
+factor [t:roundBracketOpen s:expr t:roundBracketClose]
 cmpBool [t:keyword(and)]
 cmpBool [t:keyword(or)]
 cmpExpr [s:expr t:compare s:expr]

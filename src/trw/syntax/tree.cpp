@@ -20,33 +20,33 @@ namespace TemplateRenderWizard::Syntax
         this->rules->push_back(rule00);
 
         auto rule01 = new SyntaxTree::Syntax::Rule("expr");
-        rule01->addMatch(new SyntaxTree::Syntax::RuleMatch(this->tokenMap->getType("exprValue")));
+        rule01->addMatch(new SyntaxTree::Syntax::RuleMatch("expr"));
+        rule01->addMatch(new SyntaxTree::Syntax::RuleMatch(this->tokenMap->getType("mathOp")));
+        rule01->addMatch(new SyntaxTree::Syntax::RuleMatch("term"));
         this->rules->push_back(rule01);
 
         auto rule02 = new SyntaxTree::Syntax::Rule("expr");
-        rule02->addMatch(new SyntaxTree::Syntax::RuleMatch(this->tokenMap->getType("roundBracketOpen")));
-        rule02->addMatch(new SyntaxTree::Syntax::RuleMatch("expr"));
-        rule02->addMatch(new SyntaxTree::Syntax::RuleMatch(this->tokenMap->getType("roundBracketClose")));
+        rule02->addMatch(new SyntaxTree::Syntax::RuleMatch("term"));
         this->rules->push_back(rule02);
 
-        auto rule03 = new SyntaxTree::Syntax::Rule("exprHigh");
-        rule03->addMatch(new SyntaxTree::Syntax::RuleMatch("expr"));
+        auto rule03 = new SyntaxTree::Syntax::Rule("term");
+        rule03->addMatch(new SyntaxTree::Syntax::RuleMatch("term"));
         rule03->addMatch(new SyntaxTree::Syntax::RuleMatch(this->tokenMap->getType("mathOpHigh")));
-        rule03->addMatch(new SyntaxTree::Syntax::RuleMatch("expr"));
+        rule03->addMatch(new SyntaxTree::Syntax::RuleMatch("factor"));
         this->rules->push_back(rule03);
 
-        auto rule04 = new SyntaxTree::Syntax::Rule("exprLow");
-        rule04->addMatch(new SyntaxTree::Syntax::RuleMatch("expr"));
-        rule04->addMatch(new SyntaxTree::Syntax::RuleMatch(this->tokenMap->getType("mathOp")));
-        rule04->addMatch(new SyntaxTree::Syntax::RuleMatch("expr"));
+        auto rule04 = new SyntaxTree::Syntax::Rule("term");
+        rule04->addMatch(new SyntaxTree::Syntax::RuleMatch("factor"));
         this->rules->push_back(rule04);
 
-        auto rule05 = new SyntaxTree::Syntax::Rule("expr");
-        rule05->addMatch(new SyntaxTree::Syntax::RuleMatch("exprHigh"));
+        auto rule05 = new SyntaxTree::Syntax::Rule("factor");
+        rule05->addMatch(new SyntaxTree::Syntax::RuleMatch(this->tokenMap->getType("exprValue")));
         this->rules->push_back(rule05);
 
-        auto rule06 = new SyntaxTree::Syntax::Rule("expr");
-        rule06->addMatch(new SyntaxTree::Syntax::RuleMatch("exprLow"));
+        auto rule06 = new SyntaxTree::Syntax::Rule("factor");
+        rule06->addMatch(new SyntaxTree::Syntax::RuleMatch(this->tokenMap->getType("roundBracketOpen")));
+        rule06->addMatch(new SyntaxTree::Syntax::RuleMatch("expr"));
+        rule06->addMatch(new SyntaxTree::Syntax::RuleMatch(this->tokenMap->getType("roundBracketClose")));
         this->rules->push_back(rule06);
 
         auto rule07 = new SyntaxTree::Syntax::Rule("cmpBool");
