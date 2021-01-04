@@ -229,6 +229,10 @@ namespace TemplateRenderWizard
         }
 
         if (syntaxElement->getType() == SyntaxTree::Syntax::TokenListType) {
+            if (strcmp(syntaxElement->getRule()->getName(), "term") == 0) {
+                return this->calc_expr_tree_term(syntaxElement, context);
+            }
+
             if (strcmp(syntaxElement->getRule()->getName(), "expr") != 0) {
                 throw new UnexpectedToken;
             }
