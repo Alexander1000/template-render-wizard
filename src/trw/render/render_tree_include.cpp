@@ -41,6 +41,7 @@ namespace TemplateRenderWizard
             }
 
             // todo: merge buffers
+            ((IOBuffer::IOMemoryBuffer*) buffer)->append(ioBuffer);
 
             it++; // close control tag
             free(dirName);
