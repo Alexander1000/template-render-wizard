@@ -13,6 +13,18 @@ namespace TemplateRenderWizard
     ) {
         if (strcmp(rule->getName(), "include_stmt") == 0) {
             // do something
+            auto it = elements->begin(); // open control tag
+            it++; // keyword include
+            it++; // file name for render
+            auto elFilePath = *it;
+            if (elFilePath->getType() != SyntaxTree::Syntax::SyntaxElementType::TokenType) {
+                throw new UnexpectedToken;
+            }
+            auto tFilePath = elFilePath->getToken();
+            RESET_TOKEN_READER(tFilePath);
+            INIT_CHAR_STRING(strFilePath, 64);
+            tFilePath->getReader()->read(strFilePath, 63);
+            it++; // close control tag
         }
     }
 }
