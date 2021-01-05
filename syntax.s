@@ -5,11 +5,8 @@
 
 injectValue [t:openTagValue t:plainValue t:closeTagValue]
 expr [s:expr t:mathOp s:term]
-expr [s:expr t:mathOp s:expr]
 expr [s:term]
 term [s:term t:mathOpHigh s:factor]
-term [s:term t:mathOpHigh s:expr]
-term [s:expr t:mathOpHigh s:expr]
 term [s:factor]
 factor [t:exprValue]
 factor [t:roundBracketOpen s:expr t:roundBracketClose]
