@@ -14,6 +14,9 @@ namespace TemplateRenderWizard::Syntax
             int nestedLevel = 0;
 
             if (token->getType() == TemplateRenderWizard::Token::Type::RoundBracketOpenType) {
+                SyntaxTree::Syntax::SyntaxElement* closeBracket = nullptr;
+                filteredElements->push_back(*it);
+
                 do {
                     it++;
                     if (std::next(it) == elements->end()) {
@@ -26,6 +29,7 @@ namespace TemplateRenderWizard::Syntax
                         if (nestedLevel > 0) {
                             nestedLevel--;
                         } else {
+                            closeBracket = *it;
                             break;
                         }
                     }
@@ -33,6 +37,7 @@ namespace TemplateRenderWizard::Syntax
                 } while (true);
 
                 filteredElements->push_back(this->parseBrackets(bracketElements));
+                filteredElements->push_back(closeBracket);
                 continue;
             }
 
@@ -42,7 +47,7 @@ namespace TemplateRenderWizard::Syntax
         return this->parse(filteredElements);
     }
 
-    SyntaxTree::Syntax::SyntaxElement * Tree::parseBrackets(std::list<SyntaxTree::Syntax::SyntaxElement *> *elements)
+    SyntaxTree::Syntax::SyntaxElement* Tree::parseBrackets(std::list<SyntaxTree::Syntax::SyntaxElement *> *elements)
     {
         if (elements->size() == 1) {
             return *elements->begin();
