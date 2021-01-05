@@ -31,6 +31,8 @@ namespace TemplateRenderWizard
             void initializeDefaults() override;
 
         protected:
+            std::list<SyntaxTree::Syntax::Rule*>* mathRules;
+
             SyntaxTree::Syntax::SyntaxElement* beforeParse(std::list<SyntaxTree::Syntax::SyntaxElement*>*) override;
 
         private:

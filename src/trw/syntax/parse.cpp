@@ -44,6 +44,20 @@ namespace TemplateRenderWizard::Syntax
 
     SyntaxTree::Syntax::SyntaxElement * Tree::parseBrackets(std::list<SyntaxTree::Syntax::SyntaxElement *> *elements)
     {
-        return nullptr;
+        if (elements->size() == 1) {
+            return *elements->begin();
+        }
+
+        int sizeElements;
+
+        for (auto it = this->mathRules->begin(); it != this->mathRules->end(); it++) {
+            SyntaxTree::Syntax::Rule *rule = *it;
+            do {
+                sizeElements = elements->size();
+                elements = this->run_single_rule(rule, elements);
+            } while (sizeElements != elements->size());
+        }
+
+        return this->parseBrackets(elements);
     }
 }
