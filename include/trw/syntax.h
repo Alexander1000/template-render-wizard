@@ -29,6 +29,9 @@ namespace TemplateRenderWizard
         public:
             Tree();
             void initializeDefaults() override;
+
+        protected:
+            SyntaxTree::Syntax::SyntaxElement* beforeParse(std::list<SyntaxTree::Syntax::SyntaxElement*>*) override;
         };
     }
 }

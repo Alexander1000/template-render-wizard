@@ -57,6 +57,7 @@ set(TRW_SHARED_SOURCES
     src/trw/utils/merge_buffers.cpp
     src/trw/syntax/syntax.cpp
     src/trw/syntax/tree.cpp
+    src/trw/syntax/parse.cpp
     src/trw/context.cpp
 )
 
