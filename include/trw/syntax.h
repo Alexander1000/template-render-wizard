@@ -32,6 +32,9 @@ namespace TemplateRenderWizard
 
         protected:
             SyntaxTree::Syntax::SyntaxElement* beforeParse(std::list<SyntaxTree::Syntax::SyntaxElement*>*) override;
+
+        private:
+            SyntaxTree::Syntax::SyntaxElement* parseBrackets(std::list<SyntaxTree::Syntax::SyntaxElement*>*);
         };
     }
 }

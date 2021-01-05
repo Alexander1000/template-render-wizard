@@ -31,11 +31,19 @@ namespace TemplateRenderWizard::Syntax
                     }
                     bracketElements->push_back(*it);
                 } while (true);
+
+                filteredElements->push_back(this->parseBrackets(bracketElements));
+                continue;
             }
 
             filteredElements->push_back(*it);
         }
 
         return this->parse(filteredElements);
+    }
+
+    SyntaxTree::Syntax::SyntaxElement * Tree::parseBrackets(std::list<SyntaxTree::Syntax::SyntaxElement *> *elements)
+    {
+        return nullptr;
     }
 }
