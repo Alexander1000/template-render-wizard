@@ -6,6 +6,32 @@ namespace TemplateRenderWizard::Syntax
 {
     SyntaxTree::Syntax::SyntaxElement* Tree::beforeParse(std::list<SyntaxTree::Syntax::SyntaxElement *> *elements)
     {
+        elements = this->filterBrackets(elements);
+
+        return this->parse(elements);
+    }
+
+    SyntaxTree::Syntax::SyntaxElement* Tree::parseBrackets(std::list<SyntaxTree::Syntax::SyntaxElement *> *elements)
+    {
+        if (elements->size() == 1) {
+            return *elements->begin();
+        }
+
+        int sizeElements;
+
+        for (auto it = this->mathRules->begin(); it != this->mathRules->end(); it++) {
+            SyntaxTree::Syntax::Rule *rule = *it;
+            do {
+                sizeElements = elements->size();
+                elements = this->run_single_rule(rule, elements);
+            } while (sizeElements != elements->size());
+        }
+
+        return this->parseBrackets(elements);
+    }
+
+    std::list<SyntaxTree::Syntax::SyntaxElement *> * Tree::filterBrackets(std::list<SyntaxTree::Syntax::SyntaxElement *> *elements)
+    {
         auto filteredElements = new std::list<SyntaxTree::Syntax::SyntaxElement*>;
 
         for (auto it = elements->begin(); it != elements->end(); it++) {
@@ -43,26 +69,6 @@ namespace TemplateRenderWizard::Syntax
 
             filteredElements->push_back(*it);
         }
-
-        return this->parse(filteredElements);
-    }
-
-    SyntaxTree::Syntax::SyntaxElement* Tree::parseBrackets(std::list<SyntaxTree::Syntax::SyntaxElement *> *elements)
-    {
-        if (elements->size() == 1) {
-            return *elements->begin();
-        }
-
-        int sizeElements;
-
-        for (auto it = this->mathRules->begin(); it != this->mathRules->end(); it++) {
-            SyntaxTree::Syntax::Rule *rule = *it;
-            do {
-                sizeElements = elements->size();
-                elements = this->run_single_rule(rule, elements);
-            } while (sizeElements != elements->size());
-        }
-
-        return this->parseBrackets(elements);
+        return filteredElements;
     }
 }
