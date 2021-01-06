@@ -37,7 +37,13 @@ namespace TemplateRenderWizard
 
         private:
             std::list<SyntaxTree::Syntax::SyntaxElement*>* filterBrackets(std::list<SyntaxTree::Syntax::SyntaxElement*>*);
+            std::list<SyntaxTree::Syntax::SyntaxElement*>* filterMathHigh(std::list<SyntaxTree::Syntax::SyntaxElement*>*);
+            std::list<SyntaxTree::Syntax::SyntaxElement*>* filterMathLow(std::list<SyntaxTree::Syntax::SyntaxElement*>*);
             SyntaxTree::Syntax::SyntaxElement* parseBrackets(std::list<SyntaxTree::Syntax::SyntaxElement*>*);
+
+            SyntaxTree::Syntax::SyntaxElement* parseExpr(std::list<SyntaxTree::Syntax::SyntaxElement*>*);
+
+            bool isExprToken(SyntaxTree::Syntax::SyntaxElement*);
         };
     }
 }
