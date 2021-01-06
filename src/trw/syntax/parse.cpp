@@ -58,7 +58,7 @@ namespace TemplateRenderWizard::Syntax
 
                 do {
                     it++;
-                    if (std::next(it) == elements->end()) {
+                    if (it == elements->end()) {
                         break;
                     }
                     if ((*it)->getToken()->getType() == TemplateRenderWizard::Token::Type::RoundBracketOpenType) {
@@ -151,7 +151,9 @@ namespace TemplateRenderWizard::Syntax
     SyntaxTree::Syntax::SyntaxElement* Tree::parseExpr(std::list<SyntaxTree::Syntax::SyntaxElement*>* elements)
     {
         if (elements->size() == 1) {
-            return *elements->begin();
+            auto exprElement = new SyntaxTree::Syntax::SyntaxElement(elements);
+            exprElement->setRule(new SyntaxTree::Syntax::Rule("expr"));
+            return exprElement;
         }
         elements = this->filterBrackets(elements);
         elements = this->filterMathHigh(elements);
