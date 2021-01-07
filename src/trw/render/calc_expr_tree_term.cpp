@@ -14,14 +14,20 @@ namespace TemplateRenderWizard
         if (syntaxElement->getType() == SyntaxTree::Syntax::SyntaxElementType::TokenListType) {
             int size = syntaxElement->getListElements()->size();
             auto it = syntaxElement->getListElements()->begin();
-            auto firstElement = (*it)->getElement();
+            auto firstElement = *it;
             if (size == 1) {
                 if (strcmp(firstElement->getRule()->getName(), "factor") == 0) {
                     return this->calc_expr_tree_factor(firstElement, context);
                 }
             }
 
-            Value* lValue = this->calc_expr_tree(firstElement, context);
+            Value* lValue = nullptr;
+            if (firstElement->getType() == SyntaxTree::Syntax::SyntaxElementType::SyntaxType) {
+                lValue = this->calc_expr_tree(firstElement->getElement(), context);
+            }
+            if (firstElement->getType() == SyntaxTree::Syntax::SyntaxElementType::TokenType) {
+                lValue = this->getValueFromToken(firstElement->getToken(), context);
+            }
 
             it++; // token math op
             auto tokenOp = *it;

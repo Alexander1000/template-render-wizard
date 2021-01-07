@@ -233,17 +233,17 @@ namespace TemplateRenderWizard
                 return this->calc_expr_tree_term(syntaxElement, context);
             }
 
+            if (strcmp(syntaxElement->getRule()->getName(), "factor") == 0) {
+                return this->calc_expr_tree_factor(syntaxElement, context);
+            }
+
             if (strcmp(syntaxElement->getRule()->getName(), "expr") != 0) {
                 throw new UnexpectedToken;
             }
 
             auto syntaxList = syntaxElement->getListElements();
 
-            int count = 0;
-            for (auto it = syntaxList->begin(); it != syntaxList->end(); it++) {
-                count++;
-            }
-
+            int count = syntaxList->size();
             auto it = syntaxList->begin(); // lValue
             auto firstElement = *it;
 
@@ -261,12 +261,12 @@ namespace TemplateRenderWizard
                 throw new UnexpectedToken;
             }
 
-            if (firstElement->getType() == SyntaxTree::Syntax::SyntaxElementType::TokenType) {
-                it++;
-                auto exprValue = this->calc_expr_tree(*it, context);
-                it++;
-                return exprValue;
-            }
+//            if (firstElement->getType() == SyntaxTree::Syntax::SyntaxElementType::TokenType) {
+//                it++;
+//                auto exprValue = this->calc_expr_tree(*it, context);
+//                it++;
+//                return exprValue;
+//            }
 
             lValue = this->calc_expr_tree(*it, context);
             it++;
