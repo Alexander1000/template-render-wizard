@@ -15,6 +15,7 @@ namespace TemplateRenderWizard::Syntax
                     it++;
                 } while (this->isExprToken(*it));
                 filteredElements->push_back(this->parseExpr(exprList));
+                filteredElements->push_back(*it);
             } else {
                 filteredElements->push_back(*it);
             }
@@ -151,7 +152,7 @@ namespace TemplateRenderWizard::Syntax
     SyntaxTree::Syntax::SyntaxElement* Tree::parseExpr(std::list<SyntaxTree::Syntax::SyntaxElement*>* elements)
     {
         if (elements->size() == 1) {
-            auto exprElement = new SyntaxTree::Syntax::SyntaxElement(elements);
+            auto exprElement = new SyntaxTree::Syntax::SyntaxElement(*elements->begin());
             exprElement->setRule(new SyntaxTree::Syntax::Rule("expr"));
             return exprElement;
         }
