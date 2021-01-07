@@ -80,7 +80,9 @@ namespace TemplateRenderWizard::Syntax
                 newSyntaxElement->push_back(closeBracket);
                 auto sntxElement = new SyntaxTree::Syntax::SyntaxElement(newSyntaxElement);
                 sntxElement->setRule(new SyntaxTree::Syntax::Rule("factor"));
-                filteredElements->push_back(sntxElement);
+                auto elElement = new SyntaxTree::Syntax::SyntaxElement(sntxElement);
+                elElement->setRule(new SyntaxTree::Syntax::Rule("factor"));
+                filteredElements->push_back(elElement);
                 continue;
             }
 
@@ -115,8 +117,11 @@ namespace TemplateRenderWizard::Syntax
 
                     auto newElement = new SyntaxTree::Syntax::SyntaxElement(listElements);
                     newElement->setRule(new SyntaxTree::Syntax::Rule("term"));
-                    filteredElements->push_back(newElement);
 
+                    auto elList = new SyntaxTree::Syntax::SyntaxElement(newElement);
+                    elList->setRule(new SyntaxTree::Syntax::Rule("term"));
+
+                    filteredElements->push_back(elList);
 
                     continue;
                 }
@@ -187,9 +192,12 @@ namespace TemplateRenderWizard::Syntax
                     filteredElements->pop_back();
 
                     auto newElement = new SyntaxTree::Syntax::SyntaxElement(listElements);
-                    newElement->setRule(new SyntaxTree::Syntax::Rule("term"));
-                    filteredElements->push_back(newElement);
+                    newElement->setRule(new SyntaxTree::Syntax::Rule("expr"));
 
+                    auto elList = new SyntaxTree::Syntax::SyntaxElement(newElement);
+                    elList->setRule(new SyntaxTree::Syntax::Rule("expr"));
+
+                    filteredElements->push_back(elList);
 
                     continue;
                 }
