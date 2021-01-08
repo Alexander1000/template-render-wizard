@@ -123,6 +123,8 @@ namespace TemplateRenderWizard::Syntax
 
                     filteredElements->push_back(elList);
 
+                    prev = elList;
+
                     continue;
                 }
             }
@@ -198,6 +200,8 @@ namespace TemplateRenderWizard::Syntax
                     elList->setRule(new SyntaxTree::Syntax::Rule("expr"));
 
                     filteredElements->push_back(elList);
+
+                    prev = elList;
 
                     continue;
                 }
