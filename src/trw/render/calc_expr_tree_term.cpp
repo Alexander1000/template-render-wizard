@@ -33,8 +33,14 @@ namespace TemplateRenderWizard
             auto tokenOp = *it;
 
             it++; // rValue
-            auto rValueElement = (*it)->getElement();
-            Value* rValue = this->calc_expr_tree(rValueElement, context);
+            auto rValueElement = *it;
+            Value* rValue = nullptr;
+            if (rValueElement->getType() == SyntaxTree::Syntax::SyntaxElementType::SyntaxType) {
+                rValue = this->calc_expr_tree(rValueElement->getElement(), context);
+            }
+            if (rValueElement->getType() == SyntaxTree::Syntax::SyntaxElementType::TokenType) {
+                rValue = this->getValueFromToken(rValueElement->getToken(), context);
+            }
 
             return this->calc_expr(
                 new Expression(
