@@ -1,9 +1,12 @@
 cmake_minimum_required(VERSION 3.7)
 
+project(template-render-wizard)
+
 set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
-project(template-render-wizard)
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++17")
 
 set(TRW_SHARED_SOURCES
     src/trw/config.cpp
@@ -85,6 +88,8 @@ add_executable(
     ${TRW_SOURCES}
 )
 
+target_compile_features(${PROJECT_NAME} PRIVATE cxx_std_17)
+
 target_link_libraries(${PROJECT_NAME}
     ${IO_BUFFER}
     ${YAML_PARSER}
@@ -97,7 +102,12 @@ target_link_libraries(${PROJECT_NAME}
 
 project(template-render-wizard-test)
 
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_EXTENSIONS OFF)
+
 set(CMAKE_BUILD_TYPE Debug)
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++17")
 
 set(TRW_SOURCES_TEST
     tests/src/main.cpp
@@ -124,6 +134,8 @@ add_executable(
     ${PROJECT_NAME} tests/src/main.cpp
     ${TRW_SOURCES_TEST}
 )
+
+target_compile_features(${PROJECT_NAME} PRIVATE cxx_std_17)
 
 target_link_libraries(${PROJECT_NAME}
     ${IO_BUFFER}

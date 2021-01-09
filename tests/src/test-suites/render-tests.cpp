@@ -60,7 +60,7 @@ namespace TrwTests
             }
         } while (nRead == 1023);
 
-        // std::cout << tBuffer << std::endl;
+        std::cout << tBuffer << std::endl;
 
         CppUnitTest::assertEquals(t, expected, tBuffer);
 

@@ -3,6 +3,8 @@
 #include <syntax-tree-lib.h>
 #include <cstring>
 #include <libgen.h>
+#include <iostream>
+#include <filesystem>
 
 namespace TemplateRenderWizard
 {
@@ -30,7 +32,10 @@ namespace TemplateRenderWizard
 
             if (this->tplFile != nullptr) {
                 // check nearest template file
-                auto dirName = dirname((char*) this->tplFile);
+                auto path = std::filesystem::path(this->tplFile);
+                path.remove_filename();
+                auto dirName = path.c_str();
+                // auto dirName = dirname((char*) this->tplFile);
                 INIT_CHAR_STRING(strFileNearTpl, 1024);
                 sprintf(strFileNearTpl, "%s/%s", dirName, strFilePath);
 
@@ -38,6 +43,8 @@ namespace TemplateRenderWizard
                     auto r = new Render(strFileNearTpl, this->tree);
                     ioBuffer = r->toBufferTree(context);
                     delete r;
+                } else {
+                    std::cout << "File not exists? " << strFileNearTpl << std::endl;
                 }
 
                 free(strFileNearTpl);
@@ -50,6 +57,7 @@ namespace TemplateRenderWizard
             }
 
             if (ioBuffer != nullptr) {
+                std::cout << "Merge Buffers: " << std::endl;
                 merge_buffers(buffer, ioBuffer, 4096);
             }
 
