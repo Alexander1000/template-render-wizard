@@ -6,38 +6,6 @@ namespace TemplateRenderWizard::Syntax
 {
     Tree::Tree() : SyntaxTree::Syntax::Tree() {
         this->tokenMap = new TemplateRenderWizard::Token::TokenMap;
-
-        this->mathRules = new std::list<SyntaxTree::Syntax::Rule*>;
-
-        auto rule01 = new SyntaxTree::Syntax::Rule("expr");
-        rule01->addMatch(new SyntaxTree::Syntax::RuleMatch("expr"));
-        rule01->addMatch(new SyntaxTree::Syntax::RuleMatch(this->tokenMap->getType("mathOp")));
-        rule01->addMatch(new SyntaxTree::Syntax::RuleMatch("term"));
-        this->mathRules->push_back(rule01);
-
-        auto rule02 = new SyntaxTree::Syntax::Rule("expr");
-        rule02->addMatch(new SyntaxTree::Syntax::RuleMatch("term"));
-        this->mathRules->push_back(rule02);
-
-        auto rule03 = new SyntaxTree::Syntax::Rule("term");
-        rule03->addMatch(new SyntaxTree::Syntax::RuleMatch("term"));
-        rule03->addMatch(new SyntaxTree::Syntax::RuleMatch(this->tokenMap->getType("mathOpHigh")));
-        rule03->addMatch(new SyntaxTree::Syntax::RuleMatch("factor"));
-        this->mathRules->push_back(rule03);
-
-        auto rule04 = new SyntaxTree::Syntax::Rule("term");
-        rule04->addMatch(new SyntaxTree::Syntax::RuleMatch("factor"));
-        this->mathRules->push_back(rule04);
-
-        auto rule05 = new SyntaxTree::Syntax::Rule("factor");
-        rule05->addMatch(new SyntaxTree::Syntax::RuleMatch(this->tokenMap->getType("exprValue")));
-        this->mathRules->push_back(rule05);
-
-        auto rule06 = new SyntaxTree::Syntax::Rule("factor");
-        rule06->addMatch(new SyntaxTree::Syntax::RuleMatch(this->tokenMap->getType("roundBracketOpen")));
-        rule06->addMatch(new SyntaxTree::Syntax::RuleMatch("expr"));
-        rule06->addMatch(new SyntaxTree::Syntax::RuleMatch(this->tokenMap->getType("roundBracketClose")));
-        this->mathRules->push_back(rule06);
     }
 
     void Tree::initializeDefaults()
