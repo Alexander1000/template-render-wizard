@@ -30,6 +30,14 @@ namespace TemplateRenderWizard::Lexer
         };
     }
 
+    Lexer::~Lexer() {
+        delete this->charStack;
+        delete this->positionStack;
+        delete this->position;
+        delete this->keywords;
+        delete this->modeStack;
+    }
+
     SyntaxTree::Token::Token* Lexer::getNextToken()
     {
         char* curSymbol = this->getNextChar();

@@ -46,6 +46,7 @@ namespace TemplateRenderWizard
             if (ioBuffer == nullptr && file_exists(strFilePath)) {
                 auto r = new Render(strFilePath, this->tree);
                 ioBuffer = r->toBufferTree(context);
+                delete r;
             }
 
             if (ioBuffer != nullptr) {

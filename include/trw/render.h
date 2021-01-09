@@ -23,6 +23,8 @@ namespace TemplateRenderWizard
     {
         TemplateRenderWizard::Tree::Tree* tree;
         TemplateRenderWizard::Lexer::Lexer* stream;
+        IOBuffer::IOFileReader* fileReader;
+        IOBuffer::CharStream* charStream;
         const char* tplFile;
 
         Value* getValueFromToken(SyntaxTree::Token::Token*, Context*);
@@ -53,6 +55,8 @@ namespace TemplateRenderWizard
         Render(std::string*, TemplateRenderWizard::Tree::Tree*);
         Render(TemplateRenderWizard::Lexer::Lexer*, TemplateRenderWizard::Tree::Tree*);
         IOBuffer::IOMemoryBuffer* toBufferTree(Context *context);
+
+        ~Render();
     };
 }
 

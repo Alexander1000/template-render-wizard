@@ -23,6 +23,7 @@ namespace TemplateRenderWizard::Lexer
     public:
         Lexer(IOBuffer::CharStream* charStream);
         SyntaxTree::Token::Token* getNextToken();
+        ~Lexer();
 
     private:
         IOBuffer::CharStream* charStream;
