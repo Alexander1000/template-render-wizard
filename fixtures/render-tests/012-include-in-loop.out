@@ -1,0 +1,30 @@
+<html>
+<head></head>
+<body>
+
+    <block>
+         - Hello Alexander1000!
+ - Can you go to aquapark?
+ - Perfect!
+(Test text with template and conditions)
+
+    </block>
+
+    <block>
+         - Hello Maxim!
+ - Can you go to cinema?
+ - Perfect!
+(Test text with template and conditions)
+
+    </block>
+
+    <block>
+         - Hello Andrey!
+ - Can you go to aquapark?
+ - Perfect!
+(Test text with template and conditions)
+
+    </block>
+
+</body>
+</html>
