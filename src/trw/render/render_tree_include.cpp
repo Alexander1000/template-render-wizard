@@ -2,8 +2,6 @@
 #include <io-buffer.h>
 #include <syntax-tree-lib.h>
 #include <cstring>
-#include <libgen.h>
-#include <iostream>
 #include <filesystem>
 
 namespace TemplateRenderWizard
@@ -15,7 +13,6 @@ namespace TemplateRenderWizard
         Context *context
     ) {
         if (strcmp(rule->getName(), "include_stmt") == 0) {
-            // do something
             auto it = elements->begin(); // open control tag
             it++; // keyword include
             it++; // file name for render
@@ -43,8 +40,6 @@ namespace TemplateRenderWizard
                     auto r = new Render(strFileNearTpl, this->tree);
                     ioBuffer = r->toBufferTree(context);
                     delete r;
-                } else {
-                    std::cout << "File not exists? " << strFileNearTpl << std::endl;
                 }
 
                 free(strFileNearTpl);
@@ -57,7 +52,6 @@ namespace TemplateRenderWizard
             }
 
             if (ioBuffer != nullptr) {
-                std::cout << "Merge Buffers: " << std::endl;
                 merge_buffers(buffer, ioBuffer, 4096);
             }
 
