@@ -1,0 +1,17 @@
+plainText
+openControlTag
+keyword
+plainValue
+keyword
+plainValue
+closeControlTag
+plainText
+openControlTag
+keyword
+filePath
+closeControlTag
+plainText
+openControlTag
+keyword
+closeControlTag
+plainText

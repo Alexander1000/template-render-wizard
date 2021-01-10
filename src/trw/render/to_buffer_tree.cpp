@@ -4,7 +4,7 @@
 
 namespace TemplateRenderWizard
 {
-    IOBuffer::IOMemoryBuffer* Render::toBufferTree()
+    IOBuffer::IOMemoryBuffer* Render::toBufferTree(Context *context)
     {
         auto buffer = new IOBuffer::IOMemoryBuffer(TRW_RENDER_MEMORY_BLOCK_SIZE);
 
@@ -20,7 +20,7 @@ namespace TemplateRenderWizard
         syntaxTree.initializeDefaults();
         auto syntax = syntaxTree.parse(tokens);
 
-        this->render_tree(buffer, syntax, nullptr);
+        this->render_tree(buffer, syntax, context);
 
         return buffer;
     }

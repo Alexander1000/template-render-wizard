@@ -2,7 +2,7 @@
 #define H_TRW_RENDER_INCLUDED
 
 #include <string>
-#include <trw/stream.h>
+#include <trw/lexer.h>
 #include <trw/tree_parameters.h>
 #include <io-buffer.h>
 #include <list>
@@ -22,7 +22,10 @@ namespace TemplateRenderWizard
     class Render
     {
         TemplateRenderWizard::Tree::Tree* tree;
-        TemplateRenderWizard::Stream* stream;
+        TemplateRenderWizard::Lexer::Lexer* stream;
+        IOBuffer::IOFileReader* fileReader;
+        IOBuffer::CharStream* charStream;
+        const char* tplFile;
 
         Value* getValueFromToken(SyntaxTree::Token::Token*, Context*);
         bool compare_value(Value*, Value*, SyntaxTree::Token::Token*);
@@ -38,7 +41,11 @@ namespace TemplateRenderWizard
 
         void render_tree(IOBuffer::IOBuffer* buffer, SyntaxTree::Syntax::SyntaxElement* treeElement, Context *context);
         void render_tree(IOBuffer::IOBuffer* buffer, SyntaxTree::Syntax::Rule* rule, std::list<SyntaxTree::Syntax::SyntaxElement*>* elements, Context *context);
+        void render_tree_include(IOBuffer::IOBuffer* buffer, SyntaxTree::Syntax::Rule* rule, std::list<SyntaxTree::Syntax::SyntaxElement*>* elements, Context *context);
+
         Value* calc_expr_tree(SyntaxTree::Syntax::SyntaxElement*, Context*);
+        Value* calc_expr_tree_term(SyntaxTree::Syntax::SyntaxElement*, Context*);
+        Value* calc_expr_tree_factor(SyntaxTree::Syntax::SyntaxElement*, Context*);
         void render_tree_token(IOBuffer::IOBuffer* buffer, SyntaxTree::Token::Token* token);
         bool calc_if_control(SyntaxTree::Syntax::SyntaxElement*, Context*);
         bool calc_bool_expr(SyntaxTree::Syntax::SyntaxElement*, Context*);
@@ -46,8 +53,10 @@ namespace TemplateRenderWizard
     public:
         Render(const char*, TemplateRenderWizard::Tree::Tree*);
         Render(std::string*, TemplateRenderWizard::Tree::Tree*);
-        Render(TemplateRenderWizard::Stream*, TemplateRenderWizard::Tree::Tree*);
-        IOBuffer::IOMemoryBuffer* toBufferTree();
+        Render(TemplateRenderWizard::Lexer::Lexer*, TemplateRenderWizard::Tree::Tree*);
+        IOBuffer::IOMemoryBuffer* toBufferTree(Context *context);
+
+        ~Render();
     };
 }
 

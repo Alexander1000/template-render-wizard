@@ -8,20 +8,22 @@
 #include <list>
 #include <syntax-tree-lib.h>
 
-namespace TemplateRenderWizard
+namespace TemplateRenderWizard::Lexer
 {
     enum StreamMode{
         PlainText,
         ValueMode,
         ControlModeExpression,
         ControlModeForExpression,
+        ControlModeIncludeExpression,
     };
 
-    class Stream
+    class Lexer
     {
     public:
-        Stream(IOBuffer::CharStream* charStream);
+        Lexer(IOBuffer::CharStream* charStream);
         SyntaxTree::Token::Token* getNextToken();
+        ~Lexer();
 
     private:
         IOBuffer::CharStream* charStream;
@@ -32,6 +34,8 @@ namespace TemplateRenderWizard
         std::list<std::string>* keywords;
 
         Position *position;
+
+        SyntaxTree::Token::Token* getNextTokenIncludeMode();
 
         void switchToMode(StreamMode);
         void switchToPreviousMode();

@@ -1,12 +1,11 @@
 #include <io-buffer.h>
 #include <trw.h>
 #include <stack>
-#include <iostream>
 #include <syntax-tree-lib.h>
 
-namespace TemplateRenderWizard
+namespace TemplateRenderWizard::Lexer
 {
-    Stream::Stream(IOBuffer::CharStream *charStream)
+    Lexer::Lexer(IOBuffer::CharStream *charStream)
     {
         this->charStream = charStream;
         this->mode = StreamMode::PlainText;
@@ -17,18 +16,29 @@ namespace TemplateRenderWizard
         this->position = new Position(0, 0);
         this->positionStack = new std::stack<Position*>;
 
-        this->keywords = new std::list<std::string>;
-        this->keywords->push_back("if");
-        this->keywords->push_back("else");
-        this->keywords->push_back("endif");
-        this->keywords->push_back("for");
-        this->keywords->push_back("endfor");
-        this->keywords->push_back("in");
-        this->keywords->push_back("and");
-        this->keywords->push_back("or");
+        this->keywords = new std::list<std::string>{
+            "if",
+            "else",
+            "endif",
+            "for",
+            "endfor",
+            "in",
+            "and",
+            "or",
+            "include",
+            "with",
+        };
     }
 
-    SyntaxTree::Token::Token* Stream::getNextToken()
+    Lexer::~Lexer() {
+        delete this->charStack;
+        delete this->positionStack;
+        delete this->position;
+        delete this->keywords;
+        delete this->modeStack;
+    }
+
+    SyntaxTree::Token::Token* Lexer::getNextToken()
     {
         char* curSymbol = this->getNextChar();
         if (curSymbol == nullptr) {
@@ -235,12 +245,18 @@ namespace TemplateRenderWizard
                     curSymbol = this->getNextChar();
                 } while(curSymbol != nullptr && *curSymbol != 0x20);
 
-                if (ioWriter->length() >= 2 && ioWriter->length() <= 6) {
-                    INIT_CHAR_STRING(strKeyword, 7);
-                    ioWriter->read(strKeyword, 6);
+                if (ioWriter->length() >= 2 && ioWriter->length() <= 7) {
+                    INIT_CHAR_STRING(strKeyword, 8);
+                    ioWriter->read(strKeyword, 7);
                     if (this->isKeyword(strKeyword)) {
                         if (strcmp(strKeyword, "for") == 0) {
                             this->switchToMode(StreamMode::ControlModeForExpression);
+                            token = new Token::Keyword(this->position->getLine(), this->position->getColumn(), ioWriter);
+                            return token;
+                        }
+
+                        if (strcmp(strKeyword, "include") == 0) {
+                            this->switchToMode(StreamMode::ControlModeIncludeExpression);
                             token = new Token::Keyword(this->position->getLine(), this->position->getColumn(), ioWriter);
                             return token;
                         }
@@ -320,56 +336,31 @@ namespace TemplateRenderWizard
                 token = new Token::PlainValue(this->position->getLine(), this->position->getColumn(), ioWriter);
                 return token;
             }
+
+            case StreamMode::ControlModeIncludeExpression: {
+                this->pushStackChar(curSymbol);
+                return this->getNextTokenIncludeMode();
+            }
         }
 
         return token;
     }
 
-    char* Stream::getNextChar()
-    {
-        if (!this->charStack->empty()) {
-            char* symbol = this->charStack->top();
-            this->charStack->pop();
-            // todo: free current position
-            this->position = this->positionStack->top();
-            this->positionStack->pop();
-            return symbol;
-        }
-
-        char* nextChar = this->charStream->getNext();
-        if (nextChar != nullptr) {
-            if (*nextChar == 0x0A || *nextChar == 0x0D) {
-                this->position->setColumn(0);
-                this->position->setLine(this->position->getLine() + 1);
-            } else {
-                this->position->setColumn(this->position->getColumn() + 1);
-            }
-        }
-
-        return nextChar;
-    }
-
-    void Stream::pushStackChar(char* curChar) {
-        this->charStack->push(curChar);
-        auto p = new Position(this->position->getLine(), this->position->getColumn());
-        this->positionStack->push(p);
-    }
-
-    void Stream::switchToMode(StreamMode newMode) {
+    void Lexer::switchToMode(StreamMode newMode) {
         this->modeStack->push(this->mode);
         this->mode = newMode;
     }
 
-    void Stream::switchToPreviousMode() {
+    void Lexer::switchToPreviousMode() {
         this->mode = this->modeStack->top();
         this->modeStack->pop();
     }
 
-    bool Stream::isWord(const char *symbol) {
+    bool Lexer::isWord(const char *symbol) {
         return (*symbol >= 'a' && *symbol <= 'z') || (*symbol >= 'A' && *symbol <= 'Z');
     }
 
-    bool Stream::isKeyword(std::string* strKeyword) {
+    bool Lexer::isKeyword(std::string* strKeyword) {
         for (auto it = this->keywords->begin(); it != this->keywords->end(); it++) {
             if (strcmp(it->c_str(), strKeyword->c_str()) == 0) {
                 return true;
@@ -378,7 +369,7 @@ namespace TemplateRenderWizard
         return false;
     }
 
-    bool Stream::isKeyword(const char* strKeyword) {
+    bool Lexer::isKeyword(const char* strKeyword) {
         for (auto it = this->keywords->begin(); it != this->keywords->end(); it++) {
             if (strcmp(it->c_str(), strKeyword) == 0) {
                 return true;

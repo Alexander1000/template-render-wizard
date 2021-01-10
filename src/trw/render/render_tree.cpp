@@ -216,6 +216,10 @@ namespace TemplateRenderWizard
             }
             it++; // closeControlTag
         }
+
+        if (strcmp(rule->getName(), "include_stmt") == 0) {
+            this->render_tree_include(buffer, rule, elements, context);
+        }
     }
 
     Value* Render::calc_expr_tree(SyntaxTree::Syntax::SyntaxElement *syntaxElement, Context* context)
@@ -225,17 +229,21 @@ namespace TemplateRenderWizard
         }
 
         if (syntaxElement->getType() == SyntaxTree::Syntax::TokenListType) {
+            if (strcmp(syntaxElement->getRule()->getName(), "term") == 0) {
+                return this->calc_expr_tree_term(syntaxElement, context);
+            }
+
+            if (strcmp(syntaxElement->getRule()->getName(), "factor") == 0) {
+                return this->calc_expr_tree_factor(syntaxElement, context);
+            }
+
             if (strcmp(syntaxElement->getRule()->getName(), "expr") != 0) {
                 throw new UnexpectedToken;
             }
 
             auto syntaxList = syntaxElement->getListElements();
 
-            int count = 0;
-            for (auto it = syntaxList->begin(); it != syntaxList->end(); it++) {
-                count++;
-            }
-
+            int count = syntaxList->size();
             auto it = syntaxList->begin(); // lValue
             auto firstElement = *it;
 
@@ -253,12 +261,12 @@ namespace TemplateRenderWizard
                 throw new UnexpectedToken;
             }
 
-            if (firstElement->getType() == SyntaxTree::Syntax::SyntaxElementType::TokenType) {
-                it++;
-                auto exprValue = this->calc_expr_tree(*it, context);
-                it++;
-                return exprValue;
-            }
+//            if (firstElement->getType() == SyntaxTree::Syntax::SyntaxElementType::TokenType) {
+//                it++;
+//                auto exprValue = this->calc_expr_tree(*it, context);
+//                it++;
+//                return exprValue;
+//            }
 
             lValue = this->calc_expr_tree(*it, context);
             it++;
@@ -273,6 +281,10 @@ namespace TemplateRenderWizard
                     tokenOp->getToken()
                 )
             );
+        }
+
+        if (strcmp(syntaxElement->getRule()->getName(), "term") == 0) {
+            return this->calc_expr_tree_term(syntaxElement, context);
         }
 
         if (syntaxElement->getType() != SyntaxTree::Syntax::SyntaxType || strcmp(syntaxElement->getRule()->getName(), "expr") != 0) {

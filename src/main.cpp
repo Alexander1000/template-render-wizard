@@ -17,7 +17,7 @@ inline bool file_exists(const std::string* name)
     return (stat(name->c_str(), &buffer) == 0);
 }
 
-void dump_tokens(IOBuffer::IOMemoryBuffer* buffer, TemplateRenderWizard::Stream* tokenStream) {
+void dump_tokens(IOBuffer::IOMemoryBuffer* buffer, TemplateRenderWizard::Lexer::Lexer* tokenStream) {
     TemplateRenderWizard::Token::TokenMap tokenMap;
     SyntaxTree::Token::Token* token;
 
@@ -28,6 +28,14 @@ void dump_tokens(IOBuffer::IOMemoryBuffer* buffer, TemplateRenderWizard::Stream*
         buffer->write("\n", 1);
         token = tokenStream->getNextToken();
     }
+}
+
+void dump_tokens(IOBuffer::IOMemoryBuffer* buffer, std::string* templateFile)
+{
+    IOBuffer::IOFileReader fileReader(templateFile->c_str());
+    IOBuffer::CharStream charStream(&fileReader);
+    TemplateRenderWizard::Lexer::Lexer tokenStream(&charStream);
+    dump_tokens(buffer, &tokenStream);
 }
 
 int main(int argc, char** argv) {
@@ -77,20 +85,16 @@ int main(int argc, char** argv) {
         tree.mergeValues(config.getValues());
     }
 
-    IOBuffer::IOFileReader fileReader(templateFile->c_str());
-    IOBuffer::CharStream charStream(&fileReader);
-    TemplateRenderWizard::Stream tokenStream(&charStream);
-
     IOBuffer::IOMemoryBuffer* output;
 
     if (config.isDumpTokens()) {
         output = new IOBuffer::IOMemoryBuffer(1024);
-        dump_tokens(output, &tokenStream);
+        dump_tokens(output, templateFile);
     } else {
         TemplateRenderWizard::Render* render;
-        render = new TemplateRenderWizard::Render(&tokenStream, &tree);
+        render = new TemplateRenderWizard::Render(templateFile, &tree);
 
-        output = render->toBufferTree();
+        output = render->toBufferTree(nullptr);
     }
 
     int nRead;

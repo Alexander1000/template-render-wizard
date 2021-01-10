@@ -24,7 +24,7 @@ namespace TrwTests
         sprintf(fileWithTemplate, "./fixtures/render-tests/%s", templateName);
         render = new TemplateRenderWizard::Render(fileWithTemplate, &tree);
 
-        IOBuffer::IOMemoryBuffer* buffer = render->toBufferTree();
+        IOBuffer::IOMemoryBuffer* buffer = render->toBufferTree(nullptr);
 
         int nRead = 0;
         int nBaseSize = 1024;
@@ -86,7 +86,7 @@ namespace TrwTests
         fileReader = new IOBuffer::IOFileReader(srcTemplateFile);
         IOBuffer::CharStream* charStream;
         charStream = new IOBuffer::CharStream(fileReader);
-        auto stream = new TemplateRenderWizard::Stream(charStream);
+        auto stream = new TemplateRenderWizard::Lexer::Lexer(charStream);
 
         INIT_CHAR_STRING(strTokenFile, 1024)
         INIT_CHAR_STRING(strTokenFileName, 1024)

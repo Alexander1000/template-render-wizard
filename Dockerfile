@@ -1,12 +1,15 @@
 FROM debian:buster-20201012
 
-RUN apt-get update \
+RUN echo 'deb http://deb.debian.org/debian testing main' >> /etc/apt/sources.list \
+    && apt-get update -y \
     && apt-get install -y \
+        gcc \
+        g++ \
         curl \
         make \
         cmake \
         unzip \
-        g++
+        build-essential
 
 # install cpp-unit-test library
 RUN mkdir -p /tmp/cpp-utils \

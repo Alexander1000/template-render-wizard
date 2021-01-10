@@ -3,6 +3,7 @@
 
 #include <memory.h>
 #include <list>
+#include <io-buffer.h>
 
 #define RESET_TOKEN_READER(token) \
     do { \
@@ -21,6 +22,11 @@ namespace TemplateRenderWizard
     bool is_digit(char str);
 
     std::list<char*>* explode_string(const char* str, char delimiter);
+
+    bool file_exists(const std::string* name);
+    bool file_exists(const char* name);
+
+    void merge_buffers(IOBuffer::IOWriter*, IOBuffer::IOReader*, int);
 }
 
 #endif

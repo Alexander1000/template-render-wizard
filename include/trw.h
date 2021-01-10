@@ -4,7 +4,7 @@
 #define TRW_VERSION "1.1.0"
 
 #include <trw/config.h>
-#include <trw/stream.h>
+#include <trw/lexer.h>
 #include <trw/exceptions.h>
 #include <trw/token.h>
 #include <trw/tree_parameters.h>

@@ -2,6 +2,8 @@
 
 ### 1.1.0 (Unreleased)
   - autogenerate syntax tree
+  - rename stream to lexer
+  - fixed math operations
 
 ### 1.0.0
   - support `--set key=value` for pass variables in context
