@@ -57,6 +57,14 @@ loop with key-value:
 {% endfor %}
 ```
 
+#### include
+simple:
+```
+<div class="articles">
+    {% include template.file.tpl %}
+</div>
+```
+
 ### project dependencies
 Static libraries:
   - [io-buffer](https://github.com/Alexander1000/io-buffer)
