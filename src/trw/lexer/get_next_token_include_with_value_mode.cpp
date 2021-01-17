@@ -26,6 +26,42 @@ namespace TemplateRenderWizard::Lexer
             return new Token::Comma(this->position->getLine(), this->position->getColumn());
         }
 
+        if (*curSymbol == '(') {
+            return new Token::RoundBracketOpen(this->position->getLine(), this->position->getColumn());
+        }
+
+        if (*curSymbol == ')') {
+            return new Token::RoundBracketClose(this->position->getLine(), this->position->getColumn());
+        }
+
+        if (*curSymbol == '=' || *curSymbol == '>' || *curSymbol == '<' || *curSymbol == '!') {
+            auto ioWriter = new IOBuffer::IOMemoryBuffer(4);
+            ioWriter->write(curSymbol, 1);
+
+            char* nextSymbol = this->getNextChar();
+            if (nextSymbol == nullptr) {
+                return nullptr;
+            }
+
+            if (*nextSymbol == '=') {
+                ioWriter->write(nextSymbol, 1);
+            }
+
+            return new Token::Compare(this->position->getLine(), this->position->getColumn(), ioWriter);
+        }
+
+        if (*curSymbol == '*' || *curSymbol == '/') {
+            auto ioWriter = new IOBuffer::IOMemoryBuffer(4);
+            ioWriter->write(curSymbol, 1);
+            return new Token::MathOperationHighPriority(this->position->getLine(), this->position->getColumn(), ioWriter);
+        }
+
+        if (*curSymbol == '+' || *curSymbol == '-' || *curSymbol == '%') {
+            auto ioWriter = new IOBuffer::IOMemoryBuffer(4);
+            ioWriter->write(curSymbol, 1);
+            return new Token::MathOperation(this->position->getLine(), this->position->getColumn(), ioWriter);
+        }
+
         auto ioWriter = new IOBuffer::IOMemoryBuffer(64);
         while (curSymbol != nullptr) {
             if (*curSymbol != ',') {
