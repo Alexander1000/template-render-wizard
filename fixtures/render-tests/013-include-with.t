@@ -45,4 +45,3 @@ openControlTag
 keyword
 closeControlTag
 plainText
-
