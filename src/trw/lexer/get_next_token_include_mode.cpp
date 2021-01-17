@@ -68,6 +68,7 @@ namespace TemplateRenderWizard::Lexer
             INIT_CHAR_STRING(strValue, 5);
             ioWriter->read(strValue, 4);
             if (strcmp(strValue, "with") == 0) {
+                this->switchToMode(StreamMode::ControlModeIncludeWithExpression);
                 return new Token::Keyword(this->position->getLine(), this->position->getColumn(), ioWriter);
             }
         }
