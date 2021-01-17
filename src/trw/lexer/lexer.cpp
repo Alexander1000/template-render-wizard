@@ -346,6 +346,11 @@ namespace TemplateRenderWizard::Lexer
                 this->pushStackChar(curSymbol);
                 return this->getNextTokenIncludeWithMode();
             }
+
+            case StreamMode::ControlModeIncludeWithValueExpression: {
+                this->pushStackChar(curSymbol);
+                return this->getNextTokenIncludeWithValueMode();
+            }
         }
 
         return token;

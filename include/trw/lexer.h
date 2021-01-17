@@ -17,6 +17,7 @@ namespace TemplateRenderWizard::Lexer
         ControlModeForExpression,
         ControlModeIncludeExpression,
         ControlModeIncludeWithExpression,
+        ControlModeIncludeWithValueExpression,
     };
 
     class Lexer
@@ -38,6 +39,7 @@ namespace TemplateRenderWizard::Lexer
 
         SyntaxTree::Token::Token* getNextTokenIncludeMode();
         SyntaxTree::Token::Token* getNextTokenIncludeWithMode();
+        SyntaxTree::Token::Token* getNextTokenIncludeWithValueMode();
 
         void switchToMode(StreamMode);
         void switchToPreviousMode();

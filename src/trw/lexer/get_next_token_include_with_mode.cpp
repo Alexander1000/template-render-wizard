@@ -32,7 +32,7 @@ namespace TemplateRenderWizard::Lexer
         }
 
         if (*curSymbol == ':') {
-            // todo: switch on next lexer mode
+            this->switchToMode(StreamMode::ControlModeIncludeWithValueExpression);
             return new Token::DoubleDot(this->position->getLine(), this->position->getColumn());
         }
 

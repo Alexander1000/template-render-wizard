@@ -15,6 +15,7 @@ set(TRW_SHARED_SOURCES
     src/trw/lexer/char_stack.cpp
     src/trw/lexer/get_next_token_include_mode.cpp
     src/trw/lexer/get_next_token_include_with_mode.cpp
+    src/trw/lexer/get_next_token_include_with_value_mode.cpp
     src/trw/tokens/open_tag_value.cpp
     src/trw/tokens/plain_text.cpp
     src/trw/tokens/close_tag_value.cpp
