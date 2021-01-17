@@ -21,6 +21,11 @@ namespace TemplateRenderWizard::Lexer
             return nullptr;
         }
 
+        if (*curSymbol == '}') {
+            this->switchToPreviousMode();
+            return this->getNextTokenIncludeWithMode();
+        }
+
         if (*curSymbol == ',') {
             this->switchToPreviousMode();
             return new Token::Comma(this->position->getLine(), this->position->getColumn());
@@ -64,7 +69,7 @@ namespace TemplateRenderWizard::Lexer
 
         auto ioWriter = new IOBuffer::IOMemoryBuffer(64);
         while (curSymbol != nullptr) {
-            if (*curSymbol != ',') {
+            if (this->isWord(curSymbol) || this->isDigit(curSymbol)) {
                 ioWriter->write(curSymbol, 1);
             } else {
                 this->pushStackChar(curSymbol);

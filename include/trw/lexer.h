@@ -48,6 +48,7 @@ namespace TemplateRenderWizard::Lexer
         void pushStackChar(char*);
 
         static bool isWord(const char* symbol);
+        static bool isDigit(const char* symbol);
 
         bool isKeyword(std::string*);
         bool isKeyword(const char*);

@@ -370,6 +370,10 @@ namespace TemplateRenderWizard::Lexer
         return (*symbol >= 'a' && *symbol <= 'z') || (*symbol >= 'A' && *symbol <= 'Z');
     }
 
+    bool Lexer::isDigit(const char *symbol) {
+        return (*symbol >= '0' && *symbol <= '9');
+    }
+
     bool Lexer::isKeyword(std::string* strKeyword) {
         for (auto it = this->keywords->begin(); it != this->keywords->end(); it++) {
             if (strcmp(it->c_str(), strKeyword->c_str()) == 0) {
