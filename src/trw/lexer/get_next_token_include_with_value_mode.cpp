@@ -20,7 +20,7 @@ namespace TemplateRenderWizard::Lexer
         if (curSymbol == nullptr) {
             return nullptr;
         }
-        
+
         return nullptr;
     }
 }
