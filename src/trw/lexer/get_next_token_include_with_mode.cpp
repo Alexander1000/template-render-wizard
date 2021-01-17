@@ -11,11 +11,11 @@ namespace TemplateRenderWizard::Lexer
             return nullptr;
         }
 
-        if (*curSymbol == 0x20) {
+        if (*curSymbol == 0x20 || *curSymbol == 0x0A) {
             // skip spaces
             do {
                 curSymbol = this->getNextChar();
-            } while(curSymbol != nullptr && *curSymbol == 0x20);
+            } while(curSymbol != nullptr && (*curSymbol == 0x20 || *curSymbol == 0x0A));
         }
 
         if (curSymbol == nullptr) {

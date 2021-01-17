@@ -10,11 +10,11 @@ namespace TemplateRenderWizard::Lexer
             return nullptr;
         }
 
-        if (*curSymbol == 0x20) {
+        if (*curSymbol == 0x20 || *curSymbol == 0x0A) {
             // skip spaces
             do {
                 curSymbol = this->getNextChar();
-            } while(curSymbol != nullptr && *curSymbol == 0x20);
+            } while(curSymbol != nullptr && (*curSymbol == 0x20 || *curSymbol == 0x0A));
         }
 
         if (curSymbol == nullptr) {
@@ -22,6 +22,7 @@ namespace TemplateRenderWizard::Lexer
         }
 
         if (*curSymbol == '}') {
+            this->pushStackChar(curSymbol);
             this->switchToPreviousMode();
             return this->getNextTokenIncludeWithMode();
         }
@@ -69,7 +70,7 @@ namespace TemplateRenderWizard::Lexer
 
         auto ioWriter = new IOBuffer::IOMemoryBuffer(64);
         while (curSymbol != nullptr) {
-            if (this->isWord(curSymbol) || this->isDigit(curSymbol)) {
+            if (this->isWord(curSymbol) || this->isDigit(curSymbol) || *curSymbol == '.') {
                 ioWriter->write(curSymbol, 1);
             } else {
                 this->pushStackChar(curSymbol);
