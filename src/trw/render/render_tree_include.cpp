@@ -25,6 +25,15 @@ namespace TemplateRenderWizard
             INIT_CHAR_STRING(strFilePath, 64);
             tFilePath->getReader()->read(strFilePath, 63);
 
+            if (elements->size() >= 8) {
+                // calculate context
+                it++; // keyword(with)
+                it++; // {
+                it++; // s:include_with_stmt
+                auto contextElement = *it;
+                it++; // }
+            }
+
             IOBuffer::IOMemoryBuffer* ioBuffer = nullptr;
 
             if (this->tplFile != nullptr) {
