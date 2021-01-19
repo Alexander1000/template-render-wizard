@@ -52,6 +52,7 @@ set(TRW_SHARED_SOURCES
     src/trw/render/render_tree_include.cpp
     src/trw/render/calc_expr_tree_term.cpp
     src/trw/render/calc_expr_tree_factor.cpp
+    src/trw/render/create_context_for_include_stmt.cpp
     src/trw/value.cpp
     src/trw/value/cast_value_to_int.cpp
     src/trw/value/cast_value_to_bool.cpp
