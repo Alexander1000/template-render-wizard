@@ -50,7 +50,7 @@ namespace TemplateRenderWizard
         bool calc_if_control(SyntaxTree::Syntax::SyntaxElement*, Context*);
         bool calc_bool_expr(SyntaxTree::Syntax::SyntaxElement*, Context*);
 
-        Context* create_context_for_include_stmt(SyntaxTree::Syntax::SyntaxElement*);
+        Context* create_context_for_include_stmt(SyntaxTree::Syntax::SyntaxElement*, Context*);
 
     public:
         Render(const char*, TemplateRenderWizard::Tree::Tree*);

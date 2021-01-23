@@ -31,7 +31,7 @@ namespace TemplateRenderWizard
                 it++; // {
                 it++; // s:include_with_stmt
                 auto contextElement = *it;
-                auto nestedContext = this->create_context_for_include_stmt(contextElement);
+                auto nestedContext = this->create_context_for_include_stmt(contextElement, context);
                 it++; // }
             }
 

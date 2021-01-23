@@ -5,20 +5,20 @@
 
 namespace TemplateRenderWizard
 {
-    Context* Render::create_context_for_include_stmt(SyntaxTree::Syntax::SyntaxElement *element)
+    Context* Render::create_context_for_include_stmt(SyntaxTree::Syntax::SyntaxElement *element, Context* context)
     {
         if (element->getType() == SyntaxTree::Syntax::SyntaxElementType::SyntaxType) {
-            return this->create_context_for_include_stmt(element->getElement());
+            return this->create_context_for_include_stmt(element->getElement(), context);
         }
 
-        auto context = new Context;
+        auto ctx = new Context;
 
         auto listElements = element->getListElements();
         auto itListElements = listElements->begin(); // first element
         auto curElement = *itListElements;
         if (curElement->getType() == SyntaxTree::Syntax::SyntaxElementType::SyntaxType) {
             if (strcmp(curElement->getRule()->getName(), "include_with_stmt") == 0) {
-                this->create_context_for_include_stmt(curElement->getElement());
+                this->create_context_for_include_stmt(curElement->getElement(), context);
             }
             if (strcmp(curElement->getRule()->getName(), "include_with_pair") == 0) {
                 auto elIncludeWithPair = curElement->getElement();
@@ -37,12 +37,17 @@ namespace TemplateRenderWizard
                 tKey->getReader()->read(sKey, 128);
                 itIncludePair++; // token double dot
                 itIncludePair++; // value
+                auto elValue = *itIncludePair;
+                if (elValue->getRule() != nullptr && strcmp(elValue->getRule()->getName(), "expr") == 0) {
+                    auto v = this->calc_expr_tree(elValue, context);
+                    ctx->setValue(sKey, v);
+                }
                 std::cout << std::endl;
             }
         }
         itListElements++; // t:comma
         itListElements++; // second element
         std::cout << std::endl;
-        return nullptr;
+        return ctx;
     }
 }
