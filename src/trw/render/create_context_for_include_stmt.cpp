@@ -11,6 +11,8 @@ namespace TemplateRenderWizard
             return this->create_context_for_include_stmt(element->getElement());
         }
 
+        auto context = new Context;
+
         auto listElements = element->getListElements();
         auto itListElements = listElements->begin(); // first element
         auto curElement = *itListElements;
@@ -25,6 +27,14 @@ namespace TemplateRenderWizard
                 }
                 auto lIncludePair = elIncludeWithPair->getListElements();
                 auto itIncludePair = lIncludePair->begin(); // token with key
+                auto elTokenKey = *itIncludePair;
+                if (elTokenKey->getType() != SyntaxTree::Syntax::SyntaxElementType::TokenType) {
+                    throw new UnexpectedToken;
+                }
+                auto tKey = elTokenKey->getToken();
+                RESET_TOKEN_READER(tKey);
+                INIT_CHAR_STRING(sKey, 128);
+                tKey->getReader()->read(sKey, 128);
                 itIncludePair++; // token double dot
                 itIncludePair++; // value
                 std::cout << std::endl;
