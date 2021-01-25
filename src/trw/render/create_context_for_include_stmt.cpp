@@ -47,9 +47,17 @@ namespace TemplateRenderWizard
                 itIncludePair++; // token double dot
                 itIncludePair++; // value
                 auto elValue = *itIncludePair;
-                if (elValue->getRule() != nullptr && strcmp(elValue->getRule()->getName(), "expr") == 0) {
-                    auto v = this->calc_expr_tree(elValue, context);
-                    ctx->setValue(sKey, v);
+                if (elValue->getRule() != nullptr) {
+                    if (strcmp(elValue->getRule()->getName(), "expr") == 0) {
+                        auto v = this->calc_expr_tree(elValue, context);
+                        ctx->setValue(sKey, v);
+                    }
+                    if (strcmp(elValue->getRule()->getName(), "cmpExpr") == 0) {
+                        bool cmpExpr = this->calc_bool_expr(elValue, context);
+                        auto v = new Value;
+                        v->setData(cmpExpr);
+                        ctx->setValue(sKey, v);
+                    }
                 }
             }
         }
@@ -87,9 +95,17 @@ namespace TemplateRenderWizard
                 itIncludePair++; // token double dot
                 itIncludePair++; // value
                 auto elValue = *itIncludePair;
-                if (elValue->getRule() != nullptr && strcmp(elValue->getRule()->getName(), "expr") == 0) {
-                    auto v = this->calc_expr_tree(elValue, context);
-                    ctx->setValue(sKey, v);
+                if (elValue->getRule() != nullptr) {
+                    if (strcmp(elValue->getRule()->getName(), "expr") == 0) {
+                        auto v = this->calc_expr_tree(elValue, context);
+                        ctx->setValue(sKey, v);
+                    }
+                    if (strcmp(elValue->getRule()->getName(), "cmpExpr") == 0) {
+                        bool cmpExpr = this->calc_bool_expr(elValue, context);
+                        auto v = new Value;
+                        v->setData(cmpExpr);
+                        ctx->setValue(sKey, v);
+                    }
                 }
             }
         }
