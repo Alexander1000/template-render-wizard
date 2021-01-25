@@ -47,6 +47,36 @@ namespace TemplateRenderWizard
         }
         itListElements++; // t:comma
         itListElements++; // second element
+        curElement = *itListElements;
+        if (curElement->getType() == SyntaxTree::Syntax::SyntaxElementType::SyntaxType) {
+            if (strcmp(curElement->getRule()->getName(), "include_with_stmt") == 0) {
+                this->create_context_for_include_stmt(curElement->getElement(), context);
+            }
+            if (strcmp(curElement->getRule()->getName(), "include_with_pair") == 0) {
+                auto elIncludeWithPair = curElement->getElement();
+                if (elIncludeWithPair->getType() != SyntaxTree::Syntax::SyntaxElementType::TokenListType) {
+                    throw new UnexpectedToken;
+                }
+                auto lIncludePair = elIncludeWithPair->getListElements();
+                auto itIncludePair = lIncludePair->begin(); // token with key
+                auto elTokenKey = *itIncludePair;
+                if (elTokenKey->getType() != SyntaxTree::Syntax::SyntaxElementType::TokenType) {
+                    throw new UnexpectedToken;
+                }
+                auto tKey = elTokenKey->getToken();
+                RESET_TOKEN_READER(tKey);
+                INIT_CHAR_STRING(sKey, 128);
+                tKey->getReader()->read(sKey, 128);
+                itIncludePair++; // token double dot
+                itIncludePair++; // value
+                auto elValue = *itIncludePair;
+                if (elValue->getRule() != nullptr && strcmp(elValue->getRule()->getName(), "expr") == 0) {
+                    auto v = this->calc_expr_tree(elValue, context);
+                    ctx->setValue(sKey, v);
+                }
+                std::cout << std::endl;
+            }
+        }
         std::cout << std::endl;
         return ctx;
     }
