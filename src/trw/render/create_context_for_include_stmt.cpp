@@ -19,15 +19,7 @@ namespace TemplateRenderWizard
         if (curElement->getType() == SyntaxTree::Syntax::SyntaxElementType::SyntaxType) {
             if (strcmp(curElement->getRule()->getName(), "include_with_stmt") == 0) {
                 auto nestedContext = this->create_context_for_include_stmt(curElement->getElement(), context);
-                if (nestedContext != nullptr) {
-                    auto nestedValue = nestedContext->getValueContext();
-                    if (nestedValue != nullptr && nestedValue->getType() == ValueType::Object) {
-                        auto ctxObject = nestedValue->getObject();
-                        for (auto it = ctxObject->begin(); it != ctxObject->end(); it++) {
-                            ctx->setValue(it->first.c_str(), it->second);
-                        }
-                    }
-                }
+                merge_context(ctx, nestedContext);
             }
             if (strcmp(curElement->getRule()->getName(), "include_with_pair") == 0) {
                 auto elIncludeWithPair = curElement->getElement();
@@ -67,15 +59,7 @@ namespace TemplateRenderWizard
         if (curElement->getType() == SyntaxTree::Syntax::SyntaxElementType::SyntaxType) {
             if (strcmp(curElement->getRule()->getName(), "include_with_stmt") == 0) {
                 auto nestedContext = this->create_context_for_include_stmt(curElement->getElement(), context);
-                if (nestedContext != nullptr) {
-                    auto nestedValue = nestedContext->getValueContext();
-                    if (nestedValue != nullptr && nestedValue->getType() == ValueType::Object) {
-                        auto ctxObject = nestedValue->getObject();
-                        for (auto it = ctxObject->begin(); it != ctxObject->end(); it++) {
-                            ctx->setValue(it->first.c_str(), it->second);
-                        }
-                    }
-                }
+                merge_context(ctx, nestedContext);
             }
             if (strcmp(curElement->getRule()->getName(), "include_with_pair") == 0) {
                 auto elIncludeWithPair = curElement->getElement();

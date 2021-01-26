@@ -61,6 +61,7 @@ set(TRW_SHARED_SOURCES
     src/trw/utils/explode_string.cpp
     src/trw/utils/file_exists.cpp
     src/trw/utils/merge_buffers.cpp
+    src/trw/utils/merge_context.cpp
     src/trw/syntax/syntax.cpp
     src/trw/syntax/tree.cpp
     src/trw/syntax/parse.cpp

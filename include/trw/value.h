@@ -4,6 +4,7 @@
 #include <list>
 #include <map>
 #include <yaml-parser.h>
+#include <trw/tree_parameters.h>
 
 namespace TemplateRenderWizard
 {
