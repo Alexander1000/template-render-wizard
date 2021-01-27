@@ -25,14 +25,29 @@ namespace TemplateRenderWizard
             INIT_CHAR_STRING(strFilePath, 64);
             tFilePath->getReader()->read(strFilePath, 63);
 
+            Context* nestedContext = nullptr;
+
             if (elements->size() >= 8) {
                 // calculate context
                 it++; // keyword(with)
                 it++; // {
                 it++; // s:include_with_stmt
                 auto contextElement = *it;
-                auto nestedContext = this->create_context_for_include_stmt(contextElement, context);
+                nestedContext = this->create_context_for_include_stmt(contextElement, context);
+                if (elements->size() == 9) {
+                    it++; // keyword(only)
+                } else {
+                    // merge current context with nested context
+                    auto newContext = new Context;
+                    merge_context(newContext, context);
+                    merge_context(newContext, nestedContext);
+                    auto ctx = nestedContext;
+                    nestedContext = newContext;
+                    delete ctx;
+                }
                 it++; // }
+            } else {
+                nestedContext = context;
             }
 
             IOBuffer::IOMemoryBuffer* ioBuffer = nullptr;
@@ -48,7 +63,7 @@ namespace TemplateRenderWizard
 
                 if (file_exists(strFileNearTpl)) {
                     auto r = new Render(strFileNearTpl, this->tree);
-                    ioBuffer = r->toBufferTree(context);
+                    ioBuffer = r->toBufferTree(nestedContext);
                     delete r;
                 }
 
@@ -57,7 +72,7 @@ namespace TemplateRenderWizard
 
             if (ioBuffer == nullptr && file_exists(strFilePath)) {
                 auto r = new Render(strFilePath, this->tree);
-                ioBuffer = r->toBufferTree(context);
+                ioBuffer = r->toBufferTree(nestedContext);
                 delete r;
             }
 
