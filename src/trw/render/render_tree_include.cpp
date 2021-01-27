@@ -25,6 +25,7 @@ namespace TemplateRenderWizard
             INIT_CHAR_STRING(strFilePath, 64);
             tFilePath->getReader()->read(strFilePath, 63);
 
+            bool useParentContext = true;
             Context* nestedContext = nullptr;
 
             if (elements->size() >= 8) {
@@ -36,6 +37,7 @@ namespace TemplateRenderWizard
                 nestedContext = this->create_context_for_include_stmt(contextElement, context);
                 if (elements->size() == 9) {
                     it++; // keyword(only)
+                    useParentContext = false;
                 } else {
                     // merge current context with nested context
                     auto newContext = new Context;
@@ -62,18 +64,36 @@ namespace TemplateRenderWizard
                 sprintf(strFileNearTpl, "%s/%s", dirName, strFilePath);
 
                 if (file_exists(strFileNearTpl)) {
-                    auto r = new Render(strFileNearTpl, this->tree);
+                    Tree::Tree* parentTree = nullptr;
+                    if (useParentContext) {
+                        parentTree = this->tree;
+                    } else {
+                        parentTree = new Tree::Tree();
+                    }
+                    auto r = new Render(strFileNearTpl, parentTree);
                     ioBuffer = r->toBufferTree(nestedContext);
                     delete r;
+                    if (!useParentContext) {
+                        delete parentTree;
+                    }
                 }
 
                 free(strFileNearTpl);
             }
 
             if (ioBuffer == nullptr && file_exists(strFilePath)) {
-                auto r = new Render(strFilePath, this->tree);
+                Tree::Tree* parentTree = nullptr;
+                if (useParentContext) {
+                    parentTree = this->tree;
+                } else {
+                    parentTree = new Tree::Tree();
+                }
+                auto r = new Render(strFilePath, parentTree);
                 ioBuffer = r->toBufferTree(nestedContext);
                 delete r;
+                if (!useParentContext) {
+                    delete parentTree;
+                }
             }
 
             if (ioBuffer != nullptr) {
