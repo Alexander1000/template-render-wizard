@@ -1,0 +1,37 @@
+<html>
+<head></head>
+<body>
+
+<div>
+    <div class="item">
+    <h1>Some item title</h1>
+    <p><b>Price:</b> -165</p>
+    
+        <button>Put in cart</button>
+    
+</div>
+
+</div>
+
+<div>
+    <div class="item">
+    <h1>auto car</h1>
+    <p><b>Price:</b> 8790</p>
+    
+        <button>Put in cart</button>
+    
+</div>
+
+</div>
+
+<div>
+    <div class="item">
+    <h1>lego</h1>
+    <p><b>Price:</b> -6</p>
+    
+</div>
+
+</div>
+
+</body>
+</html>

@@ -93,7 +93,6 @@ namespace TemplateRenderWizard
                 }
             }
         }
-        std::cout << std::endl;
         return ctx;
     }
 }
