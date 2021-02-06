@@ -1,0 +1,68 @@
+<html>
+<head></head>
+<body>
+
+<div>
+    <p>[Simple] "test-case with only": Some item title</p>
+    <div class="item">
+    <h1>"test-case with only"</h1>
+    <p><b>Price:</b> -165</p>
+    
+        <button>Put in cart</button>
+    
+</div>
+
+
+    <p>[Only] "test-case with only": Some item title</p>
+    <div class="item">
+    <h1></h1>
+    <p><b>Price:</b> -165</p>
+    
+        <button>Put in cart</button>
+    
+</div>
+
+</div>
+
+<div>
+    <p>[Simple] "test-case with only": auto car</p>
+    <div class="item">
+    <h1>"test-case with only"</h1>
+    <p><b>Price:</b> 8790</p>
+    
+        <button>Put in cart</button>
+    
+</div>
+
+
+    <p>[Only] "test-case with only": auto car</p>
+    <div class="item">
+    <h1></h1>
+    <p><b>Price:</b> 8790</p>
+    
+        <button>Put in cart</button>
+    
+</div>
+
+</div>
+
+<div>
+    <p>[Simple] "test-case with only": lego</p>
+    <div class="item">
+    <h1>"test-case with only"</h1>
+    <p><b>Price:</b> -6</p>
+    
+</div>
+
+
+    <p>[Only] "test-case with only": lego</p>
+    <div class="item">
+    <h1></h1>
+    <p><b>Price:</b> -6</p>
+    
+</div>
+
+</div>
+
+</body>
+</html>

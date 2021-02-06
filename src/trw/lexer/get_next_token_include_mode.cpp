@@ -71,6 +71,9 @@ namespace TemplateRenderWizard::Lexer
                 this->switchToMode(StreamMode::ControlModeIncludeWithExpression);
                 return new Token::Keyword(this->position->getLine(), this->position->getColumn(), ioWriter);
             }
+            if (strcmp(strValue, "only") == 0) {
+                return new Token::Keyword(this->position->getLine(), this->position->getColumn(), ioWriter);
+            }
         }
 
         return new Token::FilePath(this->position->getLine(), this->position->getColumn(), ioWriter);
