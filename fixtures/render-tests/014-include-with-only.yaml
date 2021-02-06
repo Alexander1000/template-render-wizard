@@ -1,0 +1,15 @@
+title: "test-case with only"
+
+user:
+  age: 30
+
+items:
+  - title: Some item title
+    price: 45
+    minAvailableAge: 6
+  - title: auto car
+    price: 9000
+    minAvailableAge: 30
+  - title: lego
+    price: 204
+    minAvailableAge: 31
