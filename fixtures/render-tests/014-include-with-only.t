@@ -82,7 +82,7 @@ exprValue
 compare
 exprValue
 closeBrace
-filePath
+keyword
 closeControlTag
 plainText
 openControlTag
