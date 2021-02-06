@@ -4,6 +4,7 @@
   - autogenerate syntax tree
   - rename stream to lexer
   - fixed math operations
+  - add support `include` constructions
 
 ### 1.0.0
   - support `--set key=value` for pass variables in context
