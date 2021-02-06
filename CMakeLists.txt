@@ -14,6 +14,8 @@ set(TRW_SHARED_SOURCES
     src/trw/lexer/lexer.cpp
     src/trw/lexer/char_stack.cpp
     src/trw/lexer/get_next_token_include_mode.cpp
+    src/trw/lexer/get_next_token_include_with_mode.cpp
+    src/trw/lexer/get_next_token_include_with_value_mode.cpp
     src/trw/tokens/open_tag_value.cpp
     src/trw/tokens/plain_text.cpp
     src/trw/tokens/close_tag_value.cpp
@@ -50,6 +52,7 @@ set(TRW_SHARED_SOURCES
     src/trw/render/render_tree_include.cpp
     src/trw/render/calc_expr_tree_term.cpp
     src/trw/render/calc_expr_tree_factor.cpp
+    src/trw/render/create_context_for_include_stmt.cpp
     src/trw/value.cpp
     src/trw/value/cast_value_to_int.cpp
     src/trw/value/cast_value_to_bool.cpp
@@ -58,6 +61,7 @@ set(TRW_SHARED_SOURCES
     src/trw/utils/explode_string.cpp
     src/trw/utils/file_exists.cpp
     src/trw/utils/merge_buffers.cpp
+    src/trw/utils/merge_context.cpp
     src/trw/syntax/syntax.cpp
     src/trw/syntax/tree.cpp
     src/trw/syntax/parse.cpp

@@ -16,6 +16,8 @@ namespace TemplateRenderWizard::Lexer
         ControlModeExpression,
         ControlModeForExpression,
         ControlModeIncludeExpression,
+        ControlModeIncludeWithExpression,
+        ControlModeIncludeWithValueExpression,
     };
 
     class Lexer
@@ -36,6 +38,8 @@ namespace TemplateRenderWizard::Lexer
         Position *position;
 
         SyntaxTree::Token::Token* getNextTokenIncludeMode();
+        SyntaxTree::Token::Token* getNextTokenIncludeWithMode();
+        SyntaxTree::Token::Token* getNextTokenIncludeWithValueMode();
 
         void switchToMode(StreamMode);
         void switchToPreviousMode();
@@ -44,6 +48,7 @@ namespace TemplateRenderWizard::Lexer
         void pushStackChar(char*);
 
         static bool isWord(const char* symbol);
+        static bool isDigit(const char* symbol);
 
         bool isKeyword(std::string*);
         bool isKeyword(const char*);

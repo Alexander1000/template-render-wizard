@@ -4,6 +4,7 @@
 #include <memory.h>
 #include <list>
 #include <io-buffer.h>
+#include <trw/context.h>
 
 #define RESET_TOKEN_READER(token) \
     do { \
@@ -27,6 +28,8 @@ namespace TemplateRenderWizard
     bool file_exists(const char* name);
 
     void merge_buffers(IOBuffer::IOWriter*, IOBuffer::IOReader*, int);
+
+    void merge_context(Context* dst, Context* src);
 }
 
 #endif

@@ -1,5 +1,6 @@
 #include <trw.h>
 #include <io-buffer.h>
+#include <cstring>
 
 namespace TemplateRenderWizard::Lexer
 {
@@ -61,6 +62,15 @@ namespace TemplateRenderWizard::Lexer
             }
             ioWriter->write(curSymbol, 1);
             curSymbol = this->getNextChar();
+        }
+
+        if (ioWriter->length() == 4) {
+            INIT_CHAR_STRING(strValue, 5);
+            ioWriter->read(strValue, 4);
+            if (strcmp(strValue, "with") == 0) {
+                this->switchToMode(StreamMode::ControlModeIncludeWithExpression);
+                return new Token::Keyword(this->position->getLine(), this->position->getColumn(), ioWriter);
+            }
         }
 
         return new Token::FilePath(this->position->getLine(), this->position->getColumn(), ioWriter);

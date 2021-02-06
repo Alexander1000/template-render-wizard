@@ -341,6 +341,16 @@ namespace TemplateRenderWizard::Lexer
                 this->pushStackChar(curSymbol);
                 return this->getNextTokenIncludeMode();
             }
+
+            case StreamMode::ControlModeIncludeWithExpression: {
+                this->pushStackChar(curSymbol);
+                return this->getNextTokenIncludeWithMode();
+            }
+
+            case StreamMode::ControlModeIncludeWithValueExpression: {
+                this->pushStackChar(curSymbol);
+                return this->getNextTokenIncludeWithValueMode();
+            }
         }
 
         return token;
@@ -358,6 +368,10 @@ namespace TemplateRenderWizard::Lexer
 
     bool Lexer::isWord(const char *symbol) {
         return (*symbol >= 'a' && *symbol <= 'z') || (*symbol >= 'A' && *symbol <= 'Z');
+    }
+
+    bool Lexer::isDigit(const char *symbol) {
+        return (*symbol >= '0' && *symbol <= '9');
     }
 
     bool Lexer::isKeyword(std::string* strKeyword) {

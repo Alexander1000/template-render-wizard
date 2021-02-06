@@ -25,6 +25,33 @@ namespace TemplateRenderWizard
             INIT_CHAR_STRING(strFilePath, 64);
             tFilePath->getReader()->read(strFilePath, 63);
 
+            bool useParentContext = true;
+            Context* nestedContext = nullptr;
+
+            if (elements->size() >= 8) {
+                // calculate context
+                it++; // keyword(with)
+                it++; // {
+                it++; // s:include_with_stmt
+                auto contextElement = *it;
+                nestedContext = this->create_context_for_include_stmt(contextElement, context);
+                if (elements->size() == 9) {
+                    it++; // keyword(only)
+                    useParentContext = false;
+                } else {
+                    // merge current context with nested context
+                    auto newContext = new Context;
+                    merge_context(newContext, context);
+                    merge_context(newContext, nestedContext);
+                    auto ctx = nestedContext;
+                    nestedContext = newContext;
+                    delete ctx;
+                }
+                it++; // }
+            } else {
+                nestedContext = context;
+            }
+
             IOBuffer::IOMemoryBuffer* ioBuffer = nullptr;
 
             if (this->tplFile != nullptr) {
@@ -37,18 +64,36 @@ namespace TemplateRenderWizard
                 sprintf(strFileNearTpl, "%s/%s", dirName, strFilePath);
 
                 if (file_exists(strFileNearTpl)) {
-                    auto r = new Render(strFileNearTpl, this->tree);
-                    ioBuffer = r->toBufferTree(context);
+                    Tree::Tree* parentTree = nullptr;
+                    if (useParentContext) {
+                        parentTree = this->tree;
+                    } else {
+                        parentTree = new Tree::Tree();
+                    }
+                    auto r = new Render(strFileNearTpl, parentTree);
+                    ioBuffer = r->toBufferTree(nestedContext);
                     delete r;
+                    if (!useParentContext) {
+                        delete parentTree;
+                    }
                 }
 
                 free(strFileNearTpl);
             }
 
             if (ioBuffer == nullptr && file_exists(strFilePath)) {
-                auto r = new Render(strFilePath, this->tree);
-                ioBuffer = r->toBufferTree(context);
+                Tree::Tree* parentTree = nullptr;
+                if (useParentContext) {
+                    parentTree = this->tree;
+                } else {
+                    parentTree = new Tree::Tree();
+                }
+                auto r = new Render(strFilePath, parentTree);
+                ioBuffer = r->toBufferTree(nestedContext);
                 delete r;
+                if (!useParentContext) {
+                    delete parentTree;
+                }
             }
 
             if (ioBuffer != nullptr) {
