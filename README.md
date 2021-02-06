@@ -64,6 +64,19 @@ simple:
     {% include template.file.tpl %}
 </div>
 ```
+or include with context:
+```
+<div class="articles">
+    {% include template.file.tpl with { value: a + b * 2 } %}
+</div>
+```
+and include with isolated context from parent/root:
+
+```
+<div class="articles">
+    {% include template.file.tpl with { value: a + b * 2 } only %}
+</div>
+```
 
 ### project dependencies
 Static libraries:
