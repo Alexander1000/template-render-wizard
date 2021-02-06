@@ -27,6 +27,7 @@ namespace TemplateRenderWizard::Lexer
             "or",
             "include",
             "with",
+            "only",
         };
     }
 
